@@ -1,3 +1,37 @@
+// ============================================================
+// ✅ Security Headers — injetados em todas as páginas
+// ============================================================
+(function() {
+  const head = document.head || document.getElementsByTagName('head')[0];
+  if (!head) return;
+
+  // 1. X-Frame-Options — proteção contra clickjacking
+  const xfo = document.createElement('meta');
+  xfo.setAttribute('http-equiv', 'X-Frame-Options');
+  xfo.setAttribute('content', 'SAMEORIGIN');
+  head.insertBefore(xfo, head.firstChild);
+
+  // 2. Referrer Policy — privacidade dos visitantes
+  const rp = document.createElement('meta');
+  rp.setAttribute('name', 'referrer');
+  rp.setAttribute('content', 'strict-origin-when-cross-origin');
+  head.insertBefore(rp, head.firstChild);
+
+  // 3. Content Security Policy
+  const csp = document.createElement('meta');
+  csp.setAttribute('http-equiv', 'Content-Security-Policy');
+  csp.setAttribute('content',
+    "default-src 'self'; " +
+    "script-src 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://www.google-analytics.com 'unsafe-inline'; " +
+    "style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; " +
+    "font-src https://fonts.gstatic.com; " +
+    "img-src 'self' data: https:; " +
+    "frame-src https://googleads.g.doubleclick.net; " +
+    "connect-src https://www.google-analytics.com;"
+  );
+  head.insertBefore(csp, head.firstChild);
+})();
+
 // Mobile menu
 const toggle = document.getElementById('menuToggle');
 const mobileNav = document.getElementById('mobileNav');
@@ -81,4 +115,4 @@ function calcIF() {
 
 function formatBRL(val) {
   return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-}
+  }
