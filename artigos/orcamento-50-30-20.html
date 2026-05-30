@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regra 50-30-20: o orçamento mais simples que realmente funciona — DinheiroInteligente</title>
+  <meta name="description" content="Aprenda a regra 50-30-20 para dividir seu salário e nunca mais ficar no vermelho no final do mês." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .article-layout{max-width:1100px;margin:0 auto;padding:40px 20px;display:grid;grid-template-columns:1fr 320px;gap:40px}
+    .article-header{background:linear-gradient(135deg,#d97706,#78350f);color:#fff;padding:60px 20px}
+    .article-header .container{max-width:800px;margin:0 auto}
+    .article-header h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;line-height:1.25;margin:14px 0}
+    .article-header .meta{font-size:.85rem;opacity:.8;margin-top:16px;display:flex;gap:20px;flex-wrap:wrap}
+    .article-body h2{font-size:1.4rem;font-weight:800;margin:32px 0 12px}
+    .article-body p{font-size:1rem;line-height:1.8;margin-bottom:14px;color:#374151}
+    .article-body ul{padding-left:20px;margin-bottom:14px}
+    .article-body li{margin-bottom:6px;line-height:1.7;color:#374151}
+    .highlight-box{background:var(--green-pale);border-left:4px solid var(--green);border-radius:0 10px 10px 0;padding:18px 20px;margin:24px 0}
+    .pie-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+    .pie-card{border-radius:var(--radius);padding:24px;text-align:center;box-shadow:var(--shadow)}
+    .pie-card.needs{background:#fef2f2;border-top:5px solid #ef4444}
+    .pie-card.wants{background:#fffbeb;border-top:5px solid #f59e0b}
+    .pie-card.saves{background:#f0fdf4;border-top:5px solid #22c55e}
+    .pie-card .pct{font-size:2.5rem;font-weight:800;margin-bottom:6px}
+    .pie-card.needs .pct{color:#ef4444}
+    .pie-card.wants .pct{color:#f59e0b}
+    .pie-card.saves .pct{color:#22c55e}
+    .pie-card h3{font-size:1rem;font-weight:700;margin-bottom:8px}
+    .pie-card p{font-size:.82rem;color:var(--gray);margin:0}
+    .example-table{width:100%;border-collapse:collapse;margin:24px 0;border-radius:10px;overflow:hidden;box-shadow:var(--shadow)}
+    .example-table th{background:var(--green);color:#fff;padding:14px 16px;text-align:left;font-size:.9rem}
+    .example-table td{padding:13px 16px;font-size:.9rem;border-bottom:1px solid #f0f0f0}
+    .example-table tr:nth-child(even) td{background:#f9fafb}
+    @media(max-width:900px){.article-layout{grid-template-columns:1fr}.pie-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">💰 <span>Dinheiro</span>Inteligente</a>
+    <nav><a href="../index.html">Home</a><a href="../index.html#artigos" class="active">Artigos</a><a href="../index.html#calculadoras">Calculadoras</a><a href="../sobre.html">Sobre</a></nav>
+    <a href="../index.html#newsletter" class="btn">Newsletter Grátis</a>
+    <button class="menu-toggle" id="menuToggle">☰</button>
+  </div>
+  <nav class="mobile-nav" id="mobileNav"><a href="../index.html">Home</a><a href="../index.html#artigos">Artigos</a></nav>
+</header>
+
+<div class="article-header">
+  <div class="container">
+    <span class="tag">📊 Orçamento</span>
+    <h1>Regra 50-30-20: o orçamento mais simples do mundo que realmente funciona</h1>
+    <div class="meta"><span>✍️ Equipe DinheiroInteligente</span><span>📅 15 de maio de 2026</span><span>⏱️ 5 min de leitura</span></div>
+  </div>
+</div>
+
+<div class="ad-wrapper"><div class="ad-slot ad-slot-leaderboard">📢 Espaço de Anúncio — AdSense</div></div>
+
+<div class="article-layout">
+  <article class="article-body">
+    <p>Criada pela senadora americana Elizabeth Warren, a regra 50-30-20 é talvez o método de orçamento pessoal mais simples e eficaz já criado. Não precisa de planilha complicada — só de saber dividir por 2 e por 5.</p>
+
+    <h2>Como funciona</h2>
+    <p>Divida sua renda líquida (o que cai na conta, após impostos) em três partes:</p>
+
+    <div class="pie-grid">
+      <div class="pie-card needs">
+        <div class="pct">50%</div>
+        <h3>Necessidades</h3>
+        <p>Aluguel, alimentação, transporte, contas de água/luz, plano de saúde</p>
+      </div>
+      <div class="pie-card wants">
+        <div class="pct">30%</div>
+        <h3>Desejos</h3>
+        <p>Restaurantes, streaming, academia, roupas, lazer, viagens</p>
+      </div>
+      <div class="pie-card saves">
+        <div class="pct">20%</div>
+        <h3>Poupança & Investimentos</h3>
+        <p>Reserva de emergência, investimentos, aposentadoria, quitação de dívidas</p>
+      </div>
+    </div>
+
+    <h2>Exemplo prático por faixa de renda</h2>
+    <table class="example-table">
+      <thead><tr><th>Renda líquida</th><th>50% — Necessidades</th><th>30% — Desejos</th><th>20% — Investimentos</th></tr></thead>
+      <tbody>
+        <tr><td>R$ 2.000</td><td>R$ 1.000</td><td>R$ 600</td><td>R$ 400</td></tr>
+        <tr><td>R$ 3.500</td><td>R$ 1.750</td><td>R$ 1.050</td><td>R$ 700</td></tr>
+        <tr><td>R$ 5.000</td><td>R$ 2.500</td><td>R$ 1.500</td><td>R$ 1.000</td></tr>
+        <tr><td>R$ 8.000</td><td>R$ 4.000</td><td>R$ 2.400</td><td>R$ 1.600</td></tr>
+      </tbody>
+    </table>
+
+    <h2>O que entra em cada categoria?</h2>
+    <p><strong>Necessidades (50%):</strong> tudo que você PRECISA para viver — aluguel/financiamento, alimentação básica, transporte para o trabalho, contas de água, luz, internet, plano de saúde, remédios.</p>
+    <p><strong>Desejos (30%):</strong> tudo que você QUER mas não é essencial para sobreviver — Netflix, Spotify, academia, bares, restaurantes, roupas além do básico, férias.</p>
+    <p><strong>Investimentos (20%):</strong> reserva de emergência, Tesouro Direto, CDB, ações, previdência privada. Se tiver dívidas, use parte aqui para quitá-las.</p>
+
+    <div class="highlight-box">
+      <strong>⚠️ E se as necessidades passam de 50%?</strong> É comum no começo. Nesse caso, reduza os desejos primeiro. Nunca corte o investimento abaixo de 5–10% da renda — mesmo que seja pouco, o hábito é o que importa.
+    </div>
+
+    <h2>Como adaptar para a realidade brasileira</h2>
+    <ul>
+      <li>Se mora de aluguel em capital, pode ser difícil manter necessidades em 50% — considere 60-20-20</li>
+      <li>Se tem dívidas com juros altos, trate-as como necessidade até quitar</li>
+      <li>A regra é um ponto de partida, não uma camisa de força</li>
+    </ul>
+
+    <div class="highlight-box">
+      <strong>💡 Dica prática:</strong> Abra uma conta separada só para investimentos. Assim que o salário cair, transfira os 20% automaticamente. O que não está disponível, você não gasta.
+    </div>
+  </article>
+
+  <aside class="sidebar">
+    <div class="ad-slot ad-slot-rectangle">📢 AdSense (336×280)</div>
+    <div class="sidebar-widget">
+      <h3 class="widget-title">📚 Artigos Relacionados</h3>
+      <ul class="popular-list">
+        <li><span class="popular-num">→</span><a href="sair-das-dividas.html">Como sair das dívidas de vez</a></li>
+        <li><span class="popular-num">→</span><a href="reserva-emergencia.html">Monte sua reserva de emergência</a></li>
+        <li><span class="popular-num">→</span><a href="renda-extra.html">15 formas de ganhar renda extra</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-widget newsletter-widget">
+      <h3 class="widget-title">📬 Newsletter</h3>
+      <p>1 dica financeira prática por semana, grátis.</p>
+      <input type="email" placeholder="seu@email.com" />
+      <button class="btn" onclick="alert('Obrigado!')">Assinar grátis</button>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-bottom" style="max-width:1100px;margin:0 auto;padding:20px;">
+    <span>© 2026 DinheiroInteligente</span>
+    <a href="../index.html" style="color:var(--green-light)">← Voltar para o blog</a>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+</body>
+</html>

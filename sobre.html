@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sobre — DinheiroInteligente</title>
+  <meta name="description" content="Conheça o DinheiroInteligente, o blog de finanças pessoais feito para brasileiros que querem crescer financeiramente." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .sobre-hero { background: linear-gradient(135deg, var(--green), #0f4c2a); color: #fff; padding: 80px 20px; text-align: center; }
+    .sobre-hero h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 16px; }
+    .sobre-hero p { font-size: 1.1rem; opacity: 0.9; max-width: 560px; margin: 0 auto; }
+    .sobre-content { max-width: 800px; margin: 60px auto; padding: 0 20px; }
+    .sobre-content h2 { font-size: 1.5rem; font-weight: 800; margin: 36px 0 12px; }
+    .sobre-content h2::after { content: ''; display: block; width: 40px; height: 4px; background: var(--green); border-radius: 2px; margin-top: 8px; }
+    .sobre-content p { font-size: 1rem; line-height: 1.8; color: #374151; margin-bottom: 16px; }
+    .valores-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin: 24px 0; }
+    .valor-card { background: var(--green-pale); border-radius: var(--radius); padding: 24px; text-align: center; }
+    .valor-card .icon { font-size: 2rem; margin-bottom: 10px; }
+    .valor-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .valor-card p { font-size: 0.85rem; color: var(--gray); margin: 0; }
+    .contato-box { background: var(--dark); color: #fff; border-radius: var(--radius); padding: 36px; text-align: center; margin-top: 40px; }
+    .contato-box h2 { color: #fff; margin-bottom: 10px; }
+    .contato-box h2::after { background: var(--green-light); }
+    .contato-box p { opacity: 0.8; margin-bottom: 20px; }
+    .contato-box input, .contato-box textarea { width: 100%; padding: 12px 16px; border-radius: 8px; border: none; font-size: 0.95rem; margin-bottom: 12px; font-family: inherit; outline: none; }
+    .contato-box textarea { height: 120px; resize: vertical; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">💰 <span>Dinheiro</span>Inteligente</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="index.html#artigos">Artigos</a>
+      <a href="index.html#calculadoras">Calculadoras</a>
+      <a href="sobre.html" class="active">Sobre</a>
+    </nav>
+    <a href="index.html#newsletter" class="btn">Newsletter Grátis</a>
+    <button class="menu-toggle" id="menuToggle">☰</button>
+  </div>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="index.html#artigos">Artigos</a>
+    <a href="index.html#calculadoras">Calculadoras</a>
+    <a href="sobre.html">Sobre</a>
+  </nav>
+</header>
+
+<div class="sobre-hero">
+  <h1>Sobre o DinheiroInteligente</h1>
+  <p>Nascemos para provar que educação financeira não precisa ser complicada nem chata.</p>
+</div>
+
+<div class="sobre-content">
+
+  <h2>Nossa história</h2>
+  <p>O DinheiroInteligente nasceu de uma necessidade real: a falta de conteúdo financeiro acessível, honesto e prático em português. Enquanto a maioria dos brasileiros ainda acredita que investir é coisa de rico, ou que dívida é inevitável, nós acreditamos que <strong>qualquer pessoa pode transformar sua relação com o dinheiro</strong>.</p>
+  <p>Começamos com um blog simples, escrevendo sobre o que aprendemos na prática — erros, acertos, estratégias que funcionam de verdade. Hoje somos lidos por milhares de brasileiros que querem crescer financeiramente sem complicação.</p>
+
+  <h2>Nossa missão</h2>
+  <p>Democratizar a educação financeira no Brasil. Queremos que cada brasileiro tenha acesso às mesmas ferramentas e conhecimentos que antes eram privilégio de poucos. Sem jargões desnecessários, sem promessas milagrosas, sem enrolação.</p>
+
+  <h2>Nossos valores</h2>
+  <div class="valores-grid">
+    <div class="valor-card">
+      <div class="icon">🎯</div>
+      <h3>Clareza</h3>
+      <p>Conteúdo direto ao ponto, sem enrolação</p>
+    </div>
+    <div class="valor-card">
+      <div class="icon">✅</div>
+      <h3>Honestidade</h3>
+      <p>Falamos os prós e contras de cada estratégia</p>
+    </div>
+    <div class="valor-card">
+      <div class="icon">📊</div>
+      <h3>Dados reais</h3>
+      <p>Simulações e exemplos baseados em números reais</p>
+    </div>
+    <div class="valor-card">
+      <div class="icon">🤝</div>
+      <h3>Acessibilidade</h3>
+      <p>Para quem ganha R$ 1.500 ou R$ 15.000 por mês</p>
+    </div>
+  </div>
+
+  <h2>Aviso importante</h2>
+  <p>O conteúdo publicado neste blog tem finalidade <strong>educativa e informativa</strong>. Não somos corretora de valores, banco nem assessores de investimento regulados pela CVM. Todas as análises e simulações apresentadas são baseadas em dados públicos e têm caráter ilustrativo.</p>
+  <p>Antes de tomar qualquer decisão de investimento, consulte um profissional certificado (CFP, assessor de investimentos). Cada pessoa tem uma situação financeira única.</p>
+
+  <div class="contato-box">
+    <h2>Entre em contato</h2>
+    <p>Sugestão de pauta, parceria ou dúvida? Fale com a gente.</p>
+    <input type="text" placeholder="Seu nome" />
+    <input type="email" placeholder="Seu e-mail" />
+    <textarea placeholder="Sua mensagem..."></textarea>
+    <button class="btn" onclick="alert('Mensagem enviada! Retornaremos em breve.')">Enviar mensagem</button>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-bottom" style="max-width:1100px; margin:0 auto; padding: 20px;">
+    <span>© 2026 DinheiroInteligente. Todos os direitos reservados.</span>
+    <a href="index.html" style="color: var(--green-light)">← Voltar para o blog</a>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
