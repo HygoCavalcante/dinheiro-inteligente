@@ -25,9 +25,21 @@
     <changefreq>yearly</changefreq>
   </url>
   <url>
+    <loc>https://fiquericoagora.com.br/artigos/bitcoin-queda-junho-2026.html</loc>
+    <lastmod>2026-06-07</lastmod>
+    <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>https://fiquericoagora.com.br/artigos/gpac11-vs-b5p211.html</loc>
     <lastmod>2026-06-05</lastmod>
     <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://fiquericoagora.com.br/artigos/fundos-imobiliarios-2026.html</loc>
+    <lastmod>2026-06-04</lastmod>
+    <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
@@ -35,6 +47,12 @@
     <lastmod>2026-05-29</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://fiquericoagora.com.br/artigos/restituicao-ir-2026.html</loc>
+    <lastmod>2026-05-30</lastmod>
+    <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://fiquericoagora.com.br/artigos/tesouro-reserva.html</loc>
@@ -82,18 +100,6 @@
     <loc>https://fiquericoagora.com.br/artigos/acoes-iniciantes.html</loc>
     <lastmod>2026-05-10</lastmod>
     <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://fiquericoagora.com.br/artigos/restituicao-ir-2026.html</loc>
-    <lastmod>2026-05-30</lastmod>
-    <priority>0.9</priority>
-    <changefreq>weekly</changefreq>
-  </url>
-  <url>
-    <loc>https://fiquericoagora.com.br/artigos/fundos-imobiliarios-2026.html</loc>
-    <lastmod>2026-06-04</lastmod>
-    <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
 </urlset>
