@@ -7,6 +7,30 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>https://fiquericoagora.com.br/calculadoras/</loc>
+    <lastmod>2026-06-11</lastmod>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://fiquericoagora.com.br/calculadoras/juros-compostos.html</loc>
+    <lastmod>2026-06-11</lastmod>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://fiquericoagora.com.br/calculadoras/reserva-de-emergencia.html</loc>
+    <lastmod>2026-06-11</lastmod>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://fiquericoagora.com.br/calculadoras/independencia-financeira.html</loc>
+    <lastmod>2026-06-11</lastmod>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://fiquericoagora.com.br/investimentos/</loc>
     <lastmod>2026-06-11</lastmod>
     <priority>0.8</priority>

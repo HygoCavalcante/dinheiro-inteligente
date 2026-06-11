@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="canonical" href="https://fiquericoagora.com.br/calculadoras/juros-compostos.html" />
+  <title>Calculadora de Juros Compostos Online e Grátis (com aportes mensais) — FiqueRicoAgora</title>
+  <meta name="description" content="Calculadora de juros compostos grátis com aportes mensais. Descubra quanto seu dinheiro rende no Tesouro, CDB ou poupança e veja o poder dos juros sobre juros." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .article-layout { max-width: 1100px; margin: 0 auto; padding: 40px 20px; display: grid; grid-template-columns: 1fr 320px; gap: 40px; }
+    .article-header { background: linear-gradient(135deg, #1a5276, #0d2d4a); color: #fff; padding: 60px 20px; }
+    .article-header .container { max-width: 800px; margin: 0 auto; }
+    .article-header h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; line-height: 1.25; margin: 14px 0; }
+    .article-header .meta { font-size: 0.85rem; opacity: 0.8; margin-top: 16px; display: flex; gap: 20px; flex-wrap: wrap; }
+    .article-body h2 { font-size: 1.4rem; font-weight: 800; margin: 32px 0 12px; color: var(--dark); }
+    .article-body h3 { font-size: 1.1rem; font-weight: 700; margin: 24px 0 10px; color: var(--green); }
+    .article-body p { font-size: 1rem; line-height: 1.8; margin-bottom: 16px; color: #374151; }
+    .article-body ul, .article-body ol { padding-left: 20px; margin-bottom: 16px; }
+    .article-body li { margin-bottom: 8px; line-height: 1.7; color: #374151; }
+    .highlight-box { background: var(--green-pale); border-left: 4px solid var(--green); border-radius: 0 10px 10px 0; padding: 18px 20px; margin: 24px 0; }
+    .calc-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 28px; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 24px 0 32px; }
+    .calc-card h2 { margin-top: 0 !important; }
+    @media (max-width: 900px) { .article-layout { grid-template-columns: 1fr; } }
+  </style>
+    <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3814459840874554" crossorigin="anonymous"></script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5NJD8D13KB"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-5NJD8D13KB');</script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora de Juros Compostos",
+    "url": "https://fiquericoagora.com.br/calculadoras/juros-compostos.html",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
+    "publisher": { "@type": "Organization", "name": "FiqueRicoAgora", "url": "https://fiquericoagora.com.br" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "O que são juros compostos?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Juros compostos são os 'juros sobre juros': a cada período, o rendimento é calculado sobre o valor inicial somado aos juros já acumulados. É o regime usado na maioria dos investimentos brasileiros, como Tesouro Direto, CDBs e fundos." }
+    },
+    {
+      "@type": "Question",
+      "name": "Qual taxa de juros devo usar na calculadora?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Use a taxa mensal do investimento que você pretende fazer. Como referência em 2026: a poupança rende cerca de 0,6% ao mês, o Tesouro Selic e CDBs de 100% do CDI rendem perto de 1,1% ao mês com a Selic em 14,75% ao ano. Para simulações conservadoras de longo prazo, 0,8% a 0,9% ao mês é um valor razoável." }
+    },
+    {
+      "@type": "Question",
+      "name": "Qual a diferença entre juros simples e compostos?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Nos juros simples, o rendimento incide sempre só sobre o valor inicial. Nos compostos, incide sobre o total acumulado (capital + juros anteriores), o que faz o dinheiro crescer de forma acelerada com o tempo. Em 20 anos, a diferença entre os dois regimes pode ser de mais do que o dobro do patrimônio." }
+    },
+    {
+      "@type": "Question",
+      "name": "A calculadora desconta imposto de renda?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Não. O resultado é bruto. Em investimentos de renda fixa, o IR segue a tabela regressiva: 22,5% sobre o lucro até 180 dias, caindo até 15% acima de 720 dias. LCIs e LCAs são isentas para pessoa física." }
+    },
+    {
+      "@type": "Question",
+      "name": "Como transformar taxa anual em mensal?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Não basta dividir por 12, porque os juros são compostos. A fórmula correta é: taxa mensal = (1 + taxa anual)^(1/12) − 1. Por exemplo, 12% ao ano equivale a cerca de 0,95% ao mês." }
+    }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">💰 <span>Fique Rico</span>Agora</a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../index.html#artigos">Artigos</a>
+      <a href="./" class="active">Calculadoras</a>
+      <a href="../planilha.html">📥 Planilha Grátis</a>
+      <a href="../sobre.html">Sobre</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle">☰</button>
+  </div>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="../index.html">Home</a>
+    <a href="../index.html#artigos">Artigos</a>
+    <a href="./">Calculadoras</a>
+  </nav>
+</header>
+
+<div class="article-header">
+  <div class="container">
+    <span class="tag">🔧 Calculadora</span>
+    <h1>Calculadora de Juros Compostos</h1>
+    <div class="meta">
+      <span>✍️ Equipe FiqueRicoAgora</span>
+      <span>📅 Atualizada em 11 de junho de 2026</span>
+      <span>🆓 Grátis, sem cadastro</span>
+    </div>
+  </div>
+</div>
+
+<div class="article-layout">
+  <article class="article-body">
+
+    <p>Simule quanto seu dinheiro vai render com <strong>juros compostos e aportes mensais</strong>. Preencha os campos abaixo com o valor inicial, a taxa mensal do investimento e por quanto tempo você pretende investir — o resultado aparece na hora, sem cadastro.</p>
+
+    <div class="calc-card">
+      <h2>📈 Simule agora</h2>
+      <div class="form-group">
+        <label>Capital inicial (R$)</label>
+        <input type="number" id="capital" placeholder="Ex: 1000" />
+      </div>
+      <div class="form-group">
+        <label>Taxa de juros mensal (%)</label>
+        <input type="number" id="taxa" placeholder="Ex: 0.9" step="0.01" />
+      </div>
+      <div class="form-group">
+        <label>Período (meses)</label>
+        <input type="number" id="meses" placeholder="Ex: 24" />
+      </div>
+      <div class="form-group">
+        <label>Aporte mensal (R$)</label>
+        <input type="number" id="aporte" placeholder="Ex: 200" />
+      </div>
+      <button class="btn" onclick="calcJuros()" style="width:100%">Calcular</button>
+      <div class="calc-result" id="resultJuros">
+        <h4>Montante final</h4>
+        <div class="result-value" id="montanteFinal"></div>
+        <div style="margin-top:12px; display:flex; gap:20px; flex-wrap:wrap;">
+          <div><h4>Total investido</h4><strong id="totalInvestido"></strong></div>
+          <div><h4>Total em juros</h4><strong id="totalLucro" style="color:var(--green)"></strong></div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Como funciona o cálculo</h2>
+    <p>A calculadora aplica a fórmula dos juros compostos mês a mês: a cada período, o aporte mensal é somado ao saldo e o total rende a taxa informada. Em outras palavras, <strong>os juros de um mês passam a render juros no mês seguinte</strong> — é o famoso efeito bola de neve, que Einstein teria chamado de "a força mais poderosa do universo".</p>
+    <p>A fórmula por trás é: <strong>M = C × (1 + i)ⁿ</strong>, onde M é o montante final, C o capital, i a taxa por período e n o número de períodos — somada à capitalização dos aportes mensais.</p>
+
+    <h2>Exemplo prático</h2>
+    <div class="highlight-box">
+      <p style="margin:0">Começando com <strong>R$ 1.000</strong>, aportando <strong>R$ 200 por mês</strong> a <strong>0,9% ao mês</strong> (próximo de um CDB de 100% do CDI em 2026): em <strong>24 meses</strong> você teria cerca de <strong>R$ 6.600</strong> — sendo R$ 5.800 investidos do próprio bolso e mais de R$ 800 só de juros. Em 10 anos, o mesmo plano passa de R$ 42.000, com mais de R$ 17.000 vindos de juros.</p>
+    </div>
+
+    <h2>Que taxa usar em 2026?</h2>
+    <ul>
+      <li><strong>Poupança:</strong> ~0,6% ao mês (quase sempre perde para as alternativas abaixo);</li>
+      <li><strong>Tesouro Selic / CDB 100% do CDI:</strong> ~1,1% ao mês com a Selic a 14,75% a.a. (antes do IR);</li>
+      <li><strong>Simulação conservadora de longo prazo:</strong> 0,7% a 0,9% ao mês, já imaginando juros mais baixos no futuro.</li>
+    </ul>
+    <p>Para entender onde conseguir essas taxas na prática, veja nossos guias de <a href="../artigos/tesouro-direto-2026.html">Tesouro Direto</a> e <a href="../artigos/cdb-lci-lca.html">CDB, LCI e LCA</a>.</p>
+
+    <h2>Perguntas frequentes</h2>
+    <h3>O que são juros compostos?</h3>
+    <p>São os "juros sobre juros": a cada período, o rendimento é calculado sobre o valor inicial <em>mais</em> os juros já acumulados. É o regime da maioria dos investimentos brasileiros.</p>
+    <h3>Qual taxa de juros devo usar?</h3>
+    <p>A taxa mensal do investimento que você pretende fazer. Na dúvida, use 0,8% a 0,9% ao mês para uma simulação realista de renda fixa.</p>
+    <h3>Qual a diferença entre juros simples e compostos?</h3>
+    <p>Nos simples, os juros incidem só sobre o valor inicial; nos compostos, sobre todo o acumulado. No longo prazo a diferença é brutal — décadas de juros compostos podem multiplicar o patrimônio várias vezes.</p>
+    <h3>A calculadora desconta imposto de renda?</h3>
+    <p>Não, o resultado é bruto. Na renda fixa o IR vai de 22,5% (até 6 meses) a 15% (acima de 2 anos) sobre o lucro. LCI e LCA são isentas.</p>
+    <h3>Como converter taxa anual em mensal?</h3>
+    <p>Use a fórmula (1 + taxa anual)^(1/12) − 1. Exemplo: 12% ao ano ≈ 0,95% ao mês — e não 1%.</p>
+
+    <p style="margin-top:28px"><em>⚠️ Esta calculadora tem fins educativos. Os resultados são estimativas e não constituem recomendação de investimento.</em></p>
+  </article>
+
+  <aside class="sidebar">
+    <div class="sidebar-widget">
+      <h3 class="widget-title">🔧 Outras calculadoras</h3>
+      <ul class="popular-list">
+        <li><span class="popular-num">→</span><a href="reserva-de-emergencia.html">Reserva de Emergência</a></li>
+        <li><span class="popular-num">→</span><a href="independencia-financeira.html">Independência Financeira</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-widget">
+      <h3 class="widget-title">📚 Artigos Relacionados</h3>
+      <ul class="popular-list">
+        <li><span class="popular-num">→</span><a href="../artigos/tesouro-direto-2026.html">Tesouro Direto 2026: análise completa</a></li>
+        <li><span class="popular-num">→</span><a href="../artigos/cdb-lci-lca.html">CDB, LCI ou LCA: qual rende mais?</a></li>
+        <li><span class="popular-num">→</span><a href="../artigos/acoes-iniciantes.html">Ações para iniciantes</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-widget newsletter-widget">
+      <h3 class="widget-title">📬 Newsletter</h3>
+      <p>1 dica financeira prática por semana, grátis.</p>
+      <input type="email" placeholder="seu@email.com" />
+      <button class="btn" onclick="alert('Obrigado!')">Assinar grátis</button>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="disclaimer" style="max-width:1100px;margin:0 auto 20px;padding:0 20px">
+    ⚠️ <strong>Aviso legal:</strong> O conteúdo deste blog tem caráter educativo e informativo. Não constitui recomendação de investimento.
+  </div>
+  <div class="footer-bottom" style="max-width:1100px; margin:0 auto; padding:20px;">
+    <span>© 2026 FiqueRicoAgora</span>
+    <a href="../index.html" style="color:var(--green-light)">← Voltar para o blog</a>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+</body>
+</html>
