@@ -157,4 +157,11 @@
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
+
+  <url>
+    <loc>https://fiquericoagora.com.br/artigos/mei-formalizar-renda-extra.html</loc>
+    <lastmod>2026-06-14</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>
