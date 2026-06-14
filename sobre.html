@@ -113,11 +113,23 @@
   <div class="contato-box" id="contato">
     <h2>Entre em contato</h2>
     <p>Sugestão de pauta, parceria ou dúvida? Fale com a gente.</p>
-    <input type="text" placeholder="Seu nome" />
-    <input type="email" placeholder="Seu e-mail" />
-    <textarea placeholder="Sua mensagem..."></textarea>
-    <button class="btn" onclick="alert('Mensagem enviada! Retornaremos em breve.')">Enviar mensagem</button>
+    <input type="text" id="ct-nome" placeholder="Seu nome" />
+    <input type="email" id="ct-email" placeholder="Seu e-mail" />
+    <textarea id="ct-msg" placeholder="Sua mensagem..."></textarea>
+    <button class="btn" onclick="enviarContato()">Enviar mensagem</button>
+    <p style="margin-top:14px;font-size:0.9rem;opacity:0.85">Ou escreva direto para <a href="mailto:hygoluiss@gmail.com" style="color:var(--green-light);font-weight:600">hygoluiss@gmail.com</a></p>
   </div>
+  <script>
+  function enviarContato(){
+    var n=document.getElementById('ct-nome').value.trim();
+    var e=document.getElementById('ct-email').value.trim();
+    var m=document.getElementById('ct-msg').value.trim();
+    if(!m){ alert('Escreva sua mensagem antes de enviar.'); return; }
+    var assunto='Contato via FiqueRicoAgora'+(n?(' - '+n):'');
+    var corpo=m+'\n\n---\nEnviado por: '+(n||'(sem nome)')+(e?(' - '+e):'');
+    window.location.href='mailto:hygoluiss@gmail.com?subject='+encodeURIComponent(assunto)+'&body='+encodeURIComponent(corpo);
+  }
+  </script>
 
 </div>
 
