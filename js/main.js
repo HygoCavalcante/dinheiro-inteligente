@@ -118,7 +118,7 @@ function formatBRL(val) {
   }
 
 // ============================================================
-// UX em artigos: breadcrumb visível + tempo de leitura + índice
+// UX em artigos: breadcrumb visível + índice "Neste artigo"
 // (roda apenas em páginas de artigo, que têm article.article-body)
 // ============================================================
 (function () {
@@ -128,7 +128,6 @@ function formatBRL(val) {
   var css = "#fr-breadcrumb{font-size:.85rem;color:#6b7280;margin:0 0 14px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;line-height:1.4}" +
     "#fr-breadcrumb a{color:#2563eb;text-decoration:none}#fr-breadcrumb a:hover{text-decoration:underline}" +
     "#fr-breadcrumb .fr-sep{color:#9ca3af}#fr-breadcrumb .fr-current{color:#6b7280}" +
-    "#fr-readtime{font-size:.9rem;color:#6b7280;margin:0 0 14px;font-weight:600}" +
     "#fr-toc{background:#f8fafc;border:1px solid #e5e7eb;border-left:4px solid #2563eb;border-radius:8px;padding:16px 20px;margin:22px 0}" +
     "#fr-toc .fr-toc-title{font-weight:800;color:#1e3a8a;margin:0 0 8px;font-size:1.05rem}" +
     "#fr-toc ul{margin:0;padding-left:18px}#fr-toc li{margin:5px 0}" +
@@ -136,6 +135,7 @@ function formatBRL(val) {
     ".article-body h2{scroll-margin-top:80px}";
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
+  // 1) Breadcrumb visível (lê do schema BreadcrumbList já presente)
   try {
     var bc = null;
     document.querySelectorAll('script[type="application/ld+json"]').forEach(function (s) {
@@ -160,14 +160,7 @@ function formatBRL(val) {
     }
   } catch (e) {}
 
-  if (!document.getElementById('fr-readtime')) {
-    var words = (body.innerText || '').trim().split(/\s+/).length;
-    var min = Math.max(1, Math.round(words / 200));
-    var rt = document.createElement('p');
-    rt.id = 'fr-readtime'; rt.innerHTML = '⏱️ ' + min + ' min de leitura';
-    body.insertBefore(rt, body.firstChild);
-  }
-
+  // 2) Índice "Neste artigo"
   if (!document.getElementById('fr-toc')) {
     var hs = body.querySelectorAll('h2');
     if (hs.length >= 3) {
@@ -183,9 +176,8 @@ function formatBRL(val) {
       }
       var toc = document.createElement('nav'); toc.id = 'fr-toc';
       toc.innerHTML = '<p class="fr-toc-title">Neste artigo:</p><ul>' + ul + '</ul>';
-      var rt2 = document.getElementById('fr-readtime');
-      if (rt2) { rt2.parentNode.insertBefore(toc, rt2.nextSibling); }
-      else { var fp = body.querySelector('p'); if (fp) fp.parentNode.insertBefore(toc, fp.nextSibling); else body.insertBefore(toc, body.firstChild); }
+      var fp = body.querySelector('p');
+      if (fp) { fp.parentNode.insertBefore(toc, fp.nextSibling); } else { body.insertBefore(toc, body.firstChild); }
     }
   }
 })();
