@@ -214,6 +214,8 @@ nav a:hover, nav a.active { color: var(--green); }
   overflow: hidden;
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
 }
 
 .card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
@@ -229,7 +231,7 @@ nav a:hover, nav a.active { color: var(--green); }
   font-size: 3rem;
 }
 
-.card-body { padding: 20px; }
+.card-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
 
 .tag {
   display: inline-block;
@@ -261,6 +263,7 @@ nav a:hover, nav a.active { color: var(--green); }
   color: var(--gray);
   border-top: 1px solid #f0f0f0;
   padding-top: 12px;
+  margin-top: auto;
 }
 
 .card-footer .read-more { color: var(--green); font-weight: 600; }
