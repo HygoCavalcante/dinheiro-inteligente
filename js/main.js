@@ -181,3 +181,27 @@ function formatBRL(val) {
     }
   }
 })();
+
+// ============================================================
+// CTA "Calculadoras grátis" no fim dos artigos
+// ============================================================
+(function () {
+  var body = document.querySelector('article.article-body');
+  if (!body || document.getElementById('fr-calc-cta')) return;
+  var css = "#fr-calc-cta{background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff;border-radius:12px;padding:22px 24px;margin:30px 0}" +
+    "#fr-calc-cta h3{margin:0 0 6px;color:#fff;font-size:1.15rem}" +
+    "#fr-calc-cta p{margin:0 0 14px;color:#dbeafe;font-size:.95rem}" +
+    "#fr-calc-cta .fr-calc-links{display:flex;flex-wrap:wrap;gap:10px}" +
+    "#fr-calc-cta a{background:#fff;color:#1e3a8a;text-decoration:none;font-weight:700;font-size:.9rem;padding:9px 16px;border-radius:8px;display:inline-block}" +
+    "#fr-calc-cta a:hover{background:#dbeafe}";
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  var box = document.createElement('div'); box.id = 'fr-calc-cta';
+  box.innerHTML = '<h3>🧮 Calculadoras grátis</h3>' +
+    '<p>Faça as contas do seu dinheiro agora mesmo, sem instalar nada:</p>' +
+    '<div class="fr-calc-links">' +
+    '<a href="https://fiquericoagora.com.br/calculadoras/juros-compostos.html">Juros compostos</a>' +
+    '<a href="https://fiquericoagora.com.br/calculadoras/reserva-de-emergencia.html">Reserva de emergência</a>' +
+    '<a href="https://fiquericoagora.com.br/calculadoras/independencia-financeira.html">Independência financeira</a>' +
+    '</div>';
+  body.appendChild(box);
+})();
