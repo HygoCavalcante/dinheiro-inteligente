@@ -275,6 +275,73 @@ nav a:hover, nav a.active { color: var(--green); }
 
 .section-subtitle { color: var(--gray); margin-bottom: 28px; }
 
+/* ========== CATEGORY NAV (home) ========== */
+.cat-nav-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin-bottom: 28px;
+}
+.cat-nav-title::after {
+  content: '';
+  display: block;
+  width: 52px;
+  height: 3px;
+  background: var(--gold);
+  border-radius: 2px;
+  margin: 12px auto 0;
+}
+.cat-nav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 16px;
+  max-width: 920px;
+  margin: 0 auto 48px;
+}
+.cat-chip {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--white);
+  border: 1px solid #e7ece8;
+  border-radius: 12px;
+  padding: 16px 18px;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.cat-chip:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(14,31,23,0.12);
+  border-color: var(--c);
+}
+.cat-chip .ico {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  background: var(--tint);
+}
+.cat-chip .lbl { display: flex; flex-direction: column; min-width: 0; }
+.cat-chip .lbl b {
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.cat-chip .lbl span {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--c);
+  margin-top: 3px;
+}
+
 /* ========== CARDS ========== */
 .cards-grid {
   display: grid;
