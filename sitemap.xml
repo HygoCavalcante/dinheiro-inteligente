@@ -192,4 +192,11 @@
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
+
+  <url>
+    <loc>https://fiquericoagora.com.br/artigos/tesouro-pre-ou-ipca-2032.html</loc>
+    <lastmod>2026-06-17</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>
