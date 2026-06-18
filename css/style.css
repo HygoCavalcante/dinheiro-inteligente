@@ -617,3 +617,75 @@ footer {
 
 .mobile-nav.open { display: flex; }
 .mobile-nav a { font-size: 1rem; font-weight: 500; color: var(--dark); padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+
+/* ========== ARTICLE POLISH (override inline per-article styles via higher specificity) ========== */
+/* Scoped to .article-header / .article-body — só existe em páginas de artigo, não afeta home/categorias */
+body .article-header { position: relative; overflow: hidden; padding: 68px 20px 56px; }
+body .article-header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(to bottom, transparent 0, transparent 33px, rgba(255,255,255,0.06) 33px, rgba(255,255,255,0.06) 34px);
+  pointer-events: none;
+}
+body .article-header .container { position: relative; z-index: 1; }
+body .article-header .tag {
+  background: rgba(255,255,255,0.16);
+  color: #fff;
+  border-radius: 5px;
+}
+body .article-header h1 {
+  font-size: clamp(1.9rem, 4.2vw, 2.7rem);
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+}
+body .article-header .meta {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  opacity: 0.9;
+  margin-top: 20px;
+}
+
+body .article-body h2 {
+  font-size: 1.55rem;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 40px 0 14px;
+  scroll-margin-top: 90px;
+}
+body .article-body h2::after {
+  content: '';
+  display: block;
+  width: 52px;
+  height: 3px;
+  background: var(--gold);
+  border-radius: 2px;
+  margin-top: 12px;
+}
+body .article-body h3 {
+  font-size: 1.18rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 26px 0 8px;
+}
+body .article-body p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #34403a;
+}
+body .article-body > p:first-of-type {
+  font-size: 1.2rem;
+  line-height: 1.65;
+  color: var(--ink);
+}
+body .article-body p a,
+body .article-body li a {
+  color: var(--green);
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+body .article-body p a:hover,
+body .article-body li a:hover { color: var(--green-deep); }
