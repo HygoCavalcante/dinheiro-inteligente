@@ -689,3 +689,45 @@ body .article-body li a {
 }
 body .article-body p a:hover,
 body .article-body li a:hover { color: var(--green-deep); }
+
+/* ========== INTERNAL PAGE HEROES (override inline gradients centrally) ========== */
+/* Utility pages → ink ledger panel (brand chrome). Higher specificity beats inline .class */
+body .sobre-hero,
+body .page-hero,
+body .page-header,
+body .hub-header {
+  background-color: var(--ink);
+  background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 37px, rgba(255,255,255,0.045) 37px, rgba(255,255,255,0.045) 38px);
+  color: #fff;
+}
+body .sobre-hero h1, body .page-hero h1, body .page-header h1, body .hub-header h1 {
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+}
+body .sobre-hero h1::after,
+body .page-hero h1::after,
+body .page-header h1::after,
+body .hub-header h1::after {
+  content: '';
+  display: block;
+  width: 52px;
+  height: 3px;
+  background: var(--gold);
+  border-radius: 2px;
+  margin: 14px auto 0;
+}
+
+/* Category pages → keep category color, add ledger texture overlay (matches article headers) */
+body .cat-hero { position: relative; overflow: hidden; }
+body .cat-hero > * { position: relative; z-index: 1; }
+body .cat-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(to bottom, transparent 0, transparent 33px, rgba(255,255,255,0.06) 33px, rgba(255,255,255,0.06) 34px);
+  pointer-events: none;
+}
+body .cat-hero h1 { letter-spacing: -0.025em; }
+
+/* Calculator hub cards */
+body .hub-card h2 { letter-spacing: -0.01em; }
