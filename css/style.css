@@ -366,15 +366,21 @@ nav a:hover, nav a.active { color: var(--green); }
 
 .card-img {
   width: 100%;
-  height: 150px;
+  height: 140px;
   object-fit: cover;
-  background: var(--green-pale);
-  border-bottom: 1px solid #e7ece8;
+  background-color: var(--ctint, var(--green-pale));
+  background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 21px, rgba(14,31,23,0.05) 21px, rgba(14,31,23,0.05) 22px);
+  border-bottom: 1px solid rgba(14,31,23,0.06);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.6rem;
+  font-size: 2.2rem;
 }
+.card.cat-inv { --ctint: #edf4ee; }
+.card.cat-div { --ctint: #fce8e8; }
+.card.cat-rex { --ctint: #e8f1fc; }
+.card.cat-orc { --ctint: #f4e9f8; }
+.card.cat-ir  { --ctint: #faf1da; }
 
 .card-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
 
