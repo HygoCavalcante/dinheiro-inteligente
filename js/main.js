@@ -39,8 +39,13 @@ if (toggle) toggle.addEventListener('click', () => mobileNav.classList.toggle('o
 
 // Modal das calculadoras
 function openModal(id) {
-  document.getElementById(id).classList.add('active');
+  var m = document.getElementById(id);
+  m.classList.add('active');
   document.body.style.overflow = 'hidden';
+  var inner = m.querySelector('.modal');
+  if (inner) { inner.setAttribute('role', 'dialog'); inner.setAttribute('aria-modal', 'true'); }
+  var first = m.querySelector('input, select');
+  if (first) setTimeout(function () { first.focus(); }, 60);
 }
 
 function closeModal(id) {
@@ -50,6 +55,14 @@ function closeModal(id) {
 
 document.querySelectorAll('.modal-overlay').forEach(m => {
   m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); });
+});
+
+// Esc fecha o modal aberto
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') {
+    var open = document.querySelector('.modal-overlay.active');
+    if (open) closeModal(open.id);
+  }
 });
 
 // ============================================================
@@ -69,6 +82,10 @@ function _cta(intro, art, artTxt) {
   return '<div class="calc-cta"><strong>' + intro + '</strong>' +
     '<a href="' + _B + art + '">' + artTxt + '</a>' +
     '<a class="ghost" href="' + _B + 'planilha.html">📊 Baixar planilha grátis</a></div>';
+}
+function _note(comoCalc) {
+  return '<p class="calc-note"><b>ℹ️ Como calculamos:</b> ' + comoCalc +
+    ' Estimativa para fins educativos — não é recomendação de investimento e rentabilidade passada não garante resultados futuros.</p>';
 }
 
 // inicialização: máscara de moeda + seletor mensal/anual na taxa de juros
@@ -148,7 +165,8 @@ function calcJuros() {
     '<div class="calc-legend"><span><i class="dot-inv"></i>Investido (' + (100 - pctJur) + '%)</span>' +
       '<span><i class="dot-jur"></i>Juros (' + pctJur + '%)</span></div>' +
     '<div class="calc-chart-wrap"><canvas id="chartJuros"></canvas></div>' +
-    _cta('💡 Agora veja onde aplicar esse dinheiro:', 'artigos/tesouro-direto-2026.html', '📈 Tesouro Direto');
+    _cta('💡 Agora veja onde aplicar esse dinheiro:', 'artigos/tesouro-direto-2026.html', '📈 Tesouro Direto') +
+    _note('a cada mês o saldo (incluindo seus aportes) rende a taxa informada, e os juros passam a render junto — é o efeito dos juros compostos.');
   box.style.display = 'block';
 
   _drawChart('juros', 'chartJuros', {
@@ -185,7 +203,8 @@ function calcReserva() {
     '<div class="calc-legend"><span><i class="dot-inv"></i>Já tem ' + formatBRL(jatem) + '</span>' +
       '<span><i style="background:#cfd6d1"></i>Falta ' + formatBRL(falta) + '</span></div>' +
     '<div class="calc-chart-wrap"><canvas id="chartReserva"></canvas></div>' +
-    _cta('💡 Onde deixar a reserva (liquidez diária):', 'artigos/tesouro-reserva.html', '🛡️ Melhores opções');
+    _cta('💡 Onde deixar a reserva (liquidez diária):', 'artigos/tesouro-reserva.html', '🛡️ Melhores opções') +
+    _note('meta = gastos mensais essenciais × nº de meses escolhido. O recomendado varia de 3 a 12 meses conforme a estabilidade da sua renda.');
   box.style.display = 'block';
 
   _drawChart('reserva', 'chartReserva', {
@@ -225,7 +244,8 @@ function calcIF() {
     '<div class="calc-stats"><div><h4>Tempo para chegar lá</h4><strong>' + anos + '</strong></div>' +
       '<div><h4>Renda passiva hoje</h4><strong class="pos">' + formatBRL(patrimonio * taxaIF) + '/mês</strong></div></div>' +
     '<div class="calc-chart-wrap"><canvas id="chartIF"></canvas></div>' +
-    _cta('💡 Acelere sua liberdade financeira:', 'artigos/acoes-para-se-aposentar.html', '🏖️ Como se aposentar investindo');
+    _cta('💡 Acelere sua liberdade financeira:', 'artigos/acoes-para-se-aposentar.html', '🏖️ Como se aposentar investindo') +
+    _note('patrimônio-alvo = gasto mensal ÷ taxa de retorno real ao mês (regra da renda passiva). O tempo estimado considera seus aportes mensais reinvestidos à mesma taxa.');
   box.style.display = 'block';
 
   _drawChart('if', 'chartIF', {
@@ -278,9 +298,13 @@ function formatBRL(val) {
   groups.forEach(function (g) {
     g.ids.forEach(function (id) {
       var el = document.getElementById(id);
-      if (el) el.addEventListener('input', function () {
+      if (!el) return;
+      el.addEventListener('input', function () {
         clearTimeout(t);
         t = setTimeout(function () { try { window[g.fn](); } catch (e) {} }, 250);
+      });
+      el.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { e.preventDefault(); try { window[g.fn](); } catch (err) {} }
       });
     });
   });

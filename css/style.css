@@ -646,6 +646,10 @@ nav a:hover, nav a.active { color: var(--green); }
 .calc-cta a.ghost { background: transparent; color: var(--green); border: 1px solid var(--green); }
 .calc-cta a:hover { background: var(--gold); border-color: var(--gold); color: var(--ink); }
 
+/* nota "como é calculado" + aviso (E-E-A-T) */
+.calc-note { font-size: 0.76rem; color: var(--gray); margin-top: 12px; line-height: 1.55; }
+.calc-note b { color: var(--ink); }
+
 /* ========== FOOTER ========== */
 footer {
   background: var(--dark);
