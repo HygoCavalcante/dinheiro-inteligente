@@ -574,6 +574,8 @@ nav a:hover, nav a.active { color: var(--green); }
   padding: 36px;
   width: 100%;
   max-width: 480px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
   position: relative;
   box-shadow: 0 20px 60px rgba(0,0,0,0.2);
 }
