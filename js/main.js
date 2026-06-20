@@ -52,70 +52,239 @@ document.querySelectorAll('.modal-overlay').forEach(m => {
   m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); });
 });
 
-// Calculadora de Juros Compostos
-function calcJuros() {
-  const capital = parseFloat(document.getElementById('capital').value) || 0;
-  const taxa = parseFloat(document.getElementById('taxa').value) / 100 || 0;
-  const meses = parseInt(document.getElementById('meses').value) || 0;
-  const aporte = parseFloat(document.getElementById('aporte').value) || 0;
+// ============================================================
+// Calculadoras — resultado visual (gráfico + barra) e cálculo ao vivo
+// As 3 funções renderizam HTML rico no container .calc-result e
+// desenham um gráfico (Chart.js, se carregado). Compartilhadas pela
+// home (modais) e pelas páginas /calculadoras/*.html (mesmos IDs).
+// ============================================================
+var _charts = {};
+function _num(id) { var el = document.getElementById(id); return el ? (parseFloat(el.value) || 0) : 0; }
+// campos de moeda viram texto com máscara de milhar; lê só os dígitos (reais inteiros)
+function _money(id) { var el = document.getElementById(id); return el ? (parseInt((el.value || '').replace(/\D/g, ''), 10) || 0) : 0; }
 
-  let montante = capital;
-  for (let i = 0; i < meses; i++) {
-    montante = (montante + aporte) * (1 + taxa);
+// CTA contextual no fim de cada resultado (links absolutos p/ funcionar na home e em /calculadoras/)
+var _B = 'https://fiquericoagora.com.br/';
+function _cta(intro, art, artTxt) {
+  return '<div class="calc-cta"><strong>' + intro + '</strong>' +
+    '<a href="' + _B + art + '">' + artTxt + '</a>' +
+    '<a class="ghost" href="' + _B + 'planilha.html">📊 Baixar planilha grátis</a></div>';
+}
+
+// inicialização: máscara de moeda + seletor mensal/anual na taxa de juros
+(function initCalcUX() {
+  var moneyIds = ['capital', 'aporte', 'gastosMensais', 'jaTem', 'gastosMensaisIF', 'patrimonioAtual', 'rendaMensalIF'];
+  moneyIds.forEach(function (id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.type = 'text';
+    el.setAttribute('inputmode', 'numeric');
+    el.addEventListener('input', function () {
+      var d = el.value.replace(/\D/g, '');
+      el.value = d ? parseInt(d, 10).toLocaleString('pt-BR') : '';
+    });
+  });
+  // seletor de período ao lado do campo de taxa (juros compostos)
+  var t = document.getElementById('taxa');
+  if (t && !document.getElementById('taxaTipo')) {
+    var lbl = t.closest('.form-group') && t.closest('.form-group').querySelector('label');
+    if (lbl) lbl.textContent = 'Taxa de juros (%)';
+    var wrap = document.createElement('div');
+    wrap.className = 'calc-rate-row';
+    t.parentNode.insertBefore(wrap, t);
+    wrap.appendChild(t);
+    var sel = document.createElement('select');
+    sel.id = 'taxaTipo';
+    sel.className = 'calc-period';
+    sel.innerHTML = '<option value="mensal">ao mês</option><option value="anual">ao ano</option>';
+    wrap.appendChild(sel);
+    sel.addEventListener('change', function () { try { calcJuros(); } catch (e) {} });
   }
-  const investido = capital + aporte * meses;
-  const lucro = montante - investido;
+})();
 
-  document.getElementById('resultJuros').style.display = 'block';
-  document.getElementById('montanteFinal').textContent = formatBRL(montante);
-  document.getElementById('totalInvestido').textContent = formatBRL(investido);
-  document.getElementById('totalLucro').textContent = formatBRL(lucro);
+function _drawChart(key, canvasId, config) {
+  if (typeof Chart === 'undefined') return; // CDN ainda não carregou
+  var cv = document.getElementById(canvasId);
+  if (!cv) return;
+  if (_charts[key]) { _charts[key].destroy(); }
+  _charts[key] = new Chart(cv.getContext('2d'), config);
 }
 
-// Calculadora de Reserva de Emergência
-function calcReserva() {
-  const gastos = parseFloat(document.getElementById('gastosMensais').value) || 0;
-  const mesesRes = parseInt(document.getElementById('mesesReserva').value) || 6;
-  const jatem = parseFloat(document.getElementById('jaTem').value) || 0;
+// ----- Juros Compostos -----
+function calcJuros() {
+  var capital = _money('capital');
+  var taxaRaw = _num('taxa') / 100;
+  var tipo = (document.getElementById('taxaTipo') || {}).value;
+  var taxa = tipo === 'anual' ? Math.pow(1 + taxaRaw, 1 / 12) - 1 : taxaRaw;
+  var meses = Math.floor(_num('meses'));
+  var aporte = _money('aporte');
+  var box = document.getElementById('resultJuros');
+  if (!box) return;
+  if (meses <= 0 || (capital + aporte) <= 0) { box.style.display = 'none'; return; }
 
-  const meta = gastos * mesesRes;
-  const falta = Math.max(0, meta - jatem);
-  const pct = Math.min(100, ((jatem / meta) * 100)).toFixed(0);
-
-  document.getElementById('resultReserva').style.display = 'block';
-  document.getElementById('metaReserva').textContent = formatBRL(meta);
-  document.getElementById('faltaReserva').textContent = formatBRL(falta);
-  document.getElementById('percentReserva').textContent = pct + '%';
-}
-
-// Calculadora de Independência Financeira
-function calcIF() {
-  const gastosMensaisIF = parseFloat(document.getElementById('gastosMensaisIF').value) || 0;
-  const patrimonio = parseFloat(document.getElementById('patrimonioAtual').value) || 0;
-  const rendaMensal = parseFloat(document.getElementById('rendaMensalIF').value) || 0;
-  const taxaIF = parseFloat(document.getElementById('taxaIF').value) / 100 / 12 || 0.005;
-
-  const metaIF = (gastosMensaisIF / taxaIF);
-  const faltaPatrimonio = Math.max(0, metaIF - patrimonio);
-
-  let mesesParaIF = 0;
-  if (rendaMensal > 0 && faltaPatrimonio > 0) {
-    let p = patrimonio;
-    while (p < metaIF && mesesParaIF < 600) {
-      p = (p + rendaMensal) * (1 + taxaIF);
-      mesesParaIF++;
+  // série mês a mês
+  var montante = capital, labels = ['Início'], serInv = [capital], serJur = [0];
+  var step = Math.max(1, Math.ceil(meses / 24));
+  for (var i = 1; i <= meses; i++) {
+    montante = (montante + aporte) * (1 + taxa);
+    if (i % step === 0 || i === meses) {
+      var invAcc = capital + aporte * i;
+      labels.push('Mês ' + i);
+      serInv.push(Math.round(invAcc));
+      serJur.push(Math.round(montante - invAcc));
     }
   }
+  var investido = capital + aporte * meses;
+  var lucro = montante - investido;
+  var pctJur = montante > 0 ? Math.round((lucro / montante) * 100) : 0;
 
-  document.getElementById('resultIF').style.display = 'block';
-  document.getElementById('metaIF').textContent = formatBRL(metaIF);
-  document.getElementById('anosIF').textContent = mesesParaIF > 0 ? Math.ceil(mesesParaIF / 12) + ' anos' : '—';
-  document.getElementById('rendaPassivaIF').textContent = formatBRL(patrimonio * taxaIF);
+  box.innerHTML =
+    '<h4>Montante final</h4>' +
+    '<div class="result-value">' + formatBRL(montante) + '</div>' +
+    '<p class="calc-phrase">Você investiu <b>' + formatBRL(investido) + '</b> e ganhou <b>' +
+      formatBRL(lucro) + '</b> só de juros — <b>' + pctJur + '%</b> do total veio do dinheiro trabalhando por você.</p>' +
+    '<div class="calc-bar"><span class="calc-bar-inv" style="width:' + (100 - pctJur) + '%"></span>' +
+      '<span class="calc-bar-jur" style="width:' + pctJur + '%"></span></div>' +
+    '<div class="calc-legend"><span><i class="dot-inv"></i>Investido (' + (100 - pctJur) + '%)</span>' +
+      '<span><i class="dot-jur"></i>Juros (' + pctJur + '%)</span></div>' +
+    '<div class="calc-chart-wrap"><canvas id="chartJuros"></canvas></div>' +
+    _cta('💡 Agora veja onde aplicar esse dinheiro:', 'artigos/tesouro-direto-2026.html', '📈 Tesouro Direto');
+  box.style.display = 'block';
+
+  _drawChart('juros', 'chartJuros', {
+    type: 'bar',
+    data: { labels: labels, datasets: [
+      { label: 'Investido', data: serInv, backgroundColor: '#0b6b43', stack: 's' },
+      { label: 'Juros', data: serJur, backgroundColor: '#e8b53d', stack: 's' }
+    ] },
+    options: _chartOpts(true)
+  });
+}
+
+// ----- Reserva de Emergência -----
+function calcReserva() {
+  var gastos = _money('gastosMensais');
+  var mesesRes = Math.floor(_num('mesesReserva')) || 6;
+  var jatem = _money('jaTem');
+  var box = document.getElementById('resultReserva');
+  if (!box) return;
+  if (gastos <= 0) { box.style.display = 'none'; return; }
+
+  var meta = gastos * mesesRes;
+  var falta = Math.max(0, meta - jatem);
+  var pct = Math.min(100, Math.round((jatem / meta) * 100));
+
+  box.innerHTML =
+    '<h4>Meta da reserva (' + mesesRes + ' meses)</h4>' +
+    '<div class="result-value">' + formatBRL(meta) + '</div>' +
+    '<p class="calc-phrase">' + (falta > 0
+      ? 'Faltam <b>' + formatBRL(falta) + '</b> para completar sua reserva. Você já tem <b>' + pct + '%</b>.'
+      : 'Parabéns! Sua reserva de <b>' + mesesRes + ' meses</b> já está completa. 🎉') + '</p>' +
+    '<div class="calc-bar"><span class="calc-bar-inv" style="width:' + pct + '%"></span>' +
+      '<span class="calc-bar-jur" style="width:' + (100 - pct) + '%;background:#e3e9e4"></span></div>' +
+    '<div class="calc-legend"><span><i class="dot-inv"></i>Já tem ' + formatBRL(jatem) + '</span>' +
+      '<span><i style="background:#cfd6d1"></i>Falta ' + formatBRL(falta) + '</span></div>' +
+    '<div class="calc-chart-wrap"><canvas id="chartReserva"></canvas></div>' +
+    _cta('💡 Onde deixar a reserva (liquidez diária):', 'artigos/tesouro-reserva.html', '🛡️ Melhores opções');
+  box.style.display = 'block';
+
+  _drawChart('reserva', 'chartReserva', {
+    type: 'doughnut',
+    data: { labels: ['Já guardado', 'Falta'], datasets: [
+      { data: [Math.min(jatem, meta), falta], backgroundColor: ['#0b6b43', '#e3e9e4'], borderWidth: 0 }
+    ] },
+    options: _chartOpts(false, pct + '%')
+  });
+}
+
+// ----- Independência Financeira -----
+function calcIF() {
+  var gastos = _money('gastosMensaisIF');
+  var patrimonio = _money('patrimonioAtual');
+  var rendaMensal = _money('rendaMensalIF');
+  var taxaIF = _num('taxaIF') / 100 / 12 || 0.005;
+  var box = document.getElementById('resultIF');
+  if (!box) return;
+  if (gastos <= 0) { box.style.display = 'none'; return; }
+
+  var metaIF = gastos / taxaIF;
+  var faltaPat = Math.max(0, metaIF - patrimonio);
+  var mesesParaIF = 0;
+  if (rendaMensal > 0 && faltaPat > 0) {
+    var p = patrimonio;
+    while (p < metaIF && mesesParaIF < 600) { p = (p + rendaMensal) * (1 + taxaIF); mesesParaIF++; }
+  }
+  var pct = Math.min(100, Math.round((patrimonio / metaIF) * 100));
+  var anos = mesesParaIF > 0 && mesesParaIF < 600 ? Math.ceil(mesesParaIF / 12) + ' anos' : (patrimonio >= metaIF ? 'Já atingiu! 🎉' : '—');
+
+  box.innerHTML =
+    '<h4>Patrimônio necessário</h4>' +
+    '<div class="result-value">' + formatBRL(metaIF) + '</div>' +
+    '<p class="calc-phrase">Com esse patrimônio rendendo, você teria <b>' + formatBRL(gastos) +
+      '/mês</b> de renda passiva. Você já tem <b>' + pct + '%</b> do caminho.</p>' +
+    '<div class="calc-stats"><div><h4>Tempo para chegar lá</h4><strong>' + anos + '</strong></div>' +
+      '<div><h4>Renda passiva hoje</h4><strong class="pos">' + formatBRL(patrimonio * taxaIF) + '/mês</strong></div></div>' +
+    '<div class="calc-chart-wrap"><canvas id="chartIF"></canvas></div>' +
+    _cta('💡 Acelere sua liberdade financeira:', 'artigos/acoes-para-se-aposentar.html', '🏖️ Como se aposentar investindo');
+  box.style.display = 'block';
+
+  _drawChart('if', 'chartIF', {
+    type: 'doughnut',
+    data: { labels: ['Já tem', 'Falta'], datasets: [
+      { data: [Math.min(patrimonio, metaIF), faltaPat], backgroundColor: ['#0b6b43', '#e3e9e4'], borderWidth: 0 }
+    ] },
+    options: _chartOpts(false, pct + '%')
+  });
+}
+
+// opções de gráfico (compartilhadas)
+function _chartOpts(stacked, centerText) {
+  var opts = {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: function (c) {
+        var v = c.parsed.y != null ? c.parsed.y : c.parsed;
+        return c.dataset.label ? c.dataset.label + ': ' + formatBRL(v) : formatBRL(v);
+      } } }
+    }
+  };
+  if (stacked) {
+    opts.scales = {
+      x: { stacked: true, grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 8, font: { size: 10 } } },
+      y: { stacked: true, ticks: { callback: function (v) { return 'R$ ' + (v >= 1000 ? (v / 1000) + 'k' : v); }, font: { size: 10 } } }
+    };
+  } else {
+    opts.cutout = '68%';
+    if (centerText) {
+      opts.plugins.tooltip.callbacks = { label: function (c) { return c.label + ': ' + formatBRL(c.parsed); } };
+    }
+  }
+  return opts;
 }
 
 function formatBRL(val) {
-  return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-  }
+  return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+}
+
+// cálculo ao vivo: recalcula enquanto digita (debounce)
+(function () {
+  var groups = [
+    { fn: 'calcJuros', ids: ['capital', 'taxa', 'meses', 'aporte'] },
+    { fn: 'calcReserva', ids: ['gastosMensais', 'mesesReserva', 'jaTem'] },
+    { fn: 'calcIF', ids: ['gastosMensaisIF', 'patrimonioAtual', 'rendaMensalIF', 'taxaIF'] }
+  ];
+  var t;
+  groups.forEach(function (g) {
+    g.ids.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.addEventListener('input', function () {
+        clearTimeout(t);
+        t = setTimeout(function () { try { window[g.fn](); } catch (e) {} }, 250);
+      });
+    });
+  });
+})();
 
 // ============================================================
 // UX em artigos: breadcrumb visível + índice "Neste artigo"

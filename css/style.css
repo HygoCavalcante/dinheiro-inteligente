@@ -615,6 +615,37 @@ nav a:hover, nav a.active { color: var(--green); }
 .calc-result h4 { font-size: 0.85rem; color: var(--gray); margin-bottom: 6px; }
 .calc-result .result-value { font-family: var(--font-mono); font-size: 1.8rem; font-weight: 600; color: var(--green); }
 
+/* ----- Resultado rico das calculadoras ----- */
+.calc-phrase { font-size: 0.92rem; color: var(--ink); margin: 10px 0 0; line-height: 1.5; }
+.calc-phrase b { color: var(--green); }
+.calc-bar { display: flex; height: 14px; border-radius: 8px; overflow: hidden; margin: 16px 0 8px; background: #e3e9e4; }
+.calc-bar span { display: block; height: 100%; transition: width .35s ease; }
+.calc-bar-inv { background: var(--green); }
+.calc-bar-jur { background: var(--gold); }
+.calc-legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 0.8rem; color: var(--gray); font-family: var(--font-mono); }
+.calc-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: middle; }
+.calc-legend .dot-inv { background: var(--green); }
+.calc-legend .dot-jur { background: var(--gold); }
+.calc-stats { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 14px; }
+.calc-stats > div h4 { margin-bottom: 2px; }
+.calc-stats > div strong { font-family: var(--font-mono); font-size: 1.05rem; color: var(--ink); }
+.calc-stats .pos { color: var(--green); }
+.calc-chart-wrap { position: relative; height: 240px; background: #fff; border: 1px solid #e3e9e4; border-radius: 10px; padding: 14px 12px; margin-top: 16px; }
+@media (max-width: 600px) { .calc-chart-wrap { height: 210px; } .calc-result .result-value { font-size: 1.5rem; } }
+
+/* seletor de período (mensal/anual) ao lado do campo de taxa */
+.calc-rate-row { display: flex; gap: 8px; }
+.calc-rate-row input { flex: 1; }
+.calc-period { border: 1px solid #d7ddd8; border-radius: 8px; padding: 0 10px; background: #fff; font-size: 0.9rem; color: var(--ink); cursor: pointer; }
+.calc-period:focus { border-color: var(--green); outline: none; }
+
+/* CTA contextual no fim do resultado */
+.calc-cta { margin-top: 16px; padding-top: 14px; border-top: 1px solid #d7ddd8; font-size: 0.88rem; color: var(--gray); }
+.calc-cta strong { color: var(--ink); display: block; margin-bottom: 6px; }
+.calc-cta a { display: inline-block; margin: 4px 8px 0 0; padding: 6px 12px; border-radius: 999px; background: var(--green); color: #fff; text-decoration: none; font-weight: 600; font-size: 0.82rem; }
+.calc-cta a.ghost { background: transparent; color: var(--green); border: 1px solid var(--green); }
+.calc-cta a:hover { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+
 /* ========== FOOTER ========== */
 footer {
   background: var(--dark);
