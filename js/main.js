@@ -90,7 +90,7 @@ function _note(comoCalc) {
 
 // inicialização: máscara de moeda + seletor mensal/anual na taxa de juros
 (function initCalcUX() {
-  var moneyIds = ['capital', 'aporte', 'gastosMensais', 'jaTem', 'gastosMensaisIF', 'patrimonioAtual', 'rendaMensalIF', 'rescSalario', 'rescFgts'];
+  var moneyIds = ['capital', 'aporte', 'gastosMensais', 'jaTem', 'gastosMensaisIF', 'patrimonioAtual', 'rendaMensalIF', 'rescSalario', 'rescFgts', 'slSalario', 'slPensao', 'slOutros'];
   moneyIds.forEach(function (id) {
     var el = document.getElementById(id);
     if (!el) return;
@@ -397,6 +397,62 @@ function calcRescisao() {
   box.style.display = 'block';
 }
 
+// ----- Salário Líquido (mensal, tabelas oficiais 2026) -----
+// Reusa _inssResc. IRRF mensal: usa a MAIOR dedução entre as legais (INSS +
+// dependentes) e o desconto simplificado (R$ 607,20 = 25% da faixa de isenção),
+// + pensão; aplica o redutor da reforma 2026. ⚠️ Revisar na virada do ano.
+function _irrfMensal(bruto, dep, pensao) {
+  if (bruto <= 0) return 0;
+  var deducao = Math.max(_inssResc(bruto) + dep * 189.59, 607.20) + pensao;
+  var base = bruto - deducao;
+  if (base < 0) base = 0;
+  var imp;
+  if (base <= 2428.80) imp = 0;
+  else if (base <= 2826.65) imp = base * 0.075 - 182.16;
+  else if (base <= 3751.05) imp = base * 0.15 - 394.16;
+  else if (base <= 4664.68) imp = base * 0.225 - 675.49;
+  else imp = base * 0.275 - 908.73;
+  if (imp < 0) imp = 0;
+  // Redutor da reforma 2026: zera o imposto até R$5.000 e reduz até R$7.350
+  if (bruto <= 7350) { var red = 978.62 - 0.133145 * bruto; if (red > 0) imp -= red; }
+  return imp > 0 ? imp : 0;
+}
+
+function calcSalarioLiquido() {
+  var box = document.getElementById('resultSalarioLiquido');
+  if (!box) return;
+  var bruto = _money('slSalario');
+  var dep = Math.max(0, Math.floor(_num('slDependentes')));
+  var pensao = _money('slPensao');
+  var outros = _money('slOutros');
+  if (bruto <= 0) { box.style.display = 'none'; return; }
+
+  var inss = _inssResc(bruto);
+  var irrf = _irrfMensal(bruto, dep, pensao);
+  var totalDesc = inss + irrf + pensao + outros;
+  var liquido = bruto - totalDesc;
+  if (liquido < 0) liquido = 0;
+  var aliqInss = (inss / bruto * 100).toFixed(1).replace('.', ',');
+  var aliqEfetiva = (totalDesc / bruto * 100).toFixed(1).replace('.', ',');
+
+  function _row(label, val, neg) { return '<tr><td>' + label + '</td><td class="resc-val' + (neg ? ' neg' : '') + '">' + (neg ? '− ' : '') + _brl2(val) + '</td></tr>'; }
+  var rows = _row('Salário bruto', bruto);
+  rows += _row('INSS (' + aliqInss + '%)', inss, true);
+  rows += _row('IRRF', irrf, true);
+  if (pensao > 0) rows += _row('Pensão alimentícia', pensao, true);
+  if (outros > 0) rows += _row('Outros descontos', outros, true);
+  rows += '<tr class="resc-sub"><td>Total de descontos</td><td class="resc-val neg">− ' + _brl2(totalDesc) + '</td></tr>';
+
+  box.innerHTML =
+    '<h4>Salário líquido</h4>' +
+    '<div class="result-value">' + _brl2(liquido) + '</div>' +
+    '<table class="resc-table">' + rows + '</table>' +
+    '<p class="resc-info">📊 Os descontos consomem <b>' + aliqEfetiva + '%</b> do salário bruto.' + (irrf === 0 ? ' Você está <b>isento de Imposto de Renda</b> nesta faixa (reforma de 2026).' : '') + '</p>' +
+    _cta('💡 Agora planeje seu salário:', 'calculadoras/reserva-de-emergencia.html', '🛡️ Quanto guardar de reserva') +
+    '<p class="calc-note"><b>ℹ️ Como calculamos:</b> descontamos o INSS (tabela progressiva 2026, teto R$ 8.475,55) e o IRRF sobre a base (salário − INSS − R$ 189,59 por dependente − pensão), usando o desconto simplificado de R$ 607,20 quando for mais vantajoso. Aplicamos a isenção da reforma de 2026 (rendimentos até R$ 5.000 isentos; redução parcial até R$ 7.350). Estimativa para CLT — não inclui horas extras, adicionais nem benefícios específicos.</p>';
+  box.style.display = 'block';
+}
+
 // opções de gráfico (compartilhadas)
 function _chartOpts(stacked, centerText) {
   var opts = {
@@ -433,7 +489,8 @@ function formatBRL(val) {
     { fn: 'calcJuros', ids: ['capital', 'taxa', 'meses', 'aporte'] },
     { fn: 'calcReserva', ids: ['gastosMensais', 'mesesReserva', 'jaTem'] },
     { fn: 'calcIF', ids: ['gastosMensaisIF', 'patrimonioAtual', 'rendaMensalIF', 'taxaIF'] },
-    { fn: 'calcRescisao', ids: ['rescSalario', 'rescAdmissao', 'rescSaida', 'rescMotivo', 'rescAviso', 'rescDependentes', 'rescFgts', 'rescFeriasVencidas'] }
+    { fn: 'calcRescisao', ids: ['rescSalario', 'rescAdmissao', 'rescSaida', 'rescMotivo', 'rescAviso', 'rescDependentes', 'rescFgts', 'rescFeriasVencidas'] },
+    { fn: 'calcSalarioLiquido', ids: ['slSalario', 'slDependentes', 'slPensao', 'slOutros'] }
   ];
   var t;
   groups.forEach(function (g) {
