@@ -220,4 +220,11 @@
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
+
+  <url>
+    <loc>https://fiquericoagora.com.br/artigos/planilha-orcamento-familiar.html</loc>
+    <lastmod>2026-06-28</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>
