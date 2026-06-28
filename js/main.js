@@ -90,7 +90,7 @@ function _note(comoCalc) {
 
 // inicialização: máscara de moeda + seletor mensal/anual na taxa de juros
 (function initCalcUX() {
-  var moneyIds = ['capital', 'aporte', 'gastosMensais', 'jaTem', 'gastosMensaisIF', 'patrimonioAtual', 'rendaMensalIF'];
+  var moneyIds = ['capital', 'aporte', 'gastosMensais', 'jaTem', 'gastosMensaisIF', 'patrimonioAtual', 'rendaMensalIF', 'rescSalario', 'rescFgts'];
   moneyIds.forEach(function (id) {
     var el = document.getElementById(id);
     if (!el) return;
@@ -257,6 +257,146 @@ function calcIF() {
   });
 }
 
+// ----- Rescisão Trabalhista (tabelas oficiais 2026) -----
+// INSS e IRRF 2026 (reforma do IR: isenção até R$5.000, redutor até R$7.350).
+// Fontes citadas na página. ⚠️ Revisar estas tabelas a cada virada de ano.
+function _inssResc(base) {
+  if (base <= 0) return 0;
+  if (base > 8475.55) base = 8475.55; // teto INSS 2026
+  var c;
+  if (base <= 1621.00) c = base * 0.075;
+  else if (base <= 2902.84) c = base * 0.09 - 24.32;
+  else if (base <= 4354.27) c = base * 0.12 - 111.40;
+  else c = base * 0.14 - 198.49;
+  return c > 0 ? c : 0;
+}
+function _irrfResc(bruto, dep, ref) {
+  // bruto = verba tributável; ref = rendimento de referência p/ isenção/redutor 2026
+  // (salário mensal cheio no caso do saldo; o próprio valor no caso do 13º).
+  if (bruto <= 0) return 0;
+  if (typeof ref !== 'number') ref = bruto;
+  var base = bruto - _inssResc(bruto) - (dep * 189.59);
+  if (base < 0) base = 0;
+  var imp;
+  if (base <= 2428.80) imp = 0;
+  else if (base <= 2826.65) imp = base * 0.075 - 182.16;
+  else if (base <= 3751.05) imp = base * 0.15 - 394.16;
+  else if (base <= 4664.68) imp = base * 0.225 - 675.49;
+  else imp = base * 0.275 - 908.73;
+  if (imp < 0) imp = 0;
+  // Reforma 2026: isenção total até R$5.000; redutor decrescente até R$7.350
+  if (ref <= 5000) return 0;
+  if (ref <= 7350) imp = imp - (978.62 - 0.133145 * ref);
+  return imp > 0 ? imp : 0;
+}
+function _avosResc(inicio, fim) {
+  // nº de avos (0..12) com a regra trabalhista dos 15 dias
+  if (!inicio || !fim || fim <= inicio) return 0;
+  var m = (fim.getFullYear() - inicio.getFullYear()) * 12 + (fim.getMonth() - inicio.getMonth());
+  if (fim.getDate() >= inicio.getDate()) {
+    if (fim.getDate() - inicio.getDate() + 1 >= 15) m += 1;
+  } else {
+    m -= 1;
+    if (fim.getDate() + (30 - inicio.getDate()) >= 15) m += 1;
+  }
+  if (m < 0) m = 0; if (m > 12) m = 12;
+  return m;
+}
+function _brl2(v) { return (v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+function _dateResc(id) { var el = document.getElementById(id); if (!el || !el.value) return null; var p = el.value.split('-'); return p.length === 3 ? new Date(+p[0], +p[1] - 1, +p[2]) : null; }
+
+function calcRescisao() {
+  var box = document.getElementById('resultRescisao');
+  if (!box) return;
+  var salario = _money('rescSalario');
+  var adm = _dateResc('rescAdmissao');
+  var saida = _dateResc('rescSaida');
+  var motivo = (document.getElementById('rescMotivo') || {}).value || 'sem-justa-causa';
+  var aviso = (document.getElementById('rescAviso') || {}).value || 'indenizado';
+  var dep = Math.max(0, Math.floor(_num('rescDependentes')));
+  var fgts = _money('rescFgts');
+  var feriasVenc = !!(document.getElementById('rescFeriasVencidas') || {}).checked;
+  if (salario <= 0 || !adm || !saida || saida <= adm) { box.style.display = 'none'; return; }
+
+  var diasCasa = Math.floor((saida - adm) / 86400000);
+  var anosCompletos = Math.floor(diasCasa / 365);
+  var temAviso = (motivo === 'sem-justa-causa' || motivo === 'acordo');
+  var diasAviso = Math.min(90, 30 + 3 * anosCompletos);
+  if (motivo === 'acordo') diasAviso = diasAviso / 2; // art. 484-A: aviso pela metade
+  var avisoInden = temAviso && aviso === 'indenizado';
+
+  // aviso indenizado projeta o fim do contrato (afeta avos de 13º e férias)
+  var proj = new Date(saida);
+  if (avisoInden) proj.setDate(proj.getDate() + Math.round(diasAviso));
+
+  var dir = {
+    decimo: motivo !== 'justa-causa',
+    feriasProp: motivo !== 'justa-causa',
+    multaPct: motivo === 'sem-justa-causa' ? 0.40 : (motivo === 'acordo' ? 0.20 : 0),
+    seguro: motivo === 'sem-justa-causa',
+    sacaFgts: motivo === 'sem-justa-causa' || motivo === 'acordo' || motivo === 'fim-contrato'
+  };
+
+  // Verbas
+  var diasMes = saida.getDate();
+  var saldo = salario / 30 * diasMes;
+  var vAviso = avisoInden ? (salario / 30 * diasAviso) : 0;
+
+  var inicio13 = new Date(saida.getFullYear(), 0, 1); // 13º conta o ano do desligamento, não o projetado pelo aviso
+  if (adm > inicio13) inicio13 = adm;
+  var avos13 = dir.decimo ? _avosResc(inicio13, proj) : 0;
+  var v13 = salario / 12 * avos13;
+
+  var aniv = new Date(proj.getFullYear(), adm.getMonth(), adm.getDate());
+  if (aniv > proj) aniv = new Date(proj.getFullYear() - 1, adm.getMonth(), adm.getDate());
+  if (aniv < adm) aniv = adm;
+  var avosFer = dir.feriasProp ? _avosResc(aniv, proj) : 0;
+  var vFeriasProp = (salario / 12 * avosFer) * (4 / 3);
+  var vFeriasVenc = feriasVenc ? salario * (4 / 3) : 0;
+  var vMulta = fgts * dir.multaPct;
+
+  // Descontos (só saldo e 13º são tributáveis; aviso indenizado, férias indenizadas e multa são isentos)
+  var inssSaldo = _inssResc(saldo);
+  var inss13 = _inssResc(v13);
+  var irrfSaldo = _irrfResc(saldo, dep, salario);
+  var irrf13 = _irrfResc(v13, dep, v13);
+
+  var proventos = saldo + vAviso + v13 + vFeriasProp + vFeriasVenc + vMulta;
+  var descontos = inssSaldo + inss13 + irrfSaldo + irrf13;
+  var liquido = proventos - descontos;
+
+  function _row(label, val, neg) { return '<tr><td>' + label + '</td><td class="resc-val' + (neg ? ' neg' : '') + '">' + (neg ? '− ' : '') + _brl2(val) + '</td></tr>'; }
+  var rows = '<tr class="resc-head"><th colspan="2">Verbas rescisórias</th></tr>';
+  rows += _row('Saldo de salário (' + diasMes + ' dia' + (diasMes > 1 ? 's' : '') + ')', saldo);
+  if (vAviso > 0) rows += _row('Aviso prévio indenizado (' + Math.round(diasAviso) + ' dias)', vAviso);
+  if (v13 > 0) rows += _row('13º salário proporcional (' + avos13 + '/12)', v13);
+  if (vFeriasVenc > 0) rows += _row('Férias vencidas + 1/3', vFeriasVenc);
+  if (vFeriasProp > 0) rows += _row('Férias proporcionais + 1/3 (' + avosFer + '/12)', vFeriasProp);
+  if (vMulta > 0) rows += _row('Multa de ' + Math.round(dir.multaPct * 100) + '% do FGTS', vMulta);
+  rows += '<tr class="resc-sub"><td>Total de proventos</td><td class="resc-val">' + _brl2(proventos) + '</td></tr>';
+  if (descontos > 0) {
+    rows += '<tr class="resc-head"><th colspan="2">Descontos</th></tr>';
+    if (inssSaldo > 0) rows += _row('INSS sobre saldo de salário', inssSaldo, true);
+    if (inss13 > 0) rows += _row('INSS sobre 13º salário', inss13, true);
+    if (irrfSaldo > 0) rows += _row('IRRF sobre saldo de salário', irrfSaldo, true);
+    if (irrf13 > 0) rows += _row('IRRF sobre 13º salário', irrf13, true);
+    rows += '<tr class="resc-sub"><td>Total de descontos</td><td class="resc-val neg">− ' + _brl2(descontos) + '</td></tr>';
+  }
+
+  var notas = '';
+  if (dir.sacaFgts) notas += '<p class="resc-info">💰 <b>FGTS para saque:</b> além das verbas acima, você pode sacar o saldo da sua conta do FGTS' + (fgts > 0 ? ' (' + _brl2(fgts) + ' informado)' : '') + ' direto na Caixa — esse valor não entra no líquido pago pela empresa.</p>';
+  notas += '<p class="resc-info">' + (dir.seguro ? '✅ <b>Seguro-desemprego:</b> nesta modalidade você costuma ter direito (confira carência e número de parcelas).' : '⚠️ <b>Seguro-desemprego:</b> não há direito nesta modalidade de saída.') + '</p>';
+
+  box.innerHTML =
+    '<h4>Total líquido a receber da empresa</h4>' +
+    '<div class="result-value">' + _brl2(liquido) + '</div>' +
+    '<table class="resc-table">' + rows + '</table>' +
+    notas +
+    _cta('💡 Use a rescisão para reforçar sua proteção:', 'calculadoras/reserva-de-emergencia.html', '🛡️ Calcular reserva de emergência') +
+    '<p class="calc-note"><b>ℹ️ Como calculamos:</b> aplicamos as tabelas oficiais de INSS e IRRF de 2026 sobre as verbas tributáveis (saldo de salário e 13º, em separado). Aviso prévio indenizado, férias indenizadas e multa do FGTS são isentos de INSS e IRRF. É uma estimativa para fins informativos — o valor final depende de convenção coletiva, médias de horas extras/comissões e da homologação. Não substitui o cálculo oficial nem a orientação de um advogado.</p>';
+  box.style.display = 'block';
+}
+
 // opções de gráfico (compartilhadas)
 function _chartOpts(stacked, centerText) {
   var opts = {
@@ -292,7 +432,8 @@ function formatBRL(val) {
   var groups = [
     { fn: 'calcJuros', ids: ['capital', 'taxa', 'meses', 'aporte'] },
     { fn: 'calcReserva', ids: ['gastosMensais', 'mesesReserva', 'jaTem'] },
-    { fn: 'calcIF', ids: ['gastosMensaisIF', 'patrimonioAtual', 'rendaMensalIF', 'taxaIF'] }
+    { fn: 'calcIF', ids: ['gastosMensaisIF', 'patrimonioAtual', 'rendaMensalIF', 'taxaIF'] },
+    { fn: 'calcRescisao', ids: ['rescSalario', 'rescAdmissao', 'rescSaida', 'rescMotivo', 'rescAviso', 'rescDependentes', 'rescFgts', 'rescFeriasVencidas'] }
   ];
   var t;
   groups.forEach(function (g) {
