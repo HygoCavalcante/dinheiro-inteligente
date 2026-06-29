@@ -36,7 +36,8 @@
     .resc-table .resc-head th { text-align:left; padding:16px 2px 4px; color:var(--dark); font-size:.78rem; text-transform:uppercase; letter-spacing:.05em; border-bottom:2px solid #e5e7eb; }
     .resc-table .resc-sub td { font-weight:800; color:#0e1f17; border-top:1px solid #cbd5d0; border-bottom:none; padding-top:10px; }
     .resc-info { font-size:.88rem; background:#f8fafc; border-left:3px solid #2563eb; padding:10px 12px; border-radius:0 8px 8px 0; margin:10px 0; color:#374151; }
-    .data-table { width:100%; border-collapse:collapse; margin:16px 0; font-size:.92rem; }
+    .table-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; margin:16px 0; }
+    .data-table { width:100%; border-collapse:collapse; margin:0; font-size:.92rem; }
     .data-table th, .data-table td { border:1px solid #e5e7eb; padding:9px 12px; text-align:left; }
     .data-table th { background:#f3f4f6; font-weight:700; color:#111827; }
     @media (max-width: 900px) { .article-layout { grid-template-columns: 1fr; } }
@@ -200,7 +201,7 @@
 
     <h2>O que você recebe em cada tipo de saída</h2>
     <p>Esta é a parte que mais confunde — e onde mais gente perde dinheiro por não saber o que exigir. Resumo das principais modalidades:</p>
-    <table class="data-table">
+    <div class="table-scroll"><table class="data-table">
       <thead>
         <tr><th>Verba</th><th>Sem justa causa</th><th>Pedido de demissão</th><th>Acordo (484-A)</th><th>Justa causa</th></tr>
       </thead>
@@ -213,13 +214,13 @@
         <tr><td>Saque do FGTS</td><td>100%</td><td>❌</td><td>80%</td><td>❌</td></tr>
         <tr><td>Seguro-desemprego</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <p>As <strong>férias vencidas</strong> (período já completo e não gozado) são devidas em qualquer modalidade — inclusive na justa causa.</p>
 
     <h2>Descontos: INSS e IRRF 2026</h2>
     <p>Nem tudo na rescisão é tributado. <strong>Só o saldo de salário e o 13º</strong> sofrem desconto de INSS e Imposto de Renda. O aviso prévio indenizado, as férias indenizadas (com o 1/3) e a multa do FGTS são <strong>isentos</strong> — fique atento para a empresa não descontar imposto onde não deve.</p>
     <h3>Tabela do INSS 2026 (progressiva)</h3>
-    <table class="data-table">
+    <div class="table-scroll"><table class="data-table">
       <thead><tr><th>Faixa salarial</th><th>Alíquota</th><th>Parcela a deduzir</th></tr></thead>
       <tbody>
         <tr><td>Até R$ 1.621,00</td><td>7,5%</td><td>—</td></tr>
@@ -227,7 +228,7 @@
         <tr><td>De R$ 2.902,85 a R$ 4.354,27</td><td>12%</td><td>R$ 111,40</td></tr>
         <tr><td>De R$ 4.354,28 a R$ 8.475,55</td><td>14%</td><td>R$ 198,49</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <p>O teto do INSS em 2026 é R$ 8.475,55, com desconto máximo de R$ 988,09.</p>
     <h3>Imposto de Renda (IRRF) 2026</h3>
     <p>Com a reforma do IR que entrou em vigor em 2026, quem tem rendimento mensal de <strong>até R$ 5.000 está isento</strong>; entre R$ 5.000,01 e R$ 7.350 há uma redução decrescente; acima disso vale a tabela progressiva normal (alíquotas de 7,5% a 27,5%), com dedução de R$ 189,59 por dependente. Como a maior parte das verbas rescisórias é isenta, muitos trabalhadores acabam com IRRF zero na rescisão.</p>

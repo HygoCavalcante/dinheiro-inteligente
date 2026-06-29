@@ -33,7 +33,8 @@
     .resc-table .resc-val { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; font-weight:600; color:#0e1f17; }
     .resc-table .resc-sub td { font-weight:800; color:#0e1f17; border-top:1px solid #cbd5d0; border-bottom:none; padding-top:10px; }
     .resc-info { font-size:.88rem; background:#f8fafc; border-left:3px solid #2563eb; padding:10px 12px; border-radius:0 8px 8px 0; margin:10px 0; color:#374151; }
-    .data-table { width:100%; border-collapse:collapse; margin:16px 0; font-size:.92rem; }
+    .table-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; margin:16px 0; }
+    .data-table { width:100%; border-collapse:collapse; margin:0; font-size:.92rem; }
     .data-table th, .data-table td { border:1px solid #e5e7eb; padding:9px 12px; text-align:left; }
     .data-table th { background:#f3f4f6; font-weight:700; color:#111827; }
     @media (max-width: 900px) { .article-layout { grid-template-columns: 1fr; } }
@@ -171,7 +172,7 @@
 
     <h2>Quantas parcelas você recebe</h2>
     <p>O número de parcelas (de 3 a 5) depende do tempo trabalhado e do número da solicitação:</p>
-    <table class="data-table">
+    <div class="table-scroll"><table class="data-table">
       <thead><tr><th>Tempo trabalhado</th><th>1ª vez</th><th>2ª vez</th><th>3ª ou mais</th></tr></thead>
       <tbody>
         <tr><td>6 a 8 meses</td><td>—</td><td>—</td><td>3 parcelas</td></tr>
@@ -179,18 +180,18 @@
         <tr><td>12 a 23 meses</td><td>4 parcelas</td><td>4 parcelas</td><td>4 parcelas</td></tr>
         <tr><td>24 meses ou mais</td><td>5 parcelas</td><td>5 parcelas</td><td>5 parcelas</td></tr>
       </tbody>
-    </table>
+    </table></div>
 
     <h2>Qual o valor das parcelas em 2026</h2>
     <p>O valor é calculado sobre a <strong>média dos seus 3 últimos salários</strong>, pela tabela do MTE vigente desde janeiro de 2026:</p>
-    <table class="data-table">
+    <div class="table-scroll"><table class="data-table">
       <thead><tr><th>Salário médio</th><th>Valor da parcela</th></tr></thead>
       <tbody>
         <tr><td>Até R$ 2.222,17</td><td>Salário médio × 0,8</td></tr>
         <tr><td>De R$ 2.222,18 a R$ 3.703,99</td><td>R$ 1.777,74 + 50% do que exceder R$ 2.222,17</td></tr>
         <tr><td>Acima de R$ 3.703,99</td><td>R$ 2.518,65 (teto)</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <p>Nenhuma parcela pode ser menor que o <strong>salário mínimo de R$ 1.621,00</strong> — esse é o piso. E o teto é de R$ 2.518,65, por maior que seja o salário.</p>
 
     <h2>Prazo e como solicitar</h2>
