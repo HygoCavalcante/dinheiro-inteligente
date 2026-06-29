@@ -90,7 +90,7 @@ function _note(comoCalc) {
 
 // inicialização: máscara de moeda + seletor mensal/anual na taxa de juros
 (function initCalcUX() {
-  var moneyIds = ['capital', 'aporte', 'gastosMensais', 'jaTem', 'gastosMensaisIF', 'patrimonioAtual', 'rendaMensalIF', 'rescSalario', 'rescFgts', 'slSalario', 'slPensao', 'slOutros'];
+  var moneyIds = ['capital', 'aporte', 'gastosMensais', 'jaTem', 'gastosMensaisIF', 'patrimonioAtual', 'rendaMensalIF', 'rescSalario', 'rescFgts', 'slSalario', 'slPensao', 'slOutros', 'sdSal1', 'sdSal2', 'sdSal3'];
   moneyIds.forEach(function (id) {
     var el = document.getElementById(id);
     if (!el) return;
@@ -453,6 +453,64 @@ function calcSalarioLiquido() {
   box.style.display = 'block';
 }
 
+// ----- Seguro-Desemprego (tabela oficial MTE 2026) -----
+// Valor pela média dos 3 últimos salários; parcelas pelo tempo trabalhado e nº
+// da solicitação. ⚠️ Faixas reajustadas pelo INPC todo ano — revisar na virada.
+function _valorSeguro(media) {
+  var v;
+  if (media <= 2222.17) v = media * 0.8;
+  else if (media <= 3703.99) v = (media - 2222.17) * 0.5 + 1777.74;
+  else v = 2518.65; // teto
+  if (v < 1621.00) v = 1621.00; // piso = salário mínimo 2026
+  if (v > 2518.65) v = 2518.65;
+  return v;
+}
+function _parcelasSeguro(solic, meses) {
+  // retorna nº de parcelas; 0 = não atingiu a carência da solicitação
+  if (solic === 1) return meses < 12 ? 0 : (meses >= 24 ? 5 : 4);
+  if (solic === 2) return meses < 9 ? 0 : (meses >= 24 ? 5 : (meses >= 12 ? 4 : 3));
+  return meses < 6 ? 0 : (meses >= 24 ? 5 : (meses >= 12 ? 4 : 3)); // 3ª solicitação ou mais
+}
+
+function calcSeguroDesemprego() {
+  var box = document.getElementById('resultSeguro');
+  if (!box) return;
+  var sals = [_money('sdSal1'), _money('sdSal2'), _money('sdSal3')].filter(function (x) { return x > 0; });
+  var solic = parseInt((document.getElementById('sdSolicitacao') || {}).value || '1', 10);
+  var meses = Math.max(0, Math.floor(_num('sdMeses')));
+  if (sals.length === 0 || meses <= 0) { box.style.display = 'none'; return; }
+  var media = sals.reduce(function (a, b) { return a + b; }, 0) / sals.length;
+
+  var parcelas = _parcelasSeguro(solic, meses);
+  var minMeses = solic === 1 ? 12 : (solic === 2 ? 9 : 6);
+
+  if (parcelas === 0) {
+    box.innerHTML =
+      '<h4>Resultado</h4>' +
+      '<p class="resc-info" style="border-left-color:#b91c1c">⚠️ Com <b>' + meses + ' meses</b> trabalhados, você ainda <b>não atinge a carência</b> desta solicitação. Na <b>' + solic + 'ª solicitação</b> é preciso ter trabalhado pelo menos <b>' + minMeses + ' meses</b>.</p>' +
+      '<p class="calc-note">Carência: 1ª vez = 12 meses (nos últimos 18); 2ª vez = 9 meses (nos últimos 12); 3ª vez ou mais = 6 meses.</p>';
+    box.style.display = 'block';
+    return;
+  }
+
+  var valor = _valorSeguro(media);
+  var total = valor * parcelas;
+  function _row(label, val) { return '<tr><td>' + label + '</td><td class="resc-val">' + val + '</td></tr>'; }
+  var rows = _row('Salário médio (base)', _brl2(media));
+  rows += _row('Número de parcelas', parcelas + 'x');
+  rows += _row('Valor de cada parcela', _brl2(valor));
+  rows += '<tr class="resc-sub"><td>Total do benefício</td><td class="resc-val">' + _brl2(total) + '</td></tr>';
+
+  box.innerHTML =
+    '<h4>Você tem direito a</h4>' +
+    '<div class="result-value">' + parcelas + ' parcelas de ' + _brl2(valor) + '</div>' +
+    '<table class="resc-table">' + rows + '</table>' +
+    '<p class="resc-info">⏱️ <b>Prazo:</b> solicite entre o 7º e o 120º dia após a demissão, pelo app Carteira de Trabalho Digital ou no gov.br. As parcelas são pagas mês a mês.</p>' +
+    _cta('💡 Enquanto procura recolocação, faça o dinheiro durar:', 'calculadoras/reserva-de-emergencia.html', '🛡️ Calcular reserva de emergência') +
+    '<p class="calc-note"><b>ℹ️ Como calculamos:</b> média dos salários informados aplicada à tabela oficial do MTE de 2026 (faixas de R$ 2.222,17 e R$ 3.703,99; piso R$ 1.621,00 e teto R$ 2.518,65). O número de parcelas segue o tempo trabalhado e o número da solicitação. Estimativa — o valor e a habilitação finais são definidos pelo Ministério do Trabalho.</p>';
+  box.style.display = 'block';
+}
+
 // opções de gráfico (compartilhadas)
 function _chartOpts(stacked, centerText) {
   var opts = {
@@ -490,7 +548,8 @@ function formatBRL(val) {
     { fn: 'calcReserva', ids: ['gastosMensais', 'mesesReserva', 'jaTem'] },
     { fn: 'calcIF', ids: ['gastosMensaisIF', 'patrimonioAtual', 'rendaMensalIF', 'taxaIF'] },
     { fn: 'calcRescisao', ids: ['rescSalario', 'rescAdmissao', 'rescSaida', 'rescMotivo', 'rescAviso', 'rescDependentes', 'rescFgts', 'rescFeriasVencidas'] },
-    { fn: 'calcSalarioLiquido', ids: ['slSalario', 'slDependentes', 'slPensao', 'slOutros'] }
+    { fn: 'calcSalarioLiquido', ids: ['slSalario', 'slDependentes', 'slPensao', 'slOutros'] },
+    { fn: 'calcSeguroDesemprego', ids: ['sdSal1', 'sdSal2', 'sdSal3', 'sdSolicitacao', 'sdMeses'] }
   ];
   var t;
   groups.forEach(function (g) {
