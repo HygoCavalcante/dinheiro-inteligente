@@ -221,7 +221,7 @@ function calcIF() {
   var gastos = _money('gastosMensaisIF');
   var patrimonio = _money('patrimonioAtual');
   var rendaMensal = _money('rendaMensalIF');
-  var taxaIF = _num('taxaIF') / 100 / 12 || 0.005;
+  var taxaIF = _num('taxaIF') / 100 || 0.005; // taxa MENSAL (o rótulo do campo pede % ao mês)
   var box = document.getElementById('resultIF');
   if (!box) return;
   if (gastos <= 0) { box.style.display = 'none'; return; }
@@ -384,7 +384,10 @@ function calcRescisao() {
   }
 
   var notas = '';
-  if (dir.sacaFgts) notas += '<p class="resc-info">💰 <b>FGTS para saque:</b> além das verbas acima, você pode sacar o saldo da sua conta do FGTS' + (fgts > 0 ? ' (' + _brl2(fgts) + ' informado)' : '') + ' direto na Caixa — esse valor não entra no líquido pago pela empresa.</p>';
+  if (dir.sacaFgts) {
+    var qtoFgts = motivo === 'acordo' ? '80% do saldo da sua conta do FGTS (art. 484-A)' : 'o saldo da sua conta do FGTS';
+    notas += '<p class="resc-info">💰 <b>FGTS para saque:</b> além das verbas acima, você pode sacar ' + qtoFgts + (fgts > 0 ? ' (saldo de ' + _brl2(fgts) + ' informado)' : '') + ' direto na Caixa — esse valor não entra no líquido pago pela empresa.</p>';
+  }
   notas += '<p class="resc-info">' + (dir.seguro ? '✅ <b>Seguro-desemprego:</b> nesta modalidade você costuma ter direito (confira carência e número de parcelas).' : '⚠️ <b>Seguro-desemprego:</b> não há direito nesta modalidade de saída.') + '</p>';
 
   box.innerHTML =
@@ -463,7 +466,9 @@ function _valorSeguro(media) {
   else v = 2518.65; // teto
   if (v < 1621.00) v = 1621.00; // piso = salário mínimo 2026
   if (v > 2518.65) v = 2518.65;
-  return v;
+  // arredonda em 2 etapas p/ neutralizar erro binário (ex.: 2166,65499... -> 2166,66)
+  return Math.round(Math.round(v * 10000) / 100) / 100;
+
 }
 function _parcelasSeguro(solic, meses) {
   // retorna nº de parcelas; 0 = não atingiu a carência da solicitação
