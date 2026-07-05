@@ -90,7 +90,7 @@ function _note(comoCalc) {
 
 // inicialização: máscara de moeda + seletor mensal/anual na taxa de juros
 (function initCalcUX() {
-  var moneyIds = ['capital', 'aporte', 'gastosMensais', 'jaTem', 'gastosMensaisIF', 'patrimonioAtual', 'rendaMensalIF', 'rescSalario', 'rescFgts', 'slSalario', 'slPensao', 'slOutros', 'sdSal1', 'sdSal2', 'sdSal3', 'ferSalario', 'decSalario'];
+  var moneyIds = ['capital', 'aporte', 'gastosMensais', 'jaTem', 'gastosMensaisIF', 'patrimonioAtual', 'rendaMensalIF', 'rescSalario', 'rescFgts', 'slSalario', 'slPensao', 'slOutros', 'sdSal1', 'sdSal2', 'sdSal3', 'ferSalario', 'decSalario', 'heSalario', 'fgSalario', 'fgSaldo'];
   moneyIds.forEach(function (id) {
     var el = document.getElementById(id);
     if (!el) return;
@@ -627,6 +627,93 @@ function calcDecimo() {
   box.style.display = 'block';
 }
 
+// ----- Horas Extras (CLT art. 59; CF art. 7º, XVI — adicional mínimo 50%) -----
+// Valor-hora = salário ÷ jornada mensal (220h p/ 44h semanais). HE 50% em dias
+// úteis; 100% em domingos/feriados. DSR sobre as HE (Lei 605/49 + Súmula 172
+// TST): total das HE ÷ dias úteis × domingos+feriados do mês. Resultado é o
+// adicional BRUTO — INSS/IRRF sobre salário+HE ficam na calc. de salário líquido.
+function calcHoras() {
+  var box = document.getElementById('resultHoras');
+  if (!box) return;
+  var salario = _money('heSalario');
+  var jornada = Math.floor(_num('heJornada')) || 220;
+  var h50 = _num('he50');
+  var h100 = _num('he100');
+  var diasUteis = Math.floor(_num('heDiasUteis')) || 25;
+  var dsrDias = Math.floor(_num('heDsr')) || 5;
+  if (salario <= 0 || (h50 <= 0 && h100 <= 0)) { box.style.display = 'none'; return; }
+  if (jornada < 1) jornada = 220;
+
+  var hora = salario / jornada;
+  var v50 = hora * 1.5 * h50;
+  var v100 = hora * 2 * h100;
+  var totalHE = v50 + v100;
+  var dsr = diasUteis > 0 ? totalHE / diasUteis * dsrDias : 0;
+  var total = totalHE + dsr;
+
+  function _row(label, val, neg) { return '<tr><td>' + label + '</td><td class="resc-val' + (neg ? ' neg' : '') + '">' + (neg ? '− ' : '') + _brl2(val) + '</td></tr>'; }
+  var rows = _row('Valor da sua hora normal (salário ÷ ' + jornada + 'h)', hora);
+  if (v50 > 0) rows += _row('Horas extras 50% (' + h50 + 'h × ' + _brl2(hora * 1.5) + ')', v50);
+  if (v100 > 0) rows += _row('Horas extras 100% (' + h100 + 'h × ' + _brl2(hora * 2) + ')', v100);
+  rows += _row('DSR sobre as horas extras', dsr);
+  rows += '<tr class="resc-sub"><td>Adicional bruto no mês</td><td class="resc-val">' + _brl2(total) + '</td></tr>';
+
+  var notas = '<p class="resc-info">🧾 <b>Este é o valor BRUTO.</b> As horas extras entram na base de INSS e IRRF junto com o salário — para ver quanto sobra líquido, some o adicional ao salário na <a href="https://fiquericoagora.com.br/calculadoras/salario-liquido.html">calculadora de salário líquido</a>.</p>' +
+    '<p class="resc-info">📅 <b>DSR:</b> as horas extras habituais também aumentam o descanso semanal remunerado (Lei 605/49): total das HE ÷ dias úteis × domingos e feriados do mês. Ajuste os dias do seu mês nos campos acima.</p>';
+
+  box.innerHTML =
+    '<h4>Adicional bruto de horas extras</h4>' +
+    '<div class="result-value">' + _brl2(total) + '</div>' +
+    '<table class="resc-table">' + rows + '</table>' +
+    notas +
+    _cta('💡 Hora extra virou rotina? Transforme em patrimônio:', 'calculadoras/juros-compostos.html', '📈 Simular nos juros compostos') +
+    '<p class="calc-note"><b>ℹ️ Como calculamos:</b> valor-hora = salário ÷ jornada mensal (220h corresponde às 44h semanais da CF). Hora extra em dia útil tem adicional mínimo de 50% (CF, art. 7º, XVI) e em domingos/feriados não compensados, 100% (Súmula 146 do TST). O DSR segue a Lei 605/49. Convenção coletiva pode prever adicionais maiores — confira a sua. Estimativa bruta, sem INSS/IRRF.</p>';
+  box.style.display = 'block';
+}
+
+// ----- FGTS (Lei 8.036/90) -----
+// Depósito = 8% da remuneração (pago pela empresa, NÃO descontado). Estimativa
+// de total depositado opcionalmente inclui 13º e 1/3 de férias (fator 13,33/12).
+// NÃO simula rendimento (TR + 3% a.a. + lucros) — saldo real é o do app FGTS.
+// Multa: 40% sem justa causa, 20% acordo (art. 484-A), sobre o TOTAL depositado
+// no contrato (mesmo com saques anteriores) — usamos o melhor valor disponível.
+function calcFgts() {
+  var box = document.getElementById('resultFgts');
+  if (!box) return;
+  var salario = _money('fgSalario');
+  var meses = Math.max(0, Math.floor(_num('fgMeses')));
+  var saldo = _money('fgSaldo');
+  var extras = !!(document.getElementById('fgExtras') || {}).checked;
+  if (salario <= 0 || meses <= 0) { box.style.display = 'none'; return; }
+
+  var depMes = salario * 0.08;
+  var fator = extras ? (13 + 1 / 3) / 12 : 1; // 12 salários + 13º + 1/3 férias por ano
+  var totalDep = depMes * meses * fator;
+  var baseMulta = saldo > 0 ? saldo : totalDep;
+  var multa40 = baseMulta * 0.40;
+  var multa20 = baseMulta * 0.20;
+
+  function _row(label, val) { return '<tr><td>' + label + '</td><td class="resc-val">' + _brl2(val) + '</td></tr>'; }
+  var rows = _row('Depósito mensal da empresa (8%)', depMes);
+  rows += _row('Total estimado depositado (' + meses + ' meses' + (extras ? ', com 13º e férias' : '') + ')', totalDep);
+  if (saldo > 0) rows += _row('Saldo informado (usado na multa)', saldo);
+  rows += '<tr class="resc-sub"><td>Multa de 40% (demissão sem justa causa)</td><td class="resc-val">' + _brl2(multa40) + '</td></tr>';
+  rows += _row('Multa de 20% (demissão por acordo)', multa20);
+
+  var notas = '<p class="resc-info">📈 <b>A estimativa NÃO inclui o rendimento</b> do FGTS (TR + 3% ao ano + distribuição de lucros) — o saldo real tende a ser <b>maior</b> e está no app FGTS da Caixa. Informe-o no campo opcional para uma multa exata.</p>' +
+    '<p class="resc-info">⚠️ <b>Saque-aniversário:</b> quem aderiu <b>não saca o saldo</b> na demissão sem justa causa — recebe só a multa de 40%. O saldo fica retido até a volta ao saque-rescisão (a troca leva ~2 anos) ou outra hipótese de saque.</p>';
+  if (saldo === 0) notas += '<p class="resc-info">🧾 <b>Fez saques</b> (aniversário, casa própria)? A multa é calculada sobre o <b>total depositado durante o contrato</b>, não sobre o saldo atual — a estimativa acima continua sendo a referência.</p>';
+
+  box.innerHTML =
+    '<h4>Seu FGTS neste emprego (estimativa)</h4>' +
+    '<div class="result-value">' + _brl2(totalDep) + '</div>' +
+    '<table class="resc-table">' + rows + '</table>' +
+    notas +
+    _cta('💡 Vai sacar o FGTS? Antes de gastar:', 'artigos/fgts-investir-dividas-2026.html', '🧭 FGTS: investir ou quitar dívidas?') +
+    '<p class="calc-note"><b>ℹ️ Como calculamos:</b> a empresa deposita todo mês 8% da sua remuneração (Lei 8.036/90) — não é descontado do salário. A estimativa multiplica o depósito pelos meses trabalhados e, se marcado, inclui os depósitos sobre 13º e férias + 1/3 (fator 13,33/12), sem correção monetária. A multa de 40% (ou 20% no acordo do art. 484-A) incide sobre o total depositado no contrato. Estimativa — o valor oficial é o do extrato no app FGTS.</p>';
+  box.style.display = 'block';
+}
+
 // opções de gráfico (compartilhadas)
 function _chartOpts(stacked, centerText) {
   var opts = {
@@ -667,7 +754,9 @@ function formatBRL(val) {
     { fn: 'calcSalarioLiquido', ids: ['slSalario', 'slDependentes', 'slPensao', 'slOutros'] },
     { fn: 'calcSeguroDesemprego', ids: ['sdSal1', 'sdSal2', 'sdSal3', 'sdSolicitacao', 'sdMeses'] },
     { fn: 'calcFerias', ids: ['ferSalario', 'ferDias', 'ferAbono', 'ferAdiant13', 'ferDependentes'] },
-    { fn: 'calcDecimo', ids: ['decSalario', 'decMeses', 'decDependentes'] }
+    { fn: 'calcDecimo', ids: ['decSalario', 'decMeses', 'decDependentes'] },
+    { fn: 'calcHoras', ids: ['heSalario', 'heJornada', 'he50', 'he100', 'heDiasUteis', 'heDsr'] },
+    { fn: 'calcFgts', ids: ['fgSalario', 'fgMeses', 'fgSaldo', 'fgExtras'] }
   ];
   var t;
   groups.forEach(function (g) {

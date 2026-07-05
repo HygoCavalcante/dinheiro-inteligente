@@ -25,6 +25,18 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>https://fiquericoagora.com.br/calculadoras/horas-extras.html</loc>
+    <lastmod>2026-07-05</lastmod>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://fiquericoagora.com.br/calculadoras/fgts.html</loc>
+    <lastmod>2026-07-05</lastmod>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://fiquericoagora.com.br/calculadoras/rescisao-trabalhista.html</loc>
     <lastmod>2026-06-28</lastmod>
     <priority>0.9</priority>
