@@ -90,7 +90,7 @@ function _note(comoCalc) {
 
 // inicialização: máscara de moeda + seletor mensal/anual na taxa de juros
 (function initCalcUX() {
-  var moneyIds = ['capital', 'aporte', 'gastosMensais', 'jaTem', 'gastosMensaisIF', 'patrimonioAtual', 'rendaMensalIF', 'rescSalario', 'rescFgts', 'slSalario', 'slPensao', 'slOutros', 'sdSal1', 'sdSal2', 'sdSal3'];
+  var moneyIds = ['capital', 'aporte', 'gastosMensais', 'jaTem', 'gastosMensaisIF', 'patrimonioAtual', 'rendaMensalIF', 'rescSalario', 'rescFgts', 'slSalario', 'slPensao', 'slOutros', 'sdSal1', 'sdSal2', 'sdSal3', 'ferSalario'];
   moneyIds.forEach(function (id) {
     var el = document.getElementById(id);
     if (!el) return;
@@ -516,6 +516,70 @@ function calcSeguroDesemprego() {
   box.style.display = 'block';
 }
 
+// ----- Férias (CLT arts. 129-145; tabelas INSS/IRRF 2026) -----
+// Reusa _inssResc/_irrfResc. Férias gozadas + 1/3 são tributáveis (IRRF em
+// separado); o abono pecuniário (venda de 10 dias) e o 1/3 dele são isentos
+// de INSS e IRRF. Adiantamento da 1ª parcela do 13º sai sem descontos (o
+// acerto de impostos do 13º acontece na 2ª parcela, em dezembro).
+function calcFerias() {
+  var box = document.getElementById('resultFerias');
+  if (!box) return;
+  var salario = _money('ferSalario');
+  var dias = Math.floor(_num('ferDias'));
+  var abono = !!(document.getElementById('ferAbono') || {}).checked;
+  var adiant13 = !!(document.getElementById('ferAdiant13') || {}).checked;
+  var dep = Math.max(0, Math.floor(_num('ferDependentes')));
+  if (salario <= 0) { box.style.display = 'none'; return; }
+  if (dias < 1) dias = 30;
+  if (dias > 30) dias = 30;
+  var ajustado = false;
+  if (abono && dias > 20) { dias = 20; ajustado = true; } // vendeu 10 dias → descansa no máximo 20
+
+  var valorDia = salario / 30;
+  var vFerias = valorDia * dias;
+  var vTerco = vFerias / 3;
+  var vAbono = abono ? valorDia * 10 : 0;
+  var vTercoAbono = vAbono / 3;
+  var vAdiant = adiant13 ? salario / 2 : 0;
+
+  var trib = vFerias + vTerco; // só férias gozadas + 1/3 sofrem INSS/IRRF
+  var inss = _inssResc(trib);
+  var irrf = _irrfResc(trib, dep, trib);
+
+  var proventos = vFerias + vTerco + vAbono + vTercoAbono + vAdiant;
+  var descontos = inss + irrf;
+  var liquido = proventos - descontos;
+
+  function _row(label, val, neg) { return '<tr><td>' + label + '</td><td class="resc-val' + (neg ? ' neg' : '') + '">' + (neg ? '− ' : '') + _brl2(val) + '</td></tr>'; }
+  var rows = '<tr class="resc-head"><th colspan="2">Proventos</th></tr>';
+  rows += _row('Férias (' + dias + ' dias)', vFerias);
+  rows += _row('1/3 constitucional', vTerco);
+  if (vAbono > 0) rows += _row('Abono pecuniário (10 dias vendidos)', vAbono);
+  if (vTercoAbono > 0) rows += _row('1/3 sobre o abono', vTercoAbono);
+  if (vAdiant > 0) rows += _row('Adiantamento do 13º (1ª parcela)', vAdiant);
+  rows += '<tr class="resc-sub"><td>Total de proventos</td><td class="resc-val">' + _brl2(proventos) + '</td></tr>';
+  if (descontos > 0) {
+    rows += '<tr class="resc-head"><th colspan="2">Descontos (sobre férias + 1/3)</th></tr>';
+    if (inss > 0) rows += _row('INSS', inss, true);
+    if (irrf > 0) rows += _row('IRRF', irrf, true);
+    rows += '<tr class="resc-sub"><td>Total de descontos</td><td class="resc-val neg">− ' + _brl2(descontos) + '</td></tr>';
+  }
+
+  var notas = '';
+  if (ajustado) notas += '<p class="resc-info">✂️ Quem vende o abono descansa no máximo <b>20 dias</b> — ajustamos os dias de descanso para 20.</p>';
+  notas += '<p class="resc-info">📅 <b>Prazo de pagamento:</b> a empresa deve depositar esse valor até <b>2 dias antes</b> do início das férias (art. 145 da CLT).</p>';
+  notas += '<p class="resc-info">⚠️ <b>Atenção ao orçamento:</b> as férias <b>substituem</b> o salário dos dias de descanso — o "extra" real é o 1/3' + (abono ? ' e o abono' : '') + '. O contracheque seguinte costuma vir menor, porque os dias de férias já foram pagos antes.</p>';
+
+  box.innerHTML =
+    '<h4>Total líquido a receber antes das férias</h4>' +
+    '<div class="result-value">' + _brl2(liquido) + '</div>' +
+    '<table class="resc-table">' + rows + '</table>' +
+    notas +
+    _cta('💡 Faça o 1/3 das férias render:', 'calculadoras/juros-compostos.html', '📈 Simular nos juros compostos') +
+    '<p class="calc-note"><b>ℹ️ Como calculamos:</b> férias = salário ÷ 30 × dias de descanso, mais o 1/3 constitucional (CF, art. 7º, XVII). INSS (tabela progressiva 2026, teto R$ 8.475,55) e IRRF (tributação em separado, tabelas 2026 com a isenção da reforma) incidem só sobre férias + 1/3; o abono pecuniário e o 1/3 dele são isentos, e o adiantamento do 13º não tem desconto neste momento. Estimativa para CLT — médias de horas extras/adicionais e convenção coletiva podem alterar o valor. Não substitui o cálculo da folha.</p>';
+  box.style.display = 'block';
+}
+
 // opções de gráfico (compartilhadas)
 function _chartOpts(stacked, centerText) {
   var opts = {
@@ -554,7 +618,8 @@ function formatBRL(val) {
     { fn: 'calcIF', ids: ['gastosMensaisIF', 'patrimonioAtual', 'rendaMensalIF', 'taxaIF'] },
     { fn: 'calcRescisao', ids: ['rescSalario', 'rescAdmissao', 'rescSaida', 'rescMotivo', 'rescAviso', 'rescDependentes', 'rescFgts', 'rescFeriasVencidas'] },
     { fn: 'calcSalarioLiquido', ids: ['slSalario', 'slDependentes', 'slPensao', 'slOutros'] },
-    { fn: 'calcSeguroDesemprego', ids: ['sdSal1', 'sdSal2', 'sdSal3', 'sdSolicitacao', 'sdMeses'] }
+    { fn: 'calcSeguroDesemprego', ids: ['sdSal1', 'sdSal2', 'sdSal3', 'sdSolicitacao', 'sdMeses'] },
+    { fn: 'calcFerias', ids: ['ferSalario', 'ferDias', 'ferAbono', 'ferAdiant13', 'ferDependentes'] }
   ];
   var t;
   groups.forEach(function (g) {
