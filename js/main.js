@@ -90,7 +90,7 @@ function _note(comoCalc) {
 
 // inicialização: máscara de moeda + seletor mensal/anual na taxa de juros
 (function initCalcUX() {
-  var moneyIds = ['capital', 'aporte', 'gastosMensais', 'jaTem', 'gastosMensaisIF', 'patrimonioAtual', 'rendaMensalIF', 'rescSalario', 'rescFgts', 'slSalario', 'slPensao', 'slOutros', 'sdSal1', 'sdSal2', 'sdSal3', 'ferSalario'];
+  var moneyIds = ['capital', 'aporte', 'gastosMensais', 'jaTem', 'gastosMensaisIF', 'patrimonioAtual', 'rendaMensalIF', 'rescSalario', 'rescFgts', 'slSalario', 'slPensao', 'slOutros', 'sdSal1', 'sdSal2', 'sdSal3', 'ferSalario', 'decSalario'];
   moneyIds.forEach(function (id) {
     var el = document.getElementById(id);
     if (!el) return;
@@ -580,6 +580,53 @@ function calcFerias() {
   box.style.display = 'block';
 }
 
+// ----- 13º Salário (Leis 4.090/62 e 4.749/65; tabelas INSS/IRRF 2026) -----
+// Bruto = salário/12 × avos (mês conta com 15+ dias trabalhados). 1ª parcela
+// (até 30/11) = metade, SEM descontos; na 2ª (até 20/12) descontam-se INSS
+// sobre o 13º integral e IRRF em separado (tributação exclusiva na fonte).
+function calcDecimo() {
+  var box = document.getElementById('resultDecimo');
+  if (!box) return;
+  var salario = _money('decSalario');
+  var meses = Math.floor(_num('decMeses'));
+  var dep = Math.max(0, Math.floor(_num('decDependentes')));
+  if (salario <= 0) { box.style.display = 'none'; return; }
+  if (!meses || meses < 1) meses = 12;
+  if (meses > 12) meses = 12;
+
+  var bruto = salario / 12 * meses;
+  var p1 = bruto / 2;
+  var inss = _inssResc(bruto);
+  var irrf = _irrfResc(bruto, dep, bruto);
+  var descontos = inss + irrf;
+  var p2 = bruto - descontos - p1;
+  if (p2 < 0) p2 = 0;
+  var liquido = bruto - descontos;
+
+  function _row(label, val, neg) { return '<tr><td>' + label + '</td><td class="resc-val' + (neg ? ' neg' : '') + '">' + (neg ? '− ' : '') + _brl2(val) + '</td></tr>'; }
+  var rows = _row('13º bruto (' + meses + '/12 avos)', bruto);
+  rows += '<tr class="resc-head"><th colspan="2">Descontos (na 2ª parcela)</th></tr>';
+  if (inss > 0) rows += _row('INSS sobre o 13º integral', inss, true);
+  if (irrf > 0) rows += _row('IRRF (tributação em separado)', irrf, true);
+  if (descontos > 0) rows += '<tr class="resc-sub"><td>Total de descontos</td><td class="resc-val neg">− ' + _brl2(descontos) + '</td></tr>';
+  rows += '<tr class="resc-head"><th colspan="2">Como você recebe</th></tr>';
+  rows += _row('1ª parcela (até 30/11) — sem descontos', p1);
+  rows += _row('2ª parcela (até 20/12) — já com os descontos', p2);
+
+  var notas = '';
+  if (meses < 12) notas += '<p class="resc-info">📆 <b>' + meses + ' avos:</b> cada mês em que você trabalhou <b>15 dias ou mais</b> conta como 1/12. Quem foi admitido no meio do ano recebe proporcional.</p>';
+  notas += '<p class="resc-info">💡 <b>Por que a 2ª parcela é menor?</b> A 1ª sai "cheia" (metade do bruto, sem descontos); todo o INSS e o IRRF do 13º são retidos de uma vez na 2ª parcela.</p>';
+
+  box.innerHTML =
+    '<h4>Total líquido do 13º</h4>' +
+    '<div class="result-value">' + _brl2(liquido) + '</div>' +
+    '<table class="resc-table">' + rows + '</table>' +
+    notas +
+    _cta('💡 Já sabe o que fazer com o 13º? Antes de gastar:', 'calculadoras/reserva-de-emergencia.html', '🛡️ Reforçar a reserva de emergência') +
+    '<p class="calc-note"><b>ℹ️ Como calculamos:</b> 13º bruto = salário ÷ 12 × meses trabalhados (avos). O INSS (tabela progressiva 2026, teto R$ 8.475,55) incide sobre o 13º integral e o IRRF é calculado em separado dos demais rendimentos (tributação exclusiva na fonte), com as tabelas de 2026, a isenção da reforma e R$ 189,59 por dependente. Estimativa para CLT — médias de horas extras/comissões integram a base e podem aumentar o valor; convenção coletiva pode prever regras próprias. Não substitui o cálculo da folha.</p>';
+  box.style.display = 'block';
+}
+
 // opções de gráfico (compartilhadas)
 function _chartOpts(stacked, centerText) {
   var opts = {
@@ -619,7 +666,8 @@ function formatBRL(val) {
     { fn: 'calcRescisao', ids: ['rescSalario', 'rescAdmissao', 'rescSaida', 'rescMotivo', 'rescAviso', 'rescDependentes', 'rescFgts', 'rescFeriasVencidas'] },
     { fn: 'calcSalarioLiquido', ids: ['slSalario', 'slDependentes', 'slPensao', 'slOutros'] },
     { fn: 'calcSeguroDesemprego', ids: ['sdSal1', 'sdSal2', 'sdSal3', 'sdSolicitacao', 'sdMeses'] },
-    { fn: 'calcFerias', ids: ['ferSalario', 'ferDias', 'ferAbono', 'ferAdiant13', 'ferDependentes'] }
+    { fn: 'calcFerias', ids: ['ferSalario', 'ferDias', 'ferAbono', 'ferAdiant13', 'ferDependentes'] },
+    { fn: 'calcDecimo', ids: ['decSalario', 'decMeses', 'decDependentes'] }
   ];
   var t;
   groups.forEach(function (g) {
