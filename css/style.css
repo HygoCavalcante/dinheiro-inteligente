@@ -841,3 +841,14 @@ body .cat-hero h1 { letter-spacing: -0.025em; }
 
 /* Calculator hub cards */
 body .hub-card h2 { letter-spacing: -0.01em; }
+
+
+/* Tabelas largas: rolam dentro do proprio quadro em vez de estourar a pagina
+   no celular (tabela de 3 colunas ja exige ~357px, acima da tela de 320px).
+   Centralizado aqui para valer em artigos, calculadoras e paginas soltas. */
+body .table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 24px 0;
+}
+body .table-scroll > table { margin-top: 0; margin-bottom: 0; }
