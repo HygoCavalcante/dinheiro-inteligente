@@ -296,4 +296,11 @@
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
+
+  <url>
+    <loc>https://fiquericoagora.com.br/artigos/comecar-a-investir-do-zero.html</loc>
+    <lastmod>2026-07-19</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>
