@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IMAB11 ou B5P211: qual ETF de Tesouro IPCA+ combina com seu prazo? — FiqueRicoAgora</title>
+  <meta name="description" content="IMAB11 e B5P211 seguem índices de NTN-B diferentes: um pega todos os prazos, outro só até 5 anos. Veja taxas oficiais, o que significa o P2 no imposto e simule o custo." />
+  <link rel="canonical" href="https://fiquericoagora.com.br/artigos/imab11-vs-b5p211.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .article-layout{max-width:1100px;margin:0 auto;padding:40px 20px;display:grid;grid-template-columns:1fr 320px;gap:40px}
+    .article-header{background:linear-gradient(135deg,#0369a1,#0c4a6e);color:#fff;padding:60px 20px}
+    .article-header .container{max-width:800px;margin:0 auto}
+    .article-header h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;line-height:1.25;margin:14px 0}
+    .article-header .meta{font-size:.85rem;opacity:.8;margin-top:16px;display:flex;gap:20px;flex-wrap:wrap}
+    .article-body h2{font-size:1.4rem;font-weight:800;margin:32px 0 12px}
+    .article-body h3{font-size:1.05rem;font-weight:700;margin:20px 0 8px;color:var(--green)}
+    .article-body p{font-size:1rem;line-height:1.8;margin-bottom:14px;color:#374151}
+    .highlight-box{background:var(--green-pale);border-left:4px solid var(--green);border-radius:0 10px 10px 0;padding:18px 20px;margin:24px 0}
+    .warn-box{background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 10px 10px 0;padding:18px 20px;margin:24px 0;font-size:.95rem;line-height:1.7}
+    .comparison-table{width:100%;border-collapse:collapse;margin:24px 0;border-radius:10px;overflow:hidden;box-shadow:var(--shadow)}
+    .comparison-table th{background:var(--green);color:#fff;padding:14px 16px;text-align:left;font-size:.9rem}
+    .comparison-table td{padding:13px 16px;font-size:.9rem;border-bottom:1px solid #f0f0f0}
+    .comparison-table tr:nth-child(even) td{background:#f9fafb}
+    .winner-badge{background:#fef9c3;border:2px solid #f59e0b;border-radius:8px;padding:16px 20px;margin:20px 0;display:flex;gap:12px;align-items:center}
+    .winner-badge .icon{font-size:1.8rem}
+    .faq-item{border-bottom:1px solid #e5e7eb;padding:16px 0}
+    .faq-item:last-child{border-bottom:none}
+    .faq-item h3{font-size:1rem;font-weight:700;margin:0 0 8px;color:#111827}
+    .faq-item p{margin:0;font-size:.95rem;color:#374151}
+    .aviso-legal{background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:16px 20px;margin-top:32px;font-size:.82rem;color:#6b7280;line-height:1.7}
+    /* Simulador de taxas */
+    .sim-box{background:#fff;border:2px solid var(--green);border-radius:14px;padding:24px;margin:28px 0;box-shadow:var(--shadow)}
+    .sim-box h3{margin:0 0 6px;color:var(--green);font-size:1.15rem}
+    .sim-sub{font-size:.88rem;color:#6b7280;margin:0 0 18px}
+    .sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+    .sim-field label{display:block;font-size:.82rem;font-weight:600;color:#374151;margin-bottom:5px}
+    .sim-field input{width:100%;padding:11px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:1rem;font-family:'IBM Plex Mono',monospace;box-sizing:border-box}
+    .sim-field input:focus{outline:2px solid var(--green);border-color:transparent}
+    .sim-result{background:var(--green-pale);border-radius:10px;padding:18px;margin-top:6px}
+    .sim-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px dashed #cbd5c8;font-size:.94rem}
+    .sim-row:last-child{border-bottom:none}
+    .sim-row .v{font-family:'IBM Plex Mono',monospace;font-weight:600}
+    .sim-final{background:#0f4c2a;color:#fff;border-radius:8px;padding:14px 16px;margin-top:14px;text-align:center}
+    .sim-final .big{font-family:'IBM Plex Mono',monospace;font-size:1.5rem;font-weight:700;display:block;margin-top:4px}
+    .sim-nota{font-size:.78rem;color:#6b7280;margin-top:12px;line-height:1.6}
+    @media(max-width:600px){.sim-grid{grid-template-columns:1fr}}
+    @media(max-width:900px){.article-layout{grid-template-columns:1fr}}
+  </style>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3814459840874554" crossorigin="anonymous"></script>
+  <!-- Schema Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "IMAB11 ou B5P211: qual ETF de Tesouro IPCA+ combina com seu prazo?",
+    "description": "IMAB11 e B5P211 seguem índices de NTN-B diferentes: um pega todos os prazos, outro só até 5 anos. Veja taxas oficiais, o que significa o P2 no imposto e simule o custo.",
+    "author": {"@type": "Organization", "name": "FiqueRicoAgora"},
+    "publisher": {"@type": "Organization", "name": "FiqueRicoAgora", "url": "https://fiquericoagora.com.br"},
+    "datePublished": "2026-07-28",
+    "dateModified": "2026-07-28",
+    "url": "https://fiquericoagora.com.br/artigos/imab11-vs-b5p211.html"
+  }
+  </script>
+  <!-- Schema FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Qual a diferença entre IMAB11 e B5P211?",
+        "acceptedAnswer": {"@type": "Answer", "text": "A diferença central é o prazo dos títulos. O IMAB11 segue o IMA-B, índice da ANBIMA formado por NTN-Bs de todos os vencimentos, incluindo papéis muito longos. O B5P211 segue o IMA-B 5 P2, formado apenas por NTN-Bs com vencimento inferior a cinco anos. Carteira mais longa oscila mais no curto prazo; carteira mais curta oscila menos. As taxas totais também diferem: 0,25% ao ano no IMAB11 e 0,20% ao ano no B5P211, conforme dados oficiais da gestora em 24 de julho de 2026."}
+      },
+      {
+        "@type": "Question",
+        "name": "O que significa o P2 no nome do B5P211?",
+        "acceptedAnswer": {"@type": "Answer", "text": "O P2 indica que o índice tem um mecanismo de controle de prazo chamado PMR (Prazo Médio de Repactuação). Segundo a ANBIMA, esse mecanismo mantém o prazo médio da carteira sempre acima de 720 dias. Isso importa porque a alíquota de imposto de renda dos ETFs de renda fixa depende justamente do prazo médio da carteira: acima de 720 dias, a alíquota é a menor da tabela, de 15%. O P2 existe para garantir esse enquadramento."}
+      },
+      {
+        "@type": "Question",
+        "name": "O imposto de renda de ETF de renda fixa é sempre 15%?",
+        "acceptedAnswer": {"@type": "Answer", "text": "Não. A alíquota depende do prazo médio de repactuação (PMR) da carteira do fundo, e não do tempo que você fica com a cota. Conforme o regulamento dos fundos, a alíquota é de 25% quando o PMR é igual ou inferior a 180 dias, 20% quando está entre 181 e 720 dias, e 15% quando é superior a 720 dias. IMAB11 e B5P211 se enquadram na faixa de 15%, mas isso é uma característica da carteira de cada fundo, não uma regra automática de todo ETF de renda fixa."}
+      },
+      {
+        "@type": "Question",
+        "name": "A diferença de taxa entre IMAB11 e B5P211 faz muita diferença?",
+        "acceptedAnswer": {"@type": "Answer", "text": "A diferença é de 0,05 ponto percentual ao ano (0,25% contra 0,20%). Em valores comuns para investidor pessoa física, isso representa poucos reais por ano para cada R$ 10.000 aplicados. Use o simulador deste artigo para ver o número no seu caso. Na prática, a escolha entre os dois deve ser guiada pelo prazo do seu objetivo, não pela diferença de taxa, que é pequena diante do efeito da oscilação de preço."}
+      },
+      {
+        "@type": "Question",
+        "name": "IMAB11 ou B5P211 para reserva de emergência?",
+        "acceptedAnswer": {"@type": "Answer", "text": "Nenhum dos dois é adequado para reserva de emergência. Ambos são fundos de índice cujo preço da cota oscila conforme o mercado de juros, então você pode precisar do dinheiro justamente num momento de queda e realizar prejuízo. Reserva de emergência pede liquidez diária e baixa oscilação, perfil que o Tesouro Selic atende melhor."}
+      },
+      {
+        "@type": "Question",
+        "name": "Esses ETFs pagam dividendos ou rendimentos?",
+        "acceptedAnswer": {"@type": "Answer", "text": "Não há distribuição periódica de rendimentos nesses ETFs de renda fixa. Os juros recebidos pelos títulos da carteira são reinvestidos e aparecem na valorização da cota. O ganho do investidor se realiza na venda, quando incide o imposto de renda retido na fonte."}
+      },
+      {
+        "@type": "Question",
+        "name": "Qual é mais líquido, IMAB11 ou B5P211?",
+        "acceptedAnswer": {"@type": "Answer", "text": "Pelos dados oficiais da gestora com referência em 24 de julho de 2026, o B5P211 apresentava volume médio negociado de R$ 11.129.788,68 contra R$ 6.720.621,44 do IMAB11. Os dois têm patrimônio líquido na casa dos bilhões de reais, com R$ 3,84 bilhões no B5P211 e R$ 3,55 bilhões no IMAB11. Volume e patrimônio mudam com o tempo, então confira os valores atualizados no site da gestora antes de decidir."}
+      }
+    ]
+  }
+  </script>
+  <!-- Schema BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://fiquericoagora.com.br/"},
+      {"@type": "ListItem", "position": 2, "name": "Investimentos", "item": "https://fiquericoagora.com.br/investimentos/"},
+      {"@type": "ListItem", "position": 3, "name": "IMAB11 ou B5P211", "item": "https://fiquericoagora.com.br/artigos/imab11-vs-b5p211.html"}
+    ]
+  }
+  </script>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">💰 <span>Fique Rico</span>Agora</a>
+    <nav><a href="../index.html">Home</a><a href="../index.html#artigos" class="active">Artigos</a><a href="../index.html#calculadoras">Calculadoras</a><a href="../planilha.html">📥 Planilha Grátis</a>
+      <a href="../sobre.html">Sobre</a></nav>
+    <button class="menu-toggle" id="menuToggle">☰</button>
+  </div>
+  <nav class="mobile-nav" id="mobileNav"><a href="../index.html">Home</a><a href="../index.html#artigos">Artigos</a></nav>
+</header>
+
+<div class="article-header">
+  <div class="container">
+    <span class="tag">📈 Investimentos</span>
+    <h1>IMAB11 ou B5P211: qual ETF de Tesouro IPCA+ combina com seu prazo?</h1>
+    <div class="meta"><span>✍️ Equipe FiqueRicoAgora</span><span>📅 Publicado em 28 de julho de 2026</span><span>⏱️ 8 min de leitura</span></div>
+  </div>
+</div>
+
+<div class="article-layout">
+  <article class="article-body">
+
+    <p>Quem procura proteção contra a inflação sem comprar título por título no Tesouro Direto costuma esbarrar em dois ETFs da mesma gestora: o <strong>IMAB11</strong> e o <strong>B5P211</strong>. Os dois investem em NTN-Bs (o Tesouro IPCA+), os dois são da Itaú Asset sob a marca It Now, e os dois têm patrimônio na casa dos bilhões.</p>
+
+    <p>À primeira vista parecem o mesmo produto com nomes diferentes. Não são. A diferença entre eles é uma só, e ela não está na taxa — está no <strong>prazo dos títulos que cada um carrega</strong>. Entender isso é o que separa uma escolha adequada de uma frustração daqui a dois anos.</p>
+
+    <div class="highlight-box">
+      <strong>💡 Resumo em uma linha:</strong> o IMAB11 carrega NTN-Bs de <em>todos</em> os vencimentos, inclusive papéis muito longos, e por isso oscila mais. O B5P211 carrega apenas NTN-Bs com vencimento <em>abaixo de cinco anos</em>, e por isso oscila menos. A escolha certa é a que combina com o prazo do seu objetivo.
+    </div>
+
+    <h2>A diferença que realmente importa: o prazo da carteira</h2>
+
+    <p>Título público de inflação funciona assim: quanto mais distante o vencimento, mais o preço do papel balança quando a taxa de juros do mercado se mexe. Um título que vence em 2035 sofre muito mais com uma alta de juros do que um que vence em 2028, mesmo que os dois sejam do mesmo tipo e do mesmo emissor.</p>
+
+    <p>É exatamente aí que os dois ETFs se separam:</p>
+
+    <h3>IMAB11 — a carteira completa</h3>
+    <p>O IMAB11 replica o <strong>IMA-B</strong>, índice calculado pela ANBIMA. Segundo a definição oficial da própria ANBIMA, o IMA-B é "formado por títulos públicos indexados à inflação medida pelo IPCA, que são as NTN-Bs". Sem recorte de prazo: entram papéis curtos e papéis longos, incluindo vencimentos que passam de uma década.</p>
+    <p>Isso significa mais sensibilidade a juros. Em ciclos de queda da taxa real, a carteira longa tende a se valorizar mais. Em ciclos de alta, cai mais também. É um instrumento com mais amplitude nos dois sentidos.</p>
+
+    <h3>B5P211 — só a ponta curta</h3>
+    <p>O B5P211 replica o <strong>IMA-B 5 P2</strong>. A ANBIMA descreve o IMA-B 5 como formado por NTN-Bs "com vencimento de até cinco anos" — e o material oficial do fundo reforça que, por ser "uma carteira com títulos de prazos mais curtos, você conta com menor risco e ainda pode se beneficiar, em maior grau, de surpresas inflacionárias".</p>
+    <p>Traduzindo: menos sobe e desce no caminho, e uma resposta mais direta quando a inflação corrente surpreende, porque os títulos curtos incorporam esse efeito mais rápido.</p>
+
+    <h2>Comparativo com dados oficiais</h2>
+
+    <div class="table-scroll">
+    <table class="comparison-table">
+      <thead>
+        <tr><th>Característica</th><th>IMAB11</th><th>B5P211</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Nome do fundo</strong></td><td>It Now ID ETF IMA-B</td><td>It Now IMA-B5 P2</td></tr>
+        <tr><td><strong>Índice replicado</strong></td><td>IMA-B (ANBIMA)</td><td>IMA-B 5 P2 (ANBIMA)</td></tr>
+        <tr><td><strong>Prazo dos títulos</strong></td><td>Todos os vencimentos</td><td>Abaixo de 5 anos</td></tr>
+        <tr><td><strong>Taxa total do produto</strong></td><td>0,25% ao ano</td><td>0,20% ao ano</td></tr>
+        <tr><td><strong>Patrimônio líquido</strong></td><td>R$ 3.550.708.464,50</td><td>R$ 3.838.968.707,20</td></tr>
+        <tr><td><strong>Volume médio negociado</strong></td><td>R$ 6.720.621,44</td><td>R$ 11.129.788,68</td></tr>
+        <tr><td><strong>Oscilação esperada</strong></td><td>Maior</td><td>Menor</td></tr>
+        <tr><td><strong>Come-cotas</strong></td><td>Não há</td><td>Não há</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="warn-box">
+      <strong>📌 Sobre estes números:</strong> taxa, patrimônio e volume foram extraídos das páginas oficiais dos fundos no site da gestora (itnow.com.br), com <strong>data de referência de 24 de julho de 2026</strong>. Patrimônio e volume mudam todo dia e a taxa pode ser alterada pela gestora. Antes de investir, confira os valores atuais na página oficial de cada ETF e na lâmina do fundo.
+    </div>
+
+    <h2>O detalhe do "P2" que quase ninguém explica (e mexe no seu imposto)</h2>
+
+    <p>Aquele "P2" no fim de B5P211 não é enfeite de nome. Ele identifica uma versão do índice com um mecanismo de controle de prazo chamado <strong>PMR — Prazo Médio de Repactuação</strong>. Nas palavras da ANBIMA, com esse mecanismo "a carteira do índice mantém sempre prazo médio (acima de 720 dias). Assim, se o fundo replicar integralmente a carteira, garantirá a menor alíquota de imposto de renda".</p>
+
+    <p>Para entender por que isso vale dinheiro, é preciso conhecer uma regra que muita gente aplica errado.</p>
+
+    <h3>A alíquota depende da carteira, não de você</h3>
+
+    <p>Em ETF de renda fixa, o imposto de renda <strong>não</strong> segue a tabela regressiva tradicional, aquela em que você paga menos quanto mais tempo deixa o dinheiro parado. Aqui a alíquota é definida pelo prazo médio da carteira <em>do fundo</em>. O regulamento oficial estabelece três faixas:</p>
+
+    <div class="table-scroll">
+    <table class="comparison-table">
+      <thead>
+        <tr><th>Prazo médio da carteira (PMR)</th><th>Alíquota de IR</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Igual ou inferior a 180 dias</td><td>25%</td></tr>
+        <tr><td>Entre 181 e 720 dias</td><td>20%</td></tr>
+        <tr><td>Superior a 720 dias</td><td><strong>15%</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Repare no que isso implica: um índice formado só por títulos curtos correria o risco de ter prazo médio abaixo de 720 dias e cair na alíquota de 20%. O mecanismo P2 existe para impedir que isso aconteça, mantendo a carteira sempre acima da linha dos 720 dias e preservando os 15%.</p>
+
+    <div class="winner-badge">
+      <span class="icon">🎯</span>
+      <div><strong>O que você tira daqui:</strong> "ETF de renda fixa paga 15%" é uma simplificação perigosa. Paga 15% <em>o fundo cuja carteira tem prazo médio acima de 720 dias</em>. Antes de comprar qualquer ETF de renda fixa, verifique essa informação no regulamento — principalmente em fundos de títulos curtos ou pós-fixados.</div>
+    </div>
+
+    <p>Vale registrar duas características que valem para os dois ETFs desta comparação: o imposto é <strong>retido na fonte</strong> na venda, o que dispensa a emissão de DARF, e <strong>não há come-cotas</strong> — aquela antecipação semestral que corrói fundos comuns de renda fixa.</p>
+
+    <h2>Simulador: quanto a diferença de taxa custa no seu caso</h2>
+
+    <p>A conversa sobre taxa costuma render mais do que merece. Entre 0,25% e 0,20% existe uma diferença de 0,05 ponto percentual ao ano — e vale a pena ver esse número virar reais no seu contexto antes de tomar decisão por causa dele.</p>
+
+    <div class="sim-box">
+      <h3>💰 Simulador de custo das taxas</h3>
+      <p class="sim-sub">Estime quanto cada ETF cobra ao longo do tempo e qual a diferença real entre eles.</p>
+
+      <div class="sim-grid">
+        <div class="sim-field">
+          <label for="simValor">Valor investido (R$)</label>
+          <input type="number" id="simValor" value="10000" min="0" step="100" />
+        </div>
+        <div class="sim-field">
+          <label for="simAnos">Prazo (anos)</label>
+          <input type="number" id="simAnos" value="5" min="1" max="40" step="1" />
+        </div>
+        <div class="sim-field">
+          <label for="simRent">Rentabilidade bruta estimada (% ao ano)</label>
+          <input type="number" id="simRent" value="10" min="0" max="30" step="0.1" />
+        </div>
+        <div class="sim-field">
+          <label for="simAporte">Aporte mensal (R$, opcional)</label>
+          <input type="number" id="simAporte" value="0" min="0" step="50" />
+        </div>
+      </div>
+
+      <div class="sim-result">
+        <div class="sim-row"><span>Total investido no período</span><span class="v" id="rInvestido">—</span></div>
+        <div class="sim-row"><span>Custo de taxa no IMAB11 (0,25% a.a.)</span><span class="v" id="rCustoA">—</span></div>
+        <div class="sim-row"><span>Custo de taxa no B5P211 (0,20% a.a.)</span><span class="v" id="rCustoB">—</span></div>
+        <div class="sim-final">
+          Diferença entre os dois no período
+          <span class="big" id="rDiferenca">—</span>
+        </div>
+      </div>
+
+      <p class="sim-nota"><strong>Como o cálculo é feito:</strong> a taxa é descontada do rendimento anual (rentabilidade bruta menos taxa), com aportes mensais capitalizados mês a mês. É uma estimativa simplificada para dimensionar a ordem de grandeza do custo — não é projeção de rentabilidade. A rentabilidade real destes ETFs varia conforme o IPCA e a taxa de juros do mercado, e pode inclusive ser negativa em alguns períodos. Imposto de renda não está incluído no cálculo.</p>
+    </div>
+
+    <p>Faça o teste com o valor que você realmente pretende investir. Na maioria dos casos de investidor pessoa física, o resultado mostra que a diferença de taxa entre os dois é modesta perto do que a oscilação de preço da cota faz em um único mês. Isso não significa que taxa seja irrelevante — significa que, <em>nesta comparação específica</em>, ela não deveria ser o critério de desempate.</p>
+
+    <h2>Qual escolher: uma pergunta de prazo</h2>
+
+    <h3>O B5P211 tende a fazer mais sentido se…</h3>
+    <p>Você tem um objetivo com data relativamente próxima, algo entre dois e cinco anos, como a entrada de um imóvel, a troca do carro ou uma reserva de médio prazo que não é emergência. Carteira curta significa menos chance de você chegar na data do objetivo em pleno vale de desvalorização.</p>
+
+    <h3>O IMAB11 tende a fazer mais sentido se…</h3>
+    <p>Seu horizonte é longo e você aguenta ver a cota balançar sem se desesperar. Aposentadoria daqui a quinze anos, por exemplo. Com prazo longo você tem tempo de atravessar os ciclos de juros, e a carteira mais longa remunera melhor esse desconforto quando o ciclo vira a favor.</p>
+
+    <div class="highlight-box">
+      <strong>🧭 A pergunta que resolve:</strong> "em que ano eu vou precisar desse dinheiro?" Se a resposta está dentro de cinco anos, a carteira curta protege você de si mesmo. Se a resposta passa de dez anos, a carteira longa tem espaço para trabalhar. Prazo é o critério; taxa é detalhe.
+    </div>
+
+    <h2>Três erros comuns nessa escolha</h2>
+
+    <h3>1. Escolher pela taxa e ignorar o prazo</h3>
+    <p>É o erro mais frequente. A diferença de 0,05 ponto percentual chama atenção porque é um número fácil de comparar, enquanto "duração da carteira" soa técnico. Mas quem compra a carteira longa para um objetivo de três anos assume um risco muito maior do que os centavos economizados em taxa.</p>
+
+    <h3>2. Usar qualquer um dos dois como reserva de emergência</h3>
+    <p>Reserva de emergência precisa de duas coisas: estar disponível rápido e não ter perdido valor no dia em que você precisa. ETF de inflação atende a primeira e falha na segunda, porque a cota oscila. Para esse papel, o Tesouro Selic continua sendo a escolha mais adequada — o assunto está detalhado no nosso guia sobre <a href="reserva-emergencia.html">onde guardar a reserva de emergência</a>.</p>
+
+    <h3>3. Achar que ETF de inflação não pode dar prejuízo</h3>
+    <p>Pode. O título público protege da inflação <em>se levado até o vencimento</em>. Um ETF não tem vencimento: ele renova a carteira continuamente. Se você vender numa janela em que a taxa de juros real subiu, realiza prejuízo mesmo com o IPCA tendo subido no período. É o mesmo mecanismo de marcação a mercado que assusta quem vende Tesouro IPCA+ antes da hora.</p>
+
+    <h2>E se você está comparando com outras opções</h2>
+
+    <p>Estes dois não são as únicas portas para inflação. Se a sua dúvida ainda está entre comprar o título direto ou via fundo de índice, vale ler nossa análise sobre <a href="tesouro-direto-2026.html">Tesouro Direto em 2026</a>. Se você chegou aqui pesquisando ETFs de inflação mais recentes, temos também a comparação entre <a href="gpac11-vs-b5p211.html">GPCA11 e B5P211</a>, que coloca o B5P211 frente a frente com um concorrente de taxa mais baixa e prazo ainda mais curto.</p>
+
+    <p>E se a sua carteira ainda está começando, o caminho lógico antes de escolher ETF de inflação está no nosso passo a passo de <a href="comecar-a-investir-do-zero.html">como começar a investir do zero</a>.</p>
+
+    <h2>Perguntas frequentes</h2>
+
+    <div class="faq-item">
+      <h3>Qual a diferença entre IMAB11 e B5P211?</h3>
+      <p>A diferença central é o prazo dos títulos. O IMAB11 segue o IMA-B, índice da ANBIMA formado por NTN-Bs de todos os vencimentos, incluindo papéis muito longos. O B5P211 segue o IMA-B 5 P2, formado apenas por NTN-Bs com vencimento inferior a cinco anos. Carteira mais longa oscila mais no curto prazo; carteira mais curta oscila menos. As taxas totais também diferem: 0,25% ao ano no IMAB11 e 0,20% ao ano no B5P211, conforme dados oficiais da gestora em 24 de julho de 2026.</p>
+    </div>
+    <div class="faq-item">
+      <h3>O que significa o P2 no nome do B5P211?</h3>
+      <p>O P2 indica que o índice tem um mecanismo de controle de prazo chamado PMR (Prazo Médio de Repactuação). Segundo a ANBIMA, esse mecanismo mantém o prazo médio da carteira sempre acima de 720 dias. Isso importa porque a alíquota de imposto de renda dos ETFs de renda fixa depende justamente do prazo médio da carteira: acima de 720 dias, a alíquota é a menor da tabela, de 15%. O P2 existe para garantir esse enquadramento.</p>
+    </div>
+    <div class="faq-item">
+      <h3>O imposto de renda de ETF de renda fixa é sempre 15%?</h3>
+      <p>Não. A alíquota depende do prazo médio de repactuação (PMR) da carteira do fundo, e não do tempo que você fica com a cota. Conforme o regulamento dos fundos, a alíquota é de 25% quando o PMR é igual ou inferior a 180 dias, 20% quando está entre 181 e 720 dias, e 15% quando é superior a 720 dias. IMAB11 e B5P211 se enquadram na faixa de 15%, mas isso é uma característica da carteira de cada fundo, não uma regra automática de todo ETF de renda fixa.</p>
+    </div>
+    <div class="faq-item">
+      <h3>A diferença de taxa entre IMAB11 e B5P211 faz muita diferença?</h3>
+      <p>A diferença é de 0,05 ponto percentual ao ano (0,25% contra 0,20%). Em valores comuns para investidor pessoa física, isso representa poucos reais por ano para cada R$ 10.000 aplicados. Use o simulador deste artigo para ver o número no seu caso. Na prática, a escolha entre os dois deve ser guiada pelo prazo do seu objetivo, não pela diferença de taxa, que é pequena diante do efeito da oscilação de preço.</p>
+    </div>
+    <div class="faq-item">
+      <h3>IMAB11 ou B5P211 para reserva de emergência?</h3>
+      <p>Nenhum dos dois é adequado para reserva de emergência. Ambos são fundos de índice cujo preço da cota oscila conforme o mercado de juros, então você pode precisar do dinheiro justamente num momento de queda e realizar prejuízo. Reserva de emergência pede liquidez diária e baixa oscilação, perfil que o Tesouro Selic atende melhor.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Esses ETFs pagam dividendos ou rendimentos?</h3>
+      <p>Não há distribuição periódica de rendimentos nesses ETFs de renda fixa. Os juros recebidos pelos títulos da carteira são reinvestidos e aparecem na valorização da cota. O ganho do investidor se realiza na venda, quando incide o imposto de renda retido na fonte.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Qual é mais líquido, IMAB11 ou B5P211?</h3>
+      <p>Pelos dados oficiais da gestora com referência em 24 de julho de 2026, o B5P211 apresentava volume médio negociado de R$ 11.129.788,68 contra R$ 6.720.621,44 do IMAB11. Os dois têm patrimônio líquido na casa dos bilhões de reais, com R$ 3,84 bilhões no B5P211 e R$ 3,55 bilhões no IMAB11. Volume e patrimônio mudam com o tempo, então confira os valores atualizados no site da gestora antes de decidir.</p>
+    </div>
+
+    <div class="aviso-legal">
+      <strong>⚠️ Aviso legal:</strong> Este artigo tem caráter exclusivamente educacional e informativo. Não constitui recomendação de investimento. Rentabilidade passada não garante resultados futuros e ETFs de renda fixa podem apresentar retorno negativo em determinados períodos. Os dados de taxa, patrimônio e volume citados têm data de referência de 24 de julho de 2026, foram obtidos nas páginas oficiais dos fundos e estão sujeitos a alteração. Regras tributárias podem mudar. Consulte um assessor de investimentos certificado antes de tomar decisões financeiras.
+    </div>
+
+    <div class="author-box" style="margin:36px 0 8px;padding:20px 24px;background:#f0f7f3;border:1px solid #d6e9dd;border-radius:12px;display:flex;gap:16px;align-items:flex-start">
+      <div style="font-size:2.4rem;line-height:1">💰</div>
+      <div>
+        <p style="margin:0 0 4px;font-weight:700;color:#0f4c2a">Escrito pela Equipe FiqueRicoAgora</p>
+        <p style="margin:0;font-size:0.92rem;line-height:1.6;color:#374151">Grupo de entusiastas e pesquisadores de finanças pessoais que estuda e explica investimentos, dívidas e orçamento de forma simples e honesta, sempre com base em fontes oficiais (Tesouro Nacional, Banco Central, B3, ANBIMA e Receita Federal). <a href="https://fiquericoagora.com.br/sobre.html" style="color:#1a6b3c;font-weight:600">Conheça nossa equipe e processo editorial &rarr;</a></p>
+      </div>
+    </div>
+  </article>
+
+  <aside class="sidebar">
+    <div class="sidebar-widget">
+      <h3 class="widget-title">📚 Artigos Relacionados</h3>
+      <ul class="popular-list">
+        <li><span class="popular-num">→</span><a href="gpac11-vs-b5p211.html">GPCA11 x B5P211: qual ETF de inflação escolher</a></li>
+        <li><span class="popular-num">→</span><a href="tesouro-direto-2026.html">Tesouro Direto 2026: vale a pena?</a></li>
+        <li><span class="popular-num">→</span><a href="tesouro-pre-ou-ipca-2032.html">Tesouro Prefixado ou IPCA+ 2032?</a></li>
+        <li><span class="popular-num">→</span><a href="reserva-emergencia.html">Onde guardar a reserva de emergência</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-widget newsletter-widget">
+      <h3 class="widget-title">📬 Newsletter</h3>
+      <p>1 dica financeira prática por semana, grátis.</p>
+      <a class="btn" href="../index.html#newsletter" style="display:block;text-align:center;text-decoration:none">Assinar grátis &rarr;</a>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-bottom" style="max-width:1100px;margin:0 auto;padding:20px;">
+    <span>© 2026 FiqueRicoAgora</span>
+    <a href="../index.html" style="color:var(--green-light)">← Voltar para o blog</a>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+<script>
+(function(){
+  var TAXA_A = 0.0025, TAXA_B = 0.0020;
+  var ids = ['simValor','simAnos','simRent','simAporte'];
+  function brl(v){
+    return 'R$ ' + v.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  }
+  function saldoFinal(valor, aporte, anos, taxaLiquidaAnual){
+    var meses = Math.round(anos * 12);
+    var i = Math.pow(1 + taxaLiquidaAnual, 1/12) - 1;
+    var s = valor;
+    for (var m = 0; m < meses; m++){ s = s * (1 + i) + aporte; }
+    return s;
+  }
+  function calcular(){
+    var valor  = parseFloat(document.getElementById('simValor').value) || 0;
+    var anos   = parseFloat(document.getElementById('simAnos').value) || 0;
+    var rent   = (parseFloat(document.getElementById('simRent').value) || 0) / 100;
+    var aporte = parseFloat(document.getElementById('simAporte').value) || 0;
+    if (anos <= 0){ return; }
+    var investido = valor + aporte * Math.round(anos * 12);
+    var semTaxa = saldoFinal(valor, aporte, anos, rent);
+    var comA    = saldoFinal(valor, aporte, anos, rent - TAXA_A);
+    var comB    = saldoFinal(valor, aporte, anos, rent - TAXA_B);
+    var custoA  = semTaxa - comA;
+    var custoB  = semTaxa - comB;
+    document.getElementById('rInvestido').textContent = brl(investido);
+    document.getElementById('rCustoA').textContent    = brl(custoA);
+    document.getElementById('rCustoB').textContent    = brl(custoB);
+    document.getElementById('rDiferenca').textContent = brl(Math.abs(custoA - custoB));
+  }
+  ids.forEach(function(id){
+    var el = document.getElementById(id);
+    if (el){ el.addEventListener('input', calcular); }
+  });
+  calcular();
+})();
+</script>
+</body>
+</html>
