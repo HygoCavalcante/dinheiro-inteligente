@@ -852,3 +852,18 @@ body .table-scroll {
   margin: 24px 0;
 }
 body .table-scroll > table { margin-top: 0; margin-bottom: 0; }
+
+/* ===== Aviso legal / ressalva =====
+   Caixa padrao de disclaimer. Nos artigos ja existia definida inline;
+   centralizada aqui para valer tambem nas calculadoras, que antes usavam
+   apenas <p><em>. Especificidade body .aviso-legal para sobrescrever inline. */
+body .aviso-legal {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-top: 32px;
+  font-size: .82rem;
+  color: #6b7280;
+  line-height: 1.7;
+}
