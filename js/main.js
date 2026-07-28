@@ -744,7 +744,8 @@ function formatBRL(val) {
   return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
 }
 
-// cálculo ao vivo: recalcula enquanto digita (debounce)
+// Enter nos campos = mesmo efeito de clicar em "Calcular".
+// Sem recálculo automático ao digitar: o resultado só aparece quando o usuário pede.
 (function () {
   var groups = [
     { fn: 'calcJuros', ids: ['capital', 'taxa', 'meses', 'aporte'] },
@@ -758,15 +759,10 @@ function formatBRL(val) {
     { fn: 'calcHoras', ids: ['heSalario', 'heJornada', 'he50', 'he100', 'heDiasUteis', 'heDsr'] },
     { fn: 'calcFgts', ids: ['fgSalario', 'fgMeses', 'fgSaldo', 'fgExtras'] }
   ];
-  var t;
   groups.forEach(function (g) {
     g.ids.forEach(function (id) {
       var el = document.getElementById(id);
       if (!el) return;
-      el.addEventListener('input', function () {
-        clearTimeout(t);
-        t = setTimeout(function () { try { window[g.fn](); } catch (e) {} }, 250);
-      });
       el.addEventListener('keydown', function (e) {
         if (e.key === 'Enter') { e.preventDefault(); try { window[g.fn](); } catch (err) {} }
       });
