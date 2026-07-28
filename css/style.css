@@ -783,6 +783,9 @@ body .article-body p {
   font-size: 1.05rem;
   line-height: 1.8;
   color: #34403a;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
 }
 body .article-body > p:first-of-type {
   font-size: 1.2rem;
