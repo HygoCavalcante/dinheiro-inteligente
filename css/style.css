@@ -870,3 +870,13 @@ body .aviso-legal {
   color: #6b7280;
   line-height: 1.7;
 }
+
+/* ===== Texto corrido justificado =====
+   Mesmo tratamento tipografico de body .article-body p, aplicado as secoes
+   .cat-intro (indices de categoria e planilha.html). Centralizado aqui porque
+   planilha.html usa a classe sem declarar o CSS dela em lugar nenhum. */
+body .cat-intro p {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
