@@ -880,3 +880,20 @@ body .cat-intro p {
   text-justify: inter-word;
   hyphens: auto;
 }
+
+/* Itens de lista tambem sao texto corrido. Itens de uma linha so nao mudam:
+   a ultima linha de um bloco nunca e justificada. */
+body .article-body li,
+body .cat-intro li {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+/* Excecao: o indice "Neste artigo" e injetado dentro do .article-body pelo
+   main.js, mas e navegacao (links curtos), nao prosa. O seletor por ID vence
+   o de classe acima independentemente da ordem. */
+body #fr-toc li {
+  text-align: left;
+  hyphens: manual;
+}
