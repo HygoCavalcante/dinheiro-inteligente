@@ -778,13 +778,15 @@ function formatBRL(val) {
   var body = document.querySelector('article.article-body');
   if (!body) return;
 
-  var css = "#fr-breadcrumb{font-size:.85rem;color:#6b7280;margin:0 0 14px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;line-height:1.4}" +
-    "#fr-breadcrumb a{color:#2563eb;text-decoration:none}#fr-breadcrumb a:hover{text-decoration:underline}" +
-    "#fr-breadcrumb .fr-sep{color:#9ca3af}#fr-breadcrumb .fr-current{color:#6b7280}" +
-    "#fr-toc{background:#f8fafc;border:1px solid #e5e7eb;border-left:4px solid #2563eb;border-radius:8px;padding:16px 20px;margin:22px 0}" +
-    "#fr-toc .fr-toc-title{font-weight:800;color:#1e3a8a;margin:0 0 8px;font-size:1.05rem}" +
+  // Paleta do site (verde/ink/dourado). Antes o breadcrumb e o indice usavam
+  // azul (#2563eb/#1e3a8a/#f8fafc), que nao existe no design system.
+  var css = "#fr-breadcrumb{font-size:.85rem;color:var(--gray);margin:0 0 14px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;line-height:1.4}" +
+    "#fr-breadcrumb a{color:var(--green);text-decoration:none}#fr-breadcrumb a:hover{text-decoration:underline}" +
+    "#fr-breadcrumb .fr-sep{color:var(--gray);opacity:.55}#fr-breadcrumb .fr-current{color:var(--gray)}" +
+    "#fr-toc{background:var(--light);border:1px solid rgba(11,107,67,.14);border-left:4px solid var(--green);border-radius:8px;padding:16px 20px;margin:22px 0}" +
+    "#fr-toc .fr-toc-title{font-weight:800;color:var(--green-deep);margin:0 0 8px;font-size:1.05rem;font-family:var(--font-display)}" +
     "#fr-toc ul{margin:0;padding-left:18px}#fr-toc li{margin:5px 0}" +
-    "#fr-toc a{color:#2563eb;text-decoration:none}#fr-toc a:hover{text-decoration:underline}" +
+    "#fr-toc a{color:var(--green);text-decoration:none}#fr-toc a:hover{text-decoration:underline}" +
     ".article-body h2{scroll-margin-top:80px}";
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
@@ -841,12 +843,14 @@ function formatBRL(val) {
 (function () {
   var body = document.querySelector('article.article-body');
   if (!body || document.getElementById('fr-calc-cta')) return;
-  var css = "#fr-calc-cta{background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff;border-radius:12px;padding:22px 24px;margin:30px 0}" +
-    "#fr-calc-cta h3{margin:0 0 6px;color:#fff;font-size:1.15rem}" +
-    "#fr-calc-cta p{margin:0 0 14px;color:#dbeafe;font-size:.95rem}" +
+  // Paleta do site (verde/ink/dourado). Antes usava azul (#1e3a8a/#2563eb),
+  // que nao existe em lugar nenhum do design system do FiqueRicoAgora.
+  var css = "#fr-calc-cta{background:linear-gradient(135deg,var(--ink),var(--green-deep));color:#fff;border-radius:12px;padding:22px 24px;margin:30px 0}" +
+    "#fr-calc-cta h3{margin:0 0 6px;color:#fff;font-size:1.15rem;font-family:var(--font-display)}" +
+    "#fr-calc-cta p{margin:0 0 14px;color:rgba(255,255,255,.82);font-size:.95rem}" +
     "#fr-calc-cta .fr-calc-links{display:flex;flex-wrap:wrap;gap:10px}" +
-    "#fr-calc-cta a{background:#fff;color:#1e3a8a;text-decoration:none;font-weight:700;font-size:.9rem;padding:9px 16px;border-radius:8px;display:inline-block}" +
-    "#fr-calc-cta a:hover{background:#dbeafe}";
+    "#fr-calc-cta a{background:var(--gold);color:var(--ink);text-decoration:none;font-weight:700;font-size:.9rem;padding:9px 16px;border-radius:8px;display:inline-block}" +
+    "#fr-calc-cta a:hover{background:#f1c659}";
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
   var box = document.createElement('div'); box.id = 'fr-calc-cta';
   box.innerHTML = '<h3>🧮 Calculadoras grátis</h3>' +
