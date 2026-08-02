@@ -858,3 +858,135 @@ function formatBRL(val) {
     '</div>';
   body.appendChild(box);
 })();
+
+// ============================================================
+// Busca client-side — índice embutido no próprio arquivo.
+// Não usa fetch de propósito: o CSP do site libera connect-src
+// só para o Google Analytics, então buscar um .json seria bloqueado.
+// O índice é gerado a partir do sitemap + <title>/<meta description>
+// de cada página. Ao publicar página nova, regerar (ver README do repo).
+// ============================================================
+(function () {
+  var IDX = [{"u":"/","t":"Fique Rico Agora — Finanças Pessoais para Brasileiros","d":"Aprenda a investir, sair das dívidas e conquistar a independência financeira. Dicas práticas de finanças pessoais para o dia a dia do brasileiro.","s":"Página"},{"u":"/calculadoras/","t":"Calculadoras Financeiras e Trabalhistas Grátis: salário líquido, rescisão e juros","d":"Calculadoras online e grátis: salário líquido e rescisão trabalhista 2026 (INSS e IRRF), juros compostos, reserva de emergência e independência financeira. Sem cadastro, direto no navegador.","s":"Calculadora"},{"u":"/calculadoras/ferias.html","t":"Calculadora de Férias 2026: valor com 1/3, abono e descontos","d":"Calculadora de férias 2026 grátis: descubra o valor das férias a receber com o 1/3 constitucional, quanto rende vender 10 dias (abono pecuniário) e os descontos de INSS e IRRF. Sem cadastro.","s":"Calculadora"},{"u":"/calculadoras/decimo-terceiro.html","t":"Calculadora de 13º Salário 2026: parcelas, INSS e IRRF","d":"Calculadora de 13º salário 2026 grátis: veja o valor da 1ª e da 2ª parcela, os descontos de INSS e IRRF e o proporcional por meses trabalhados. Sem cadastro.","s":"Calculadora"},{"u":"/calculadoras/horas-extras.html","t":"Calculadora de Horas Extras 2026: 50%, 100% e DSR","d":"Calculadora de horas extras 2026 grátis: veja o valor da sua hora, o adicional de 50% e 100%, o reflexo no DSR e quanto isso soma no mês. Sem cadastro.","s":"Calculadora"},{"u":"/calculadoras/fgts.html","t":"Calculadora de FGTS 2026: depósitos e multa de 40%","d":"Calculadora de FGTS 2026 grátis: estime quanto a empresa já depositou para você (8% ao mês, com 13º e férias) e o valor da multa de 40% na demissão. Sem cadastro.","s":"Calculadora"},{"u":"/calculadoras/rescisao-trabalhista.html","t":"Calculadora de Rescisão Trabalhista 2026: calcule online e grátis","d":"Calculadora de rescisão trabalhista 2026 grátis: descubra quanto você tem a receber na demissão sem justa causa, pedido de demissão ou acordo. Saldo, aviso, 13º, férias, FGTS e descontos de INSS e IRRF.","s":"Calculadora"},{"u":"/calculadoras/salario-liquido.html","t":"Calculadora de Salário Líquido 2026: INSS, IRRF e descontos","d":"Calculadora de salário líquido 2026 grátis: informe o salário bruto e veja quanto cai na conta após INSS e Imposto de Renda, já com a isenção até R$ 5.000 da reforma. Considera dependentes, pensão e outros descontos.","s":"Calculadora"},{"u":"/calculadoras/seguro-desemprego.html","t":"Calculadora de Seguro-Desemprego 2026: parcelas e valor","d":"Calculadora de seguro-desemprego 2026 grátis: descubra quantas parcelas você recebe e o valor de cada uma, pela tabela oficial do MTE. Informe seus últimos salários e o tempo trabalhado.","s":"Calculadora"},{"u":"/calculadoras/juros-compostos.html","t":"Calculadora de Juros Compostos Online e Grátis (com aportes mensais)","d":"Calculadora de juros compostos grátis com aportes mensais. Descubra quanto seu dinheiro rende no Tesouro, CDB ou poupança e veja o poder dos juros sobre juros.","s":"Calculadora"},{"u":"/calculadoras/reserva-de-emergencia.html","t":"Calculadora de Reserva de Emergência: quanto guardar e onde","d":"Calculadora grátis de reserva de emergência: descubra quanto você precisa guardar conforme seu perfil (CLT, autônomo, servidor) e onde investir o dinheiro.","s":"Calculadora"},{"u":"/calculadoras/independencia-financeira.html","t":"Calculadora de Independência Financeira: quanto preciso para viver de renda?","d":"Calculadora grátis de independência financeira: descubra o patrimônio necessário para viver de renda e em quantos anos você chega lá com seus aportes atuais.","s":"Calculadora"},{"u":"/investimentos/","t":"Investimentos 2026: Tesouro, CDB, FIIs e ETFs como GPAC11 — Fique Rico Agora","d":"Guias práticos e comparativos honestos: GPAC11 vs B5P211, XPML11 vs HGLG11, Tesouro Direto, CDB, LCI e ações. Aprenda a investir do zero, sem promessa milagrosa.","s":"Página"},{"u":"/dividas/","t":"Como Sair das Dívidas em 2026 — Guias e Estratégias — Fique Rico Agora","d":"Estratégias comprovadas para sair das dívidas: método bola de neve, avalanche, negociação com credores e uso do FGTS. Guias práticos e sem enrolação.","s":"Página"},{"u":"/renda-extra/","t":"Renda Extra em 2026: Como Ganhar Mais Dinheiro — Fique Rico Agora","d":"Ideias práticas e testadas para ganhar renda extra sem sair do emprego atual. Freelance, venda online, investimentos e mais opções para o brasileiro.","s":"Página"},{"u":"/orcamento/","t":"Orçamento Pessoal e Controle Financeiro 2026 — Fique Rico Agora","d":"Aprenda a montar um orçamento pessoal eficiente com a regra 50-30-20 e outras estratégias comprovadas. Controle suas finanças e nunca mais fique no vermelho.","s":"Página"},{"u":"/sobre.html","t":"Sobre","d":"Conheça o FiqueRicoAgora, o blog de finanças pessoais feito para brasileiros que querem crescer financeiramente.","s":"Página"},{"u":"/planilha.html","t":"Planilha de Controle Financeiro Grátis 2026 (Excel, sem cadastro)","d":"Baixe grátis a planilha de controle financeiro 2026 em Excel (.xlsx): receitas, despesas, investimentos e metas. Download direto, sem cadastro e sem e-mail.","s":"Página"},{"u":"/politica-de-privacidade.html","t":"Política de Privacidade","d":"Política de privacidade do FiqueRicoAgora. Saiba como coletamos e usamos seus dados.","s":"Página"},{"u":"/artigos/bitcoin-queda-junho-2026.html","t":"Bitcoin abaixo de US$ 65.000: o que está acontecendo e o que fazer agora?","d":"Bitcoin caiu mais de 20% em junho de 2026. Veja gráficos da queda, entenda os 5 motivos, o histórico de recuperações e o que considerar — sem recomendação de compra.","s":"Artigo"},{"u":"/artigos/gpac11-vs-b5p211.html","t":"GPCA11 (GPAC11) x B5P211: qual ETF de inflação vale mais em 2026?","d":"Compare GPCA11 (ticker às vezes buscado como GPAC11) e B5P211, dois ETFs de renda fixa indexados ao IPCA. Cotação, taxas, rentabilidade e qual escolher em 2026.","s":"Artigo"},{"u":"/artigos/fundos-imobiliarios-2026.html","t":"Fundos Imobiliários (FIIs) em 2026: como investir e ter renda mensal","d":"Aprenda a investir em fundos imobiliários (FIIs) em 2026: o que são, os tipos, como pagam dividendos todo mês e o passo a passo para comprar sua primeira cota.","s":"Artigo"},{"u":"/artigos/fgts-investir-dividas-2026.html","t":"Como usar o FGTS para investir e sair das dívidas em 2026","d":"Saiba como usar o FGTS em 2026 para quitar dívidas pelo Desenrola Brasil, antecipar o saque-aniversário e fazer seu dinheiro render mais.","s":"Artigo"},{"u":"/artigos/restituicao-ir-2026.html","t":"Calendário Restituição Imposto de Renda 2026: Datas dos Lotes e Como Consultar","d":"Calendário oficial da restituição do IR 2026: datas dos 4 lotes, ordem de prioridade, como consultar pelo app da Receita e o que fazer com o dinheiro.","s":"Artigo"},{"u":"/artigos/tesouro-reserva.html","t":"Tesouro Reserva: a nova poupança do governo que paga mais","d":"Tesouro Reserva: invista a partir de R$ 1, saque a qualquer hora e ganhe mais que a poupança. Entenda como funciona a nova aplicação do governo lançada em maio de 2026.","s":"Artigo"},{"u":"/artigos/reserva-emergencia.html","t":"Como montar sua reserva de emergência do zero em 6 meses","d":"Passo a passo para criar sua reserva de emergência mesmo ganhando pouco. Descubra quanto guardar e onde deixar o dinheiro.","s":"Artigo"},{"u":"/artigos/renda-extra.html","t":"15 formas de ganhar renda extra sem sair do emprego","d":"Formas reais e testadas para ganhar renda extra no Brasil em 2026, sem precisar largar seu emprego atual.","s":"Artigo"},{"u":"/artigos/sair-das-dividas.html","t":"Método Bola de Neve vs Avalanche: qual é melhor para pagar dívidas?","d":"Comparamos os dois métodos mais eficazes para quitar dívidas com simulação real dos dois cenários.","s":"Artigo"},{"u":"/artigos/cdb-lci-lca.html","t":"CDB, LCI ou LCA: qual rende mais para você em 2026?","d":"Simulamos R$ 10.000 investidos em CDB, LCI e LCA. Veja qual rende mais dependendo do seu perfil.","s":"Artigo"},{"u":"/artigos/orcamento-50-30-20.html","t":"Regra 50-30-20: o orçamento mais simples que realmente funciona","d":"Aprenda a regra 50-30-20 para dividir seu salário e nunca mais ficar no vermelho no final do mês.","s":"Artigo"},{"u":"/artigos/tesouro-direto-2026.html","t":"Tesouro Direto 2026: Vale a pena investir com a Selic em 14,25%?","d":"Análise completa do Tesouro Direto em 2026: Selic, Prefixado e IPCA+. Qual modalidade rende mais com a Selic a 14,25% ao ano?","s":"Artigo"},{"u":"/artigos/acoes-iniciantes.html","t":"Como comprar ações pela primeira vez — Guia para iniciantes","d":"Da abertura de conta à primeira compra: tudo que você precisa saber para investir em ações sem complicação.","s":"Artigo"},{"u":"/artigos/cortar-gastos-sem-sofrer.html","t":"Como Cortar Gastos Sem Sofrer: 15 Economias Reais no Seu Mês","d":"Cortar gastos não precisa ser sacrifício. 15 economias reais e indolores para sobrar mais dinheiro no fim do mês, sem abrir mão do que importa.","s":"Artigo"},{"u":"/artigos/mei-formalizar-renda-extra.html","t":"MEI 2026: Como Formalizar Sua Renda Extra (Guia Completo)","d":"Como abrir MEI em 2026 e formalizar sua renda extra: quanto custa, quem pode, vantagens, passo a passo grátis e obrigações. Guia honesto para iniciantes.","s":"Artigo"},{"u":"/artigos/orcamento-mensal-do-zero.html","t":"Orçamento Mensal do Zero em 5 Passos: Guia Prático 2026","d":"Monte seu primeiro orçamento mensal em 5 passos: renda real, categorias de gastos, metas e revisão. Método simples que funciona até com salário apertado.","s":"Artigo"},{"u":"/artigos/xpml11-vs-hglg11.html","t":"XPML11 ou HGLG11? Qual FII Comprar em 2026 (Comparativo)","d":"XPML11 (shoppings) ou HGLG11 (galpões logísticos)? Comparamos perfil, dividendos e riscos — e mostramos qual FII combina com cada objetivo em 2026.","s":"Artigo"},{"u":"/artigos/mxrf11-vs-xpml11.html","t":"MXRF11 vs XPML11: Fundo de Papel ou de Tijolo? (2026)","d":"MXRF11 vs XPML11: entenda a diferença entre fundo de papel e fundo de tijolo, compare os dois FIIs com 5 indicadores e descubra qual combina com você.","s":"Artigo"},{"u":"/artigos/acoes-para-se-aposentar.html","t":"3 ações para se aposentar: o passo a passo que funciona","d":"Esqueça fórmulas mágicas: são 3 ações simples que constroem a aposentadoria. Comece cedo, automatize os aportes e escolha os veículos certos. Guia prático.","s":"Artigo"},{"u":"/artigos/tesouro-pre-ou-ipca-2032.html","t":"Tesouro Pré ou IPCA+ 2032? Onde muita gente erra","d":"Tesouro Prefixado ou Tesouro IPCA+ 2032? Entenda a diferença, quando cada um ganha e o erro de marcação a mercado que faz muita gente perder dinheiro.","s":"Artigo"},{"u":"/artigos/tesouro-ipca-2032-juro-real-recorde.html","t":"Tesouro IPCA+ 2032 a 8,5%: vale a pena travar o juro real recorde?","d":"O Tesouro IPCA+ 2032 bateu juro real recorde acima de 8,5% ao ano. O que isso significa, se vale a pena travar agora, o risco da marcação a mercado e o que o maior juro real do mundo revela sobre o Brasil.","s":"Artigo"},{"u":"/artigos/hglg11-vs-btlg11.html","t":"HGLG11 ou BTLG11: Qual o Melhor FII de Logística em 2026?","d":"HGLG11 vs BTLG11: comparamos os dois maiores FIIs de logística do Brasil — gestão, tipos de contrato, diversificação e riscos — para você decidir com clareza.","s":"Artigo"},{"u":"/artigos/renda-passiva-como-comecar.html","t":"Renda Passiva: O Que É e Como Começar do Zero","d":"Renda passiva de verdade: o que é, as principais fontes (renda fixa, FIIs, dividendos, aluguel) e um passo a passo realista para começar do zero, sem ilusões.","s":"Artigo"},{"u":"/artigos/planilha-orcamento-familiar.html","t":"Planilha de Orçamento Familiar: Como Montar (Modelo Grátis)","d":"Como montar uma planilha de orçamento familiar do zero: estrutura, categorias essenciais, passo a passo e um modelo grátis para baixar e começar hoje.","s":"Artigo"},{"u":"/artigos/decisoes-financeiras-primeiro-milhao.html","t":"Decisões Financeiras que Levam ao Primeiro Milhão","d":"Não é sobre ganhar mais ou cortar tudo. Veja as 7 decisões financeiras que realmente pesam para quem quer construir o primeiro milhão de reais com consistência.","s":"Artigo"},{"u":"/artigos/fii-esta-caro-como-avaliar.html","t":"FII Está Caro ou Barato? Como Avaliar de Verdade","d":"IFIX na máxima não quer dizer que fundo imobiliário está caro. Veja o que olhar além do preço da cota — P/VP, dividend yield, histórico e liquidez — antes de decidir.","s":"Artigo"},{"u":"/artigos/fundo-do-ciclo-bitcoin-indicadores.html","t":"Como Saber se o Bitcoin Chegou ao Fundo do Ciclo","d":"Reagir a uma notícia pontual não é análise. Veja os indicadores que investidores usam para tentar identificar o fundo de um ciclo de baixa do Bitcoin — sem prever o futuro.","s":"Artigo"},{"u":"/artigos/imposto-de-renda-cdb.html","t":"Imposto de Renda no CDB: Quanto Você Realmente Recebe","d":"Seu CDB rendeu, mas quanto sobra depois do imposto? Veja a tabela regressiva do IR, o IOF dos primeiros 30 dias e quanto muda resgatar antes ou depois de cada faixa.","s":"Artigo"},{"u":"/artigos/comecar-a-investir-do-zero.html","t":"Como Começar a Investir do Zero: o Passo a Passo na Ordem Certa","d":"Guia para quem nunca investiu: a ordem certa dos passos, da reserva de emergência à renda variável, com o que fazer em cada etapa e os riscos de pular degraus.","s":"Artigo"},{"u":"/artigos/imab11-vs-b5p211.html","t":"IMAB11 ou B5P211: qual ETF de Tesouro IPCA+ combina com seu prazo?","d":"IMAB11 e B5P211 seguem índices de NTN-B diferentes: um pega todos os prazos, outro só até 5 anos. Veja taxas oficiais, o que significa o P2 no imposto e simule o custo.","s":"Artigo"}];
+
+  function norm(s) {
+    return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
+  // Todos os termos precisam aparecer (E, não OU). Título pesa mais que descrição.
+  function score(item, terms) {
+    var t = norm(item.t), d = norm(item.d), sc = 0;
+    for (var i = 0; i < terms.length; i++) {
+      var q = terms[i];
+      var inT = t.indexOf(q), inD = d.indexOf(q);
+      if (inT === -1 && inD === -1) return 0;
+      if (inT === 0) sc += 8; else if (inT > -1) sc += 5;
+      if (inD > -1) sc += 1;
+    }
+    return sc;
+  }
+
+  function buscar(q) {
+    var terms = norm(q).split(/\s+/).filter(function (x) { return x.length > 1; });
+    if (!terms.length) return [];
+    return IDX.map(function (it) { return { it: it, sc: score(it, terms) }; })
+      .filter(function (r) { return r.sc > 0; })
+      .sort(function (a, b) { return b.sc - a.sc; })
+      .slice(0, 8)
+      .map(function (r) { return r.it; });
+  }
+
+  var navDesk = document.querySelector('header .header-inner nav');
+  var navMob = document.getElementById('mobileNav');
+  if (!navDesk && !navMob) return;
+
+  // Overlay
+  var ov = document.createElement('div');
+  ov.id = 'fr-search';
+  ov.setAttribute('role', 'dialog');
+  ov.setAttribute('aria-modal', 'true');
+  ov.setAttribute('aria-label', 'Buscar no site');
+  ov.innerHTML =
+    '<div class="fr-search-box">' +
+      '<input type="search" id="fr-search-input" autocomplete="off" ' +
+        'placeholder="Buscar artigo ou calculadora..." aria-label="Buscar no site">' +
+      '<ul id="fr-search-results" role="listbox"></ul>' +
+      '<p class="fr-search-hint">Enter abre o primeiro resultado · Esc fecha</p>' +
+    '</div>';
+  document.body.appendChild(ov);
+
+  var input = ov.querySelector('#fr-search-input');
+  var lista = ov.querySelector('#fr-search-results');
+  var atual = [];
+  var sel = -1;
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  function render() {
+    if (!atual.length) {
+      lista.innerHTML = input.value.trim().length > 1
+        ? '<li class="fr-search-empty">Nada encontrado para “' + esc(input.value.trim()) + '”</li>'
+        : '';
+      return;
+    }
+    lista.innerHTML = atual.map(function (it, i) {
+      return '<li role="option" class="' + (i === sel ? 'sel' : '') + '">' +
+        '<a href="' + esc(it.u) + '">' +
+          '<span class="fr-search-tag">' + esc(it.s) + '</span>' +
+          '<strong>' + esc(it.t) + '</strong>' +
+          '<small>' + esc(it.d) + '</small>' +
+        '</a></li>';
+    }).join('');
+  }
+
+  function abrir() {
+    ov.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    input.focus();
+  }
+
+  function fechar() {
+    ov.classList.remove('open');
+    document.body.style.overflow = '';
+    input.value = '';
+    atual = []; sel = -1;
+    lista.innerHTML = '';
+  }
+
+  // Gatilhos: um no nav do desktop, outro dentro do menu mobile
+  // (o nav do desktop some abaixo de 900px, por isso os dois).
+  function criarGatilho(alvo, rotulo) {
+    if (!alvo) return;
+    var b = document.createElement('button');
+    b.className = 'fr-search-btn';
+    b.type = 'button';
+    b.setAttribute('aria-label', 'Buscar no site');
+    b.innerHTML = '<span aria-hidden="true">🔍</span>' + (rotulo ? '<span>' + rotulo + '</span>' : '');
+    b.addEventListener('click', abrir);
+    alvo.appendChild(b);
+  }
+  criarGatilho(navDesk, '');
+  criarGatilho(navMob, 'Buscar');
+
+  ov.addEventListener('click', function (e) { if (e.target === ov) fechar(); });
+
+  input.addEventListener('input', function () {
+    atual = buscar(input.value);
+    sel = atual.length ? 0 : -1;
+    render();
+  });
+
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown') { e.preventDefault(); sel = Math.min(sel + 1, atual.length - 1); render(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); sel = Math.max(sel - 1, 0); render(); }
+    else if (e.key === 'Enter' && atual[sel]) { e.preventDefault(); location.href = atual[sel].u; }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && ov.classList.contains('open')) fechar();
+  });
+})();
