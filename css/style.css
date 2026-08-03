@@ -490,6 +490,10 @@ nav a:hover, nav a.active { color: var(--green); }
   justify-content: center;
   font-size: 5rem;
   min-height: 250px;
+  /* O fundo e escuro. Emoji trazem cor propria, mas SIMBOLO DE TEXTO (₿, R$,
+     %, €) herda a cor do corpo e sumia — o ₿ do slide do Bitcoin ficou
+     invisivel por isso. Definir a cor aqui resolve para qualquer glifo. */
+  color: #fff;
 }
 
 .featured-body { padding: 36px; display: flex; flex-direction: column; justify-content: center; }
