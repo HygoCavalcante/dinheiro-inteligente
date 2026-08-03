@@ -67,7 +67,11 @@ header {
 
 .logo span { color: var(--dark); }
 
-nav { display: flex; gap: 28px; }
+/* align-items:center e obrigatorio: sem ele o flex usa "stretch", os <a>
+   esticam ate a altura do item mais alto e o texto deles fica no TOPO da
+   caixa esticada — 9px acima do texto do campo de busca, que centraliza o
+   proprio conteudo. Era isso que desalinhava a barra. */
+nav { display: flex; gap: 28px; align-items: center; }
 
 nav a {
   font-size: 0.95rem;
