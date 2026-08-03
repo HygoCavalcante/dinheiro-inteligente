@@ -956,8 +956,6 @@ body .fr-search-hero kbd { margin-right: 4px; }
   body .fr-search-btn.fr-search-hero { height: 52px; font-size: .98rem; padding-left: 18px; }
   body .fr-search-hero .fr-search-ico { width: 38px; height: 38px; padding: 10px; }
 }
-/* esconde a pilula do topo enquanto o campo do hero esta a vista */
-body .fr-search-btn.fr-oculto { visibility: hidden; pointer-events: none; }
 
 body #fr-search {
   display: none; position: fixed; inset: 0; z-index: 300;

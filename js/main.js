@@ -998,16 +998,13 @@ function formatBRL(val) {
     cx.firstChild.classList.add('fr-search-hero');
     var depois = hero.querySelector('.hero-btns');
     if (depois) hero.insertBefore(cx, depois); else hero.appendChild(cx);
-
-    // O cabecalho e sticky. Enquanto o hero estiver visivel os dois campos
-    // apareceriam juntos; entao some com o do topo e traz de volta ao rolar.
-    var btnTopo = navDesk && navDesk.querySelector('.fr-search-btn');
-    if (btnTopo && 'IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) {
-        btnTopo.classList.toggle('fr-oculto', es[0].isIntersecting);
-      }, { threshold: 0.15 }).observe(cx);
-    }
   }
+  // NAO esconder a pilula do topo na home. Ja foi tentado e nao compensa:
+  // com visibility:hidden ela segue ocupando 282px e abre um buraco de 330px
+  // depois de "Sobre" (os links parecem desalinhados a direita); com
+  // display:none o espaco some, mas ao rolar a pilula reaparece e empurra os
+  // links 282px de uma vez. Manter os dois visiveis nao tem nenhum dos dois
+  // defeitos -- e busca no topo e no hero e padrao em site de conteudo.
 
   // Atalho "/" abre a busca (padrao de sites de conteudo). Ignorado enquanto o
   // foco estiver num campo, senao quebra a digitacao nas calculadoras.
