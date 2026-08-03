@@ -969,14 +969,22 @@ function formatBRL(val) {
     b.className = 'fr-search-btn';
     b.type = 'button';
     b.setAttribute('aria-label', 'Buscar no site');
-    b.innerHTML = '<span aria-hidden="true">🔍</span>' + (rotulo ? '<span>' + rotulo + '</span>' : '')
-      + '<kbd aria-hidden="true">/</kbd>';
+    // Ordem importa: texto a ESQUERDA e lupa a DIREITA, como num campo de
+    // busca de verdade. Lupa em SVG, nao emoji -- emoji renderiza colorido e
+    // com metrica propria de cada sistema, e nao parece controle de interface.
+    b.innerHTML =
+      '<span class="fr-search-ph">' + (rotulo || 'Buscar') + '</span>' +
+      '<kbd aria-hidden="true">/</kbd>' +
+      '<svg class="fr-search-ico" aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" ' +
+        'fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">' +
+        '<circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line>' +
+      '</svg>';
     b.addEventListener('click', abrir);
     alvo.appendChild(b);
   }
   // O desktop tambem leva rotulo: so o emoji, sem texto e sem fundo, ficava do
   // tamanho do link ao lado e era lido como enfeite, nao como botao.
-  criarGatilho(navDesk, 'Buscar');
+  criarGatilho(navDesk, 'Buscar no site…');
   criarGatilho(navMob, 'Buscar');
 
   // Atalho "/" abre a busca (padrao de sites de conteudo). Ignorado enquanto o
