@@ -936,6 +936,29 @@ body #mobileNav .fr-search-btn {
 }
 body #mobileNav .fr-search-ph { flex: 0 0 auto; }
 
+/* ---- Campo grande na faixa verde do hero (home) ---- */
+body .fr-search-hero-wrap { margin: 26px 0 22px; }
+body .fr-search-btn.fr-search-hero {
+  width: 100%; max-width: 560px; height: 58px;
+  padding: 0 10px 0 22px; font-size: 1.05rem; gap: 12px;
+  border-color: transparent; box-shadow: 0 6px 22px rgba(0,0,0,.16);
+}
+body .fr-search-btn.fr-search-hero:hover { box-shadow: 0 8px 26px rgba(0,0,0,.22); }
+/* no fundo escuro o foco precisa de anel claro para aparecer */
+body .fr-search-btn.fr-search-hero:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+/* a lupa vira botao circular verde, como em campo de busca de verdade */
+body .fr-search-hero .fr-search-ico {
+  width: 42px; height: 42px; padding: 11px; border-radius: 50%;
+  background: var(--green); color: #fff; box-sizing: border-box;
+}
+body .fr-search-hero kbd { margin-right: 4px; }
+@media (max-width: 600px) {
+  body .fr-search-btn.fr-search-hero { height: 52px; font-size: .98rem; padding-left: 18px; }
+  body .fr-search-hero .fr-search-ico { width: 38px; height: 38px; padding: 10px; }
+}
+/* esconde a pilula do topo enquanto o campo do hero esta a vista */
+body .fr-search-btn.fr-oculto { visibility: hidden; pointer-events: none; }
+
 body #fr-search {
   display: none; position: fixed; inset: 0; z-index: 300;
   background: rgba(14,31,23,0.55); padding: 80px 16px 16px;

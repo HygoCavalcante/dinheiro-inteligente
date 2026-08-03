@@ -987,6 +987,28 @@ function formatBRL(val) {
   criarGatilho(navDesk, 'Buscar no site…');
   criarGatilho(navMob, 'Buscar');
 
+  // Campo grande na faixa verde — SO na home, unica pagina com .hero-inner.
+  // Por isso o gatilho do cabecalho continua existindo em todo lugar: se a
+  // busca vivesse so aqui, sumiria das outras 48 paginas.
+  var hero = document.querySelector('.hero-inner');
+  if (hero) {
+    var cx = document.createElement('div');
+    cx.className = 'fr-search-hero-wrap';
+    criarGatilho(cx, 'Buscar artigo ou calculadora…');
+    cx.firstChild.classList.add('fr-search-hero');
+    var depois = hero.querySelector('.hero-btns');
+    if (depois) hero.insertBefore(cx, depois); else hero.appendChild(cx);
+
+    // O cabecalho e sticky. Enquanto o hero estiver visivel os dois campos
+    // apareceriam juntos; entao some com o do topo e traz de volta ao rolar.
+    var btnTopo = navDesk && navDesk.querySelector('.fr-search-btn');
+    if (btnTopo && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        btnTopo.classList.toggle('fr-oculto', es[0].isIntersecting);
+      }, { threshold: 0.15 }).observe(cx);
+    }
+  }
+
   // Atalho "/" abre a busca (padrao de sites de conteudo). Ignorado enquanto o
   // foco estiver num campo, senao quebra a digitacao nas calculadoras.
   document.addEventListener('keydown', function (e) {
