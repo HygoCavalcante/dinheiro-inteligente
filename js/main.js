@@ -969,12 +969,26 @@ function formatBRL(val) {
     b.className = 'fr-search-btn';
     b.type = 'button';
     b.setAttribute('aria-label', 'Buscar no site');
-    b.innerHTML = '<span aria-hidden="true">🔍</span>' + (rotulo ? '<span>' + rotulo + '</span>' : '');
+    b.innerHTML = '<span aria-hidden="true">🔍</span>' + (rotulo ? '<span>' + rotulo + '</span>' : '')
+      + '<kbd aria-hidden="true">/</kbd>';
     b.addEventListener('click', abrir);
     alvo.appendChild(b);
   }
-  criarGatilho(navDesk, '');
+  // O desktop tambem leva rotulo: so o emoji, sem texto e sem fundo, ficava do
+  // tamanho do link ao lado e era lido como enfeite, nao como botao.
+  criarGatilho(navDesk, 'Buscar');
   criarGatilho(navMob, 'Buscar');
+
+  // Atalho "/" abre a busca (padrao de sites de conteudo). Ignorado enquanto o
+  // foco estiver num campo, senao quebra a digitacao nas calculadoras.
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return;
+    var a = document.activeElement, t = a ? a.tagName : '';
+    if (t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT' || (a && a.isContentEditable)) return;
+    if (ov.classList.contains('open')) return;
+    e.preventDefault();
+    abrir();
+  });
 
   ov.addEventListener('click', function (e) { if (e.target === ov) fechar(); });
 

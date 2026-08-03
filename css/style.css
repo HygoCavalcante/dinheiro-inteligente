@@ -899,13 +899,33 @@ body #fr-toc li {
 }
 
 /* ========== BUSCA CLIENT-SIDE (injetada pelo main.js) ========== */
+/* O gatilho parece um CAMPO de busca, nao um icone solto: borda + fundo + a
+   palavra "Buscar". So o emoji, transparente e do tamanho do texto vizinho,
+   era lido como enfeite e ninguem clicava. */
 body .fr-search-btn {
-  background: none; border: none; cursor: pointer; color: var(--dark);
-  font-size: 1rem; padding: 6px 8px; border-radius: 6px; line-height: 1;
+  background: #fff; border: 1px solid #d9e2dc; cursor: pointer; color: #5b6b62;
+  font-size: 0.95rem; padding: 8px 12px; border-radius: 999px; line-height: 1;
   display: inline-flex; align-items: center; gap: 8px;
+  transition: border-color .15s, background .15s, color .15s;
 }
-body .fr-search-btn:hover { background: rgba(11,107,67,0.08); }
+body .fr-search-btn:hover {
+  background: rgba(11,107,67,0.06); border-color: var(--green); color: var(--dark);
+}
 body .fr-search-btn:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+/* dica da tecla de atalho — some onde nao ha teclado */
+body .fr-search-btn kbd {
+  font: 600 0.72rem/1 ui-monospace, monospace; color: #8a9a91;
+  background: #f2f5f3; border: 1px solid #e2e8e4; border-radius: 4px;
+  padding: 3px 6px; margin-left: 2px;
+}
+@media (hover: none), (max-width: 900px) {
+  body .fr-search-btn kbd { display: none; }
+}
+/* Dentro da gaveta mobile ele volta a ser item de menu, nao pilula. */
+body #mobileNav .fr-search-btn {
+  background: none; border: none; border-radius: 6px;
+  width: 100%; justify-content: flex-start; font-size: 1rem; padding: 10px 4px;
+}
 
 body #fr-search {
   display: none; position: fixed; inset: 0; z-index: 300;
