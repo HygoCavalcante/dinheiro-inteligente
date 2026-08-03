@@ -438,6 +438,46 @@ nav a:hover, nav a.active { color: var(--green); }
   margin-bottom: 40px;
 }
 
+/* ===== Carrossel do destaque (home) =====
+   Base em scroll-snap: sem JS o trilho continua rolavel e o 1o slide aparece
+   inteiro. O JS so acrescenta setas, pontinhos e teclado. */
+.fc-carrossel { position: relative; margin-bottom: 40px; }
+.fc-trilho {
+  display: flex; gap: 20px;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  scroll-behavior: smooth; scrollbar-width: none;
+}
+.fc-trilho::-webkit-scrollbar { display: none; }
+.fc-trilho > .featured-card {
+  flex: 0 0 100%; scroll-snap-align: start; margin-bottom: 0;
+}
+/* setas — criadas pelo JS, entao nao ocupam espaco se o JS falhar */
+.fc-seta {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+  width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+  background: rgba(255,255,255,.96); border: 1px solid #e7ece8;
+  box-shadow: 0 4px 14px rgba(0,0,0,.16);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink); transition: background .15s, box-shadow .15s;
+}
+.fc-seta:hover { background: #fff; box-shadow: 0 6px 18px rgba(0,0,0,.22); }
+.fc-seta:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+.fc-seta[disabled] { opacity: .35; cursor: default; box-shadow: none; }
+.fc-seta.ant { left: 12px; }
+.fc-seta.prox { right: 12px; }
+.fc-pontos { display: flex; gap: 8px; justify-content: center; margin-top: 16px; }
+.fc-ponto {
+  width: 9px; height: 9px; padding: 0; border-radius: 50%; cursor: pointer;
+  border: none; background: #cbd6ce; transition: background .15s, width .15s;
+}
+.fc-ponto[aria-current="true"] { background: var(--green); width: 26px; border-radius: 999px; }
+.fc-ponto:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+@media (max-width: 700px) {
+  .fc-seta { display: none; }   /* no celular vale o arrasto, nao a seta */
+  .fc-trilho { gap: 14px; }
+}
+@media (prefers-reduced-motion: reduce) { .fc-trilho { scroll-behavior: auto; } }
+
 .featured-img {
   background-color: var(--ink);
   background-image: repeating-linear-gradient(

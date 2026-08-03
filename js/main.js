@@ -1035,3 +1035,84 @@ function formatBRL(val) {
     if (e.key === 'Escape' && ov.classList.contains('open')) fechar();
   });
 })();
+
+// ===== Carrossel do destaque (home) =====
+// Progressive enhancement: o HTML ja funciona sozinho (trilho com scroll-snap).
+// Aqui so acrescentamos setas, pontinhos e teclado.
+// SEM rotacao automatica de proposito — slide que troca sozinho tira a leitura
+// de quem esta lendo e viola o criterio 2.2.2 do WCAG.
+(function () {
+  var car = document.querySelector('.fc-carrossel');
+  if (!car) return;
+  var trilho = car.querySelector('.fc-trilho');
+  var slides = Array.prototype.slice.call(trilho.querySelectorAll('.featured-card'));
+  if (slides.length < 2) return;
+
+  var SVG = 'http://www.w3.org/2000/svg';
+  function seta(classe, rotulo, d) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'fc-seta ' + classe; b.setAttribute('aria-label', rotulo);
+    var s = document.createElementNS(SVG, 'svg');
+    s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('width', '20'); s.setAttribute('height', '20');
+    s.setAttribute('fill', 'none'); s.setAttribute('stroke', 'currentColor');
+    s.setAttribute('stroke-width', '2.2'); s.setAttribute('stroke-linecap', 'round');
+    s.setAttribute('stroke-linejoin', 'round'); s.setAttribute('aria-hidden', 'true');
+    var p = document.createElementNS(SVG, 'polyline'); p.setAttribute('points', d);
+    s.appendChild(p); b.appendChild(s);
+    return b;
+  }
+  var bAnt = seta('ant', 'Slide anterior', '15 18 9 12 15 6');
+  var bProx = seta('prox', 'Próximo slide', '9 18 15 12 9 6');
+  car.appendChild(bAnt); car.appendChild(bProx);
+
+  var pontos = document.createElement('div');
+  pontos.className = 'fc-pontos';
+  pontos.setAttribute('role', 'tablist');
+  pontos.setAttribute('aria-label', 'Escolher destaque');
+  slides.forEach(function (_, i) {
+    var p = document.createElement('button');
+    p.type = 'button'; p.className = 'fc-ponto'; p.setAttribute('role', 'tab');
+    p.setAttribute('aria-label', 'Destaque ' + (i + 1) + ' de ' + slides.length);
+    p.addEventListener('click', function () { irPara(i); });
+    pontos.appendChild(p);
+  });
+  car.appendChild(pontos);
+
+  var idx = 0;
+  function irPara(i) {
+    idx = Math.max(0, Math.min(i, slides.length - 1));
+    trilho.scrollTo({ left: slides[idx].offsetLeft - trilho.offsetLeft, behavior: 'smooth' });
+    marcar();
+  }
+  function marcar() {
+    Array.prototype.forEach.call(pontos.children, function (p, i) {
+      p.setAttribute('aria-current', i === idx ? 'true' : 'false');
+    });
+    bAnt.disabled = idx === 0;
+    bProx.disabled = idx === slides.length - 1;
+  }
+  bAnt.addEventListener('click', function () { irPara(idx - 1); });
+  bProx.addEventListener('click', function () { irPara(idx + 1); });
+
+  // arrastar/rolar no proprio trilho tambem atualiza o estado
+  var t;
+  trilho.addEventListener('scroll', function () {
+    clearTimeout(t);
+    t = setTimeout(function () {
+      var meio = trilho.scrollLeft + trilho.clientWidth / 2;
+      slides.forEach(function (s, i) {
+        var ini = s.offsetLeft - trilho.offsetLeft;
+        if (meio >= ini && meio < ini + s.offsetWidth) { idx = i; }
+      });
+      marcar();
+    }, 90);
+  }, { passive: true });
+
+  // setas do teclado quando o foco esta dentro do carrossel
+  car.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') { e.preventDefault(); irPara(idx + 1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); irPara(idx - 1); }
+  });
+
+  marcar();
+})();

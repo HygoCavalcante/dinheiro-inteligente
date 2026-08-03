@@ -106,17 +106,67 @@
   <!-- ✅ Substitua pelo seu bloco de anúncio AdSense -->
 </div>
 
-<!-- ========== DESTAQUE ========== -->
+<!-- ========== DESTAQUE (carrossel) ==========
+     Sem rotacao automatica de proposito: slide que troca sozinho tira a
+     leitura de quem esta lendo e e problema de acessibilidade (WCAG 2.2.2).
+     Navegacao so por seta, pontinho, teclado ou arrasto.
+     Sem JS o 1o slide continua visivel e os outros viram lista rolavel. -->
 <div class="container" style="padding-top: 40px;">
-  <div class="featured-card">
-    <div class="featured-img">🏦</div>
-    <div class="featured-body">
-      <span class="tag">🔥 NOVO — Maio 2026</span>
-      <h2>Tesouro Reserva: a nova "poupança" do governo que paga o dobro</h2>
-      <p>Lançado agora em maio de 2026, o Tesouro Reserva rende a Selic (14,25% a.a.), pode ser resgatado 24h por dia e começa com R$ 1. Fizemos a comparação completa com a poupança e o CDB.</p>
-      <a href="artigos/tesouro-reserva.html" class="btn">Ler análise completa</a>
+  <section class="fc-carrossel" aria-roledescription="carrossel" aria-label="Artigos em destaque">
+    <div class="fc-trilho">
+
+      <article class="featured-card" aria-roledescription="slide" aria-label="1 de 5">
+        <div class="featured-img">🏦</div>
+        <div class="featured-body">
+          <span class="tag">💡 Renda fixa</span>
+          <h2>Tesouro Reserva: a nova "poupança" do governo que paga muito mais</h2>
+          <p>Rende a Selic (14,25% a.a.), pode ser resgatado 24h por dia e começa com R$ 1. Fizemos a comparação completa com a poupança e o CDB.</p>
+          <a href="artigos/tesouro-reserva.html" class="btn">Ler análise completa</a>
+        </div>
+      </article>
+
+      <article class="featured-card" aria-roledescription="slide" aria-label="2 de 5">
+        <div class="featured-img">📊</div>
+        <div class="featured-body">
+          <span class="tag">⚖️ Comparativo</span>
+          <h2>IMAB11 ou B5P211: qual ETF de Tesouro IPCA+ combina com seu prazo?</h2>
+          <p>Os dois seguem índices de NTN-B diferentes: um pega todos os prazos, outro só até 5 anos. Taxas oficiais, o que significa o P2 no imposto e o custo simulado.</p>
+          <a href="artigos/imab11-vs-b5p211.html" class="btn">Comparar os dois</a>
+        </div>
+      </article>
+
+      <article class="featured-card" aria-roledescription="slide" aria-label="3 de 5">
+        <div class="featured-img">🛡️</div>
+        <div class="featured-body">
+          <span class="tag">⚖️ Comparativo</span>
+          <h2>GPCA11 (GPAC11) x B5P211: qual ETF de inflação vale mais em 2026?</h2>
+          <p>Dois ETFs de renda fixa indexados ao IPCA, lado a lado: cotação, taxas, rentabilidade e em que situação cada um faz mais sentido.</p>
+          <a href="artigos/gpac11-vs-b5p211.html" class="btn">Ver o comparativo</a>
+        </div>
+      </article>
+
+      <article class="featured-card" aria-roledescription="slide" aria-label="4 de 5">
+        <div class="featured-img">💸</div>
+        <div class="featured-body">
+          <span class="tag">🗓️ Atualizado</span>
+          <h2>Calendário da Restituição do IR 2026: datas dos lotes e como consultar</h2>
+          <p>Os 4 lotes com datas oficiais, a ordem de prioridade, como consultar pelo app da Receita e o que fazer com o dinheiro quando cair.</p>
+          <a href="artigos/restituicao-ir-2026.html" class="btn">Ver o calendário</a>
+        </div>
+      </article>
+
+      <article class="featured-card" aria-roledescription="slide" aria-label="5 de 5">
+        <div class="featured-img">₿</div>
+        <div class="featured-body">
+          <span class="tag">📉 Mercado</span>
+          <h2>Bitcoin abaixo de US$ 65.000: o que está acontecendo e o que fazer agora?</h2>
+          <p>Gráficos da queda, os 5 motivos por trás dela e o histórico de recuperações de ciclos anteriores — sem recomendação de compra.</p>
+          <a href="artigos/bitcoin-queda-junho-2026.html" class="btn">Entender a queda</a>
+        </div>
+      </article>
+
     </div>
-  </div>
+  </section>
 </div>
 
 
