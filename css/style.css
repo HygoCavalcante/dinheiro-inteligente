@@ -1055,3 +1055,27 @@ body .fr-search-hint {
   body .fr-search-hint { display: none; }
   body .mobile-nav .fr-search-btn { width: 100%; justify-content: flex-start; padding: 10px 0; }
 }
+/* ===== Modo incorporação (?embed) — usado quando a calculadora roda dentro de
+   um iframe em outro site. Mesma página, sem duplicar código. ===== */
+.is-embed header,
+.is-embed footer,
+.is-embed .article-header,
+.is-embed .sidebar,
+.is-embed .embed-box { display: none !important; }
+.is-embed .article-layout { display: block; grid-template-columns: none; gap: 0; }
+.is-embed .article-body > *:not(.calc-card):not(.aviso-legal):not(.embed-credit) { display: none; }
+.is-embed .container { max-width: 100%; padding: 12px; }
+.is-embed .calc-card { margin: 0 0 12px; box-shadow: none; }
+.is-embed .aviso-legal { font-size: .78rem; }
+
+.embed-credit { display: none; }
+.is-embed .embed-credit { display: block; text-align: center; font-size: .82rem;
+  color: #6b7280; margin: 10px 0 2px; }
+
+.embed-box { border: 1px dashed #cbd5e1; border-radius: 12px; padding: 20px;
+  margin: 32px 0; background: #f8fafc; }
+.embed-box h2 { margin-top: 0; font-size: 1.15rem; }
+.embed-box p { font-size: .92rem; margin: 8px 0 12px; }
+.embed-box textarea { width: 100%; font-family: 'IBM Plex Mono', monospace;
+  font-size: .78rem; line-height: 1.5; padding: 12px; border: 1px solid #cbd5e1;
+  border-radius: 8px; background: #fff; resize: vertical; }
