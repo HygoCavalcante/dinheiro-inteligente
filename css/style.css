@@ -345,6 +345,12 @@ nav a:hover, nav a.active { color: var(--green); }
 .cat-chip--livros {
   background: linear-gradient(135deg, #1a365d 0%, #2c5282 50%, #2b6cb0 100%);
 }
+.cat-chip--livros .cat-chip-overlay {
+  background: linear-gradient(to top, rgba(10,20,40,0.55) 0%, transparent 60%);
+}
+.cat-chip--livros:hover .cat-chip-overlay {
+  background: linear-gradient(to top, rgba(10,20,40,0.7) 0%, transparent 65%);
+}
 .cat-chip--livros::after {
   content: '\1F4DA';
   position: absolute;
@@ -352,7 +358,7 @@ nav a:hover, nav a.active { color: var(--green); }
   right: 18px;
   transform: translateY(-60%);
   font-size: 3.2rem;
-  opacity: 0.18;
+  opacity: 0.2;
   z-index: 0;
   pointer-events: none;
 }
