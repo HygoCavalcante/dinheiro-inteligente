@@ -97,6 +97,12 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>https://fiquericoagora.com.br/livros/</loc>
+    <lastmod>2026-11-07</lastmod>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>https://fiquericoagora.com.br/sobre.html</loc>
     <lastmod>2026-07-19</lastmod>
     <priority>0.6</priority>

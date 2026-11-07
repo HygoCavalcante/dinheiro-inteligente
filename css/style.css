@@ -401,6 +401,7 @@ nav a:hover, nav a.active { color: var(--green); }
 .card.cat-rex { --ctint: #e8f1fc; }
 .card.cat-orc { --ctint: #f4e9f8; }
 .card.cat-ir  { --ctint: #faf1da; }
+.card.cat-liv { --ctint: #dbeafe; }
 
 .card-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
 
