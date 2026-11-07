@@ -310,4 +310,10 @@
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://fiquericoagora.com.br/artigos/livros-educacao-financeira.html</loc>
+    <lastmod>2026-11-07</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>
