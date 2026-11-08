@@ -328,4 +328,10 @@
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://fiquericoagora.com.br/termos-de-uso.html</loc>
+    <lastmod>2026-11-08</lastmod>
+    <priority>0.4</priority>
+    <changefreq>yearly</changefreq>
+  </url>
 </urlset>
