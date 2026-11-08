@@ -1097,3 +1097,33 @@ body .fr-search-hint {
 .embed-box textarea { width: 100%; font-family: 'IBM Plex Mono', monospace;
   font-size: .78rem; line-height: 1.5; padding: 12px; border: 1px solid #cbd5e1;
   border-radius: 8px; background: #fff; resize: vertical; }
+
+
+/* Blocos técnicos (AdSense/YMYL) */
+body .fontes-oficiais-box,
+body .metodologia-box {
+  background: #f8fafc;
+  border: 1px solid #dbe3ea;
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin: 28px 0;
+}
+body .fontes-oficiais-box h2,
+body .metodologia-box h2 {
+  font-size: 1.08rem;
+  margin: 0 0 10px;
+  color: var(--ink);
+}
+body .fontes-oficiais-box ul,
+body .metodologia-box ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+body .fontes-oficiais-box li,
+body .metodologia-box li {
+  margin-bottom: 6px;
+}
+body .fontes-oficiais-box a {
+  color: var(--green);
+  text-decoration: underline;
+}
